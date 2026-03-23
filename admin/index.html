@@ -4,32 +4,9 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Beheer — MijnKoelpietje</title>
-  <style>
-    body { margin: 0; font-family: sans-serif; background: #0a0a0a; color: #e8e8e8; }
-    .login-info {
-      position: fixed; bottom: 20px; right: 20px; z-index: 9999;
-      background: #1a1a1a; border: 1px solid rgba(245,196,0,0.3);
-      border-radius: 12px; padding: 16px 20px; max-width: 320px;
-      font-size: 13px; color: #888; line-height: 1.6;
-    }
-    .login-info strong { color: #f5c400; }
-  </style>
+  <link rel="cms-config-url" type="application/json" href="/admin/config.yml" />
 </head>
 <body>
-  <script>
-    // Zorg dat CMS de juiste config.yml vindt
-    window.CMS_MANUAL_INIT = false;
-  </script>
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-  <script>
-    // Override config URL expliciet
-    if (window.CMS) {
-      CMS.init({ config: { load_config_file: true, config_url: '/admin/config.yml' } });
-    }
-  </script>
-  <div class="login-info">
-    <strong>🐦 MijnKoelpietje Beheer</strong><br/>
-    Log in met je GitHub account om verhalen, nieuws en kunstwerken te beheren.
-  </div>
 </body>
 </html>
