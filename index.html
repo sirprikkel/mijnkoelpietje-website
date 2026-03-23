@@ -376,13 +376,13 @@
     </div>
 
     <!-- Mobiel hamburger -->
-    <button id="mob-menu-btn" onclick="toggleMobMenu()" class="hidden items-center justify-center min-w-[44px] min-h-[44px] cursor-pointer bg-transparent border-none" style="color:var(--geel);" aria-label="Menu openen/sluiten" aria-expanded="false">
+    <button id="mob-menu-btn" onclick="toggleMobMenu()" style="display:none;color:var(--geel);" class="items-center justify-center min-w-[44px] min-h-[44px] cursor-pointer bg-transparent border-none" aria-label="Menu openen/sluiten" aria-expanded="false">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="24" height="24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
     </button>
   </div>
 
   <!-- Mobiel dropdown -->
-  <div id="mob-menu" class="border-t px-6 pb-4" style="border-color:rgba(245,196,0,0.12);">
+  <div id="mob-menu" style="display:none;" class="border-t px-6 pb-4" style="border-color:rgba(245,196,0,0.12);">
     <div class="flex flex-col gap-4 pt-4">
       <button class="nav-link text-left min-h-[44px]" onclick="toonSectie('verhalen');toggleMobMenu()">Verhalen</button>
       <button class="nav-link text-left min-h-[44px]" onclick="toonSectie('nieuws');toggleMobMenu()">Nieuws</button>
