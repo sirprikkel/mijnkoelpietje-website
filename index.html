@@ -669,9 +669,7 @@
       <p class="text-gray-500 max-w-xl mx-auto">Updates over nieuwe kunstwerken, evenementen en verhalen.</p>
     </div>
 
-    <div class="flex flex-col gap-6">
-
-      <article class="kaart p-6 sm:p-8 flex flex-col md:flex-row gap-6 items-start">
+    <div id="nieuws-container" class="flex flex-col gap-6">      <article class="kaart p-6 sm:p-8 flex flex-col md:flex-row gap-6 items-start">
         <div class="mono text-xs whitespace-nowrap pt-1" style="color:rgba(245,196,0,0.7);min-width:80px;">23 mrt 2026</div>
         <div>
           <div class="mono text-xs text-gray-600 mb-2 uppercase tracking-wide">Collectie</div>
@@ -715,7 +713,7 @@
       <p class="text-gray-500 max-w-xl mx-auto">Prints, digitale werken en collectors items. Elk stuk gemaakt met AI — elk stuk uniek.</p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div id="shop-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
       <div class="kaart">
         <div class="kunst-placeholder" style="background:linear-gradient(135deg,#1a1400,#0a0a0a);">
@@ -772,7 +770,7 @@
       </div>
 
       <!-- Bundel -->
-      <div class="kaart md:col-span-2 lg:col-span-3" style="border-color:rgba(245,196,0,0.25);">
+      <div class="kaart bundel-kaart md:col-span-2 lg:col-span-3" style="border-color:rgba(245,196,0,0.25);">
         <div class="p-8 flex flex-col md:flex-row items-center gap-8">
           <div class="text-center md:text-left flex-1">
             <div class="mono text-xs mb-2 uppercase tracking-widest" style="color:rgba(245,196,0,0.7);">Bestseller</div>
@@ -962,98 +960,210 @@
 <!-- ══════════════════════════════════════════ VERHAAL DATA + SCRIPTS ══ -->
 <script>
 // ─── Verhaal data ───────────────────────────────────────────────────────────
-const verhalen = {
-  v1: {
-    titel: 'Mijn eerste dag onder de grond',
-    rubriek: 'Herinneringen',
-    rubriekKleur: '#f5c400',
-    datum: '12 januari 2026',
-    tekst: `
-      <p>Het was koud die ochtend. Koud zoals alleen een januariochtend in Limburg koud kan zijn — de mist hing laag over de velden, en de fietswielen lieten sporen achter in de rijp op het pad naar de schacht.</p>
-      <p>Ik was zeventien. Mijn vader was al tien jaar mijnwerker. Hij had nooit veel gezegd over het werk, maar die ochtend, in de kleedkamer, terwijl hij zijn helm opzette en de lamp controleerde, zei hij: <em>"Luister altijd naar de kanarie. Als zij stil is — ren."</em></p>
-      <p>De kooi hing in het hoekje van de lift. Een klein geel vogeltje, niet groter dan mijn vuist. Het zong onophoudelijk terwijl de lift daalde — een tinkelend liedje dat echode tegen de vochtige stenen wanden.</p>
-      <p>Dieper. Donkerder. Tot het licht van boven verdween en alleen de lampen op onze helmen de weg wezen.</p>
-      <p>Ik herinner me de geur het sterkst. Steen en oud hout en iets wat ik niet kon benoemen — de adem van de aarde zelf. En door alles heen: het zingen van de kanarie.</p>
-      <blockquote>"Als zij zingt, leven wij."</blockquote>
-      <p>Dat was de regel. Zo simpel. Zo onontkoombaar.</p>
-      <p>Die eerste dag heb ik meer geleerd dan in een jaar schoolbanken. Over samenwerken in het donker, over vertrouwen, over de kleine dingen die het leven draaglijk maken wanneer de wereld boven je hoofd kilometers steen is.</p>
-      <p>En over de kanarie. Over hoe een klein geel vogeltje groter kan zijn dan de berg zelf.</p>
-    `
-  },
-  v2: {
-    titel: 'De kanarie als levensredder',
-    rubriek: 'Geschiedenis',
-    rubriekKleur: '#3b82f6',
-    datum: '28 februari 2026',
-    tekst: `
-      <p>Lang voordat er gasdetectoren bestonden, hadden mijnwerkers een simpel maar geniaal systeem: de kanarie.</p>
-      <p>Kanaries zijn extreem gevoelig voor koolmonoxide en andere giftige gassen. Ze ademen sneller dan mensen en reageren eerder op gevaarlijke concentraties. Als een kanarie flauwvalt of sterft, is dat een waarschuwing: verlaat de mijn, onmiddellijk.</p>
-      <p>Deze praktijk begon officieel in Engeland in 1911, geïntroduceerd door mijnbouwingenieur John Scott Haldane. Maar informeel gebruikten mijnwerkers al veel langer vogels als vroege-waarschuwingssystemen.</p>
-      <blockquote>"De kanarie sterft zodat wij leven. Dat vergeet je nooit."</blockquote>
-      <p>In Nederland, en met name in de Limburgse mijnen, werden kanaries tot in de jaren zeventig gebruikt. Pas toen betrouwbare elektronische gasdetectoren gemeengoed werden, verdwenen de kleine gele vogeltjes uit de schachten.</p>
-      <p>Het laatste koelpietje werd in 1987 uit een Britse mijn gehaald. Op dat moment stapten de mijnwerkers op om het vogeltje een erehaag te geven.</p>
-      <p>Het woord "koelpietje" — zoals de kanarie in de mijn werd genoemd — is daarmee niet alleen een naam, maar een symbool. Van solidariteit, van opoffering, van het kleine dat het grote beschermt.</p>
-    `
-  },
-  v3: {
-    titel: 'Hoe ik mijn beelden maak',
-    rubriek: 'AI & Kunst',
-    rubriekKleur: '#10b981',
-    datum: '5 maart 2026',
-    tekst: `
-      <p>Mensen vragen me vaak: hoe maak jij die beelden? Zijn ze echt? Zijn ze nep? Het antwoord is: ze zijn allebei tegelijk.</p>
-      <p>Ik begin altijd met een gevoel. Een herinnering, een oud foto uit een boek, een geur. Die verander ik in woorden — een zogenaamde "prompt." Woorden als: <em>dark mine tunnel, single yellow canary light, coal dust in the air, photorealistic, cinematic, high contrast</em>.</p>
-      <p>Dan laat ik de AI zijn werk doen. Midjourney, Dall-E, Stable Diffusion — ik experimenteer met allemaal. Het resultaat is nooit precies wat ik bedoelde, maar altijd iets wat ik niet zelf had kunnen maken.</p>
-      <blockquote>"AI geeft vorm aan wat ik voel maar niet kan tekenen."</blockquote>
-      <p>Dan begint het echte werk: selecteren, bijwerken, nabewerken in Photoshop en Lightroom. De kleuren precies goed krijgen — het zwart zwart genoeg, het geel fel genoeg. Het gevoel van benauwd donker met dat ene gloeiende plekje licht.</p>
-      <p>Elk beeld is een samenwerking. Ik lever de intentie, de herinnering, het gevoel. De AI levert de technische uitvoering. Samen maken we iets wat noch ik noch de machine alleen had kunnen maken.</p>
-      <p>Dat vind ik juist mooi aan AI-kunst: het is een gesprek.</p>
-    `
-  },
-  v4: {
-    titel: 'De brooddoos en de lamp',
-    rubriek: 'Mijnleven',
-    rubriekKleur: '#a855f7',
-    datum: '10 maart 2026',
-    tekst: `
-      <p>Elke mijnwerker had zijn rituelen. Kleine dingen die het leven in de schacht draaglijk maakten — misschien zelfs mooi.</p>
-      <p>De brooddoos was heilig. Altijd dezelfde: een metalen doos met een klik-deksel, deuken en krassen van jaren gebruik. Daarin: boterhammen met leverworst of kaas, een appel, misschien een koekje dat zijn vrouw er 's ochtends bij had gedaan.</p>
-      <p>De lamp was van een ander soort heiligheid. Die checkte je tweemaal voor je de schacht inging. Niet omdat je het vergat, maar omdat het een ritueel was. Een belofte aan jezelf: <em>ik kom boven.</em></p>
-      <blockquote>"Een mijnwerker zonder lamp is blind. Een mijnwerker zonder brood is gebroken."</blockquote>
-      <p>Halverwege de dienst, in een nisje in de gang, aten de mannen samen. Zwijgend meestal. Het was donker, het was lawaaiig, de machines sloegen niet om. Maar die tien minuten waren van hen.</p>
-      <p>Ik denk wel eens: als je zou proberen het leven in de mijn samen te vatten in twee voorwerpen, dan zouden het de lamp en de brooddoos zijn. Het ene houdt je bij de weg. Het andere houdt je bij het leven.</p>
-    `
-  },
-  v5: {
-    titel: 'Het zingen stopt nooit',
-    rubriek: 'Natuur & Kanarie',
-    rubriekKleur: '#ef4444',
-    datum: '17 maart 2026',
-    tekst: `
-      <p>Er is iets mysterieus aan een kanarie die zingt in het donker.</p>
-      <p>Boven de grond zitten kanaries bij ramen, in lichte kamers, in de zon. In de mijn zitten ze in het diepst van de duisternis, omgeven door het geluid van machines en steen. En ze zingen.</p>
-      <p>Mijnwerkers luisterden naar dat gezang met een intensiteit die nergens anders voor wordt bewaard. Want dat gezang was het bewijs: de lucht is goed. Wij leven. We kunnen doorgaan.</p>
-      <blockquote>"Als de kanarie zingt, is alles goed. Als ze stopt — ren je voor je leven."</blockquote>
-      <p>Er zijn verhalen van mijnwerkers die hun koelpietje jaar na jaar meenamen, die ze kenden aan hun stem, die verdriet hadden als het vogeltje stierf. Niet alleen omdat een nieuwe moest worden aangeschaft, maar omdat een kameraad was verloren.</p>
-      <p>Dat is het mooie en het tragische tegelijk: het kleine gele vogeltje dat zijn leven geeft voor de grote zwarte mijnwerkers. Ongelijke ruil, oneerlijk misschien — maar ook een van de meest menselijke verhalen die ik ken.</p>
-      <p>Ik noem mijn project "Mijn Koelpietje" als eerbetoon aan die vogels. En aan de mannen die naar hen luisterden.</p>
-    `
-  },
-  v6: {
-    titel: 'Vrienden in het donker',
-    rubriek: 'Herinneringen',
-    rubriekKleur: '#f5c400',
-    datum: '20 maart 2026',
-    tekst: `
-      <p>Je kent niemand beter dan degene die naast je werkt in het pikkedonker.</p>
-      <p>Ik had drie vaste ploeggenoten. Jan, die altijd grappen maakte ook als niemand er zin in had. Piet, die zo stil kon zijn dat je bijna vergat dat hij er was — totdat je hem nodig had, en dan stond hij er. En Toon, de oudste, die met zijn ogen dicht nog de weg wist door de gangen.</p>
-      <p>We spraken weinig. Het lawaai liet dat ook niet toe. Maar je leerde de ander kennen op een manier die woorden niet kunnen. Je kende zijn bewegingen. Je wist hoe hij ademde als hij moe was. Je voelde het als hij zich zorgen maakte.</p>
-      <blockquote>"Boven de grond heb je kennissen. Onder de grond heb je broeders."</blockquote>
-      <p>Die saamhorigheid verdwijnt niet als de mijn sluit. Mijnwerkers treffen elkaar decennia later nog, en het is alsof de tijd heeft stilgestaan. De lamp is weg, de brooddoos is weg, de kanarie is weg — maar de band blijft.</p>
-      <p>Ik schrijf deze verhalen ook voor hen. Voor Jan en Piet en Toon, en voor alle mannen die hun beste jaren diep onder de grond hebben gegeven. Zodat niemand vergeet wat daar gebeurde.</p>
-    `
-  }
+// ─── Content Loader (dynamisch uit JSON) ──────────────────────────
+let verhalen = {};
+let kunstwerken = [];
+let nieuwsItems = [];
+
+const rubriekConfig = {
+  'herinneringen': { label: 'Herinneringen', kleur: '#f5c400', bg: 'rgba(245,196,0,0.15)' },
+  'geschiedenis':  { label: 'Geschiedenis',  kleur: '#3b82f6', bg: 'rgba(59,130,246,0.15)' },
+  'ai-kunst':      { label: 'AI & Kunst',    kleur: '#10b981', bg: 'rgba(16,185,129,0.15)' },
+  'mijnleven':     { label: 'Mijnleven',     kleur: '#a855f7', bg: 'rgba(168,85,247,0.15)' },
+  'natuur':        { label: 'Natuur & Kanarie', kleur: '#ef4444', bg: 'rgba(239,68,68,0.15)' }
 };
+
+async function laadContent() {
+  try {
+    // Laad alle content JSON files
+    const [verhalenResp, kunstResp, nieuwsResp] = await Promise.all([
+      fetch('/content/verhalen/'),
+      fetch('/content/kunstwerken/'),
+      fetch('/content/nieuws/')
+    ]);
+
+    // Fallback: laad bekende bestanden direct
+    await laadVerhalen();
+    await laadKunstwerken();
+    await laadNieuws();
+  } catch(e) {
+    console.log('Content laden via directe fetch...');
+    await laadVerhalen();
+    await laadKunstwerken();
+    await laadNieuws();
+  }
+}
+
+async function fetchJSON(url) {
+  try {
+    const r = await fetch(url);
+    if (!r.ok) return null;
+    return await r.json();
+  } catch(e) { return null; }
+}
+
+async function laadVerhalen() {
+  // Probeer alle bekende verhaal IDs + scan voor nieuwe
+  const bekende = ['v1','v2','v3','v4','v5','v6'];
+  verhalen = {};
+  const promises = bekende.map(id => fetchJSON(`/content/verhalen/${id}.json`));
+  const results = await Promise.all(promises);
+  results.forEach(v => {
+    if (v && v.id) verhalen[v.id] = v;
+  });
+
+  // Scan ook voor willekeurige nieuwe bestanden via index
+  try {
+    const r = await fetch('/content/verhalen/index.json');
+    if (r.ok) {
+      const idx = await r.json();
+      const extra = await Promise.all(idx.map(id => fetchJSON(`/content/verhalen/${id}.json`)));
+      extra.forEach(v => { if (v && v.id) verhalen[v.id] = v; });
+    }
+  } catch(e) {}
+
+  renderVerhalenGrid();
+  renderVerhalenPreview();
+}
+
+async function laadKunstwerken() {
+  const bekende = ['k1','k2','k3','k4','k5','k6','k7','k8'];
+  const promises = bekende.map(id => fetchJSON(`/content/kunstwerken/${id}.json`));
+  const results = await Promise.all(promises);
+  kunstwerken = results.filter(k => k && k.id);
+
+  try {
+    const r = await fetch('/content/kunstwerken/index.json');
+    if (r.ok) {
+      const idx = await r.json();
+      const extra = await Promise.all(idx.map(id => fetchJSON(`/content/kunstwerken/${id}.json`)));
+      extra.forEach(k => { if (k && k.id && !kunstwerken.find(x => x.id === k.id)) kunstwerken.push(k); });
+    }
+  } catch(e) {}
+
+  renderShop();
+}
+
+async function laadNieuws() {
+  const bekende = ['n1','n2','n3','n4','n5'];
+  const promises = bekende.map(id => fetchJSON(`/content/nieuws/${id}.json`));
+  const results = await Promise.all(promises);
+  nieuwsItems = results.filter(n => n && n.id);
+  renderNieuws();
+}
+
+// ─── Render functies ──────────────────────────────────────────
+
+function renderVerhalenGrid() {
+  const grid = document.getElementById('verhalen-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  Object.values(verhalen).forEach(v => {
+    const cfg = rubriekConfig[v.rubriek] || { label: v.rubriek, kleur: '#f5c400', bg: 'rgba(245,196,0,0.15)' };
+    const kaart = document.createElement('div');
+    kaart.className = 'kaart overflow-hidden';
+    kaart.dataset.rubriek = v.rubriek;
+    kaart.dataset.tags = (v.intro || '') + ' ' + (v.titel || '');
+    kaart.setAttribute('role', 'listitem');
+    kaart.onclick = () => openVerhaal(v.id);
+    kaart.innerHTML = `
+      <div style="height:3px;background:${cfg.kleur};width:100%;"></div>
+      <div class="p-6">
+        <span class="rubriek-tag" style="background:${cfg.bg};color:${cfg.kleur};">${cfg.label}</span>
+        <h3 class="font-bold text-lg mt-3 mb-2">${v.titel}</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">${v.intro || ''}</p>
+        <div class="mt-4 text-xs mono" style="color:${cfg.kleur};">Lees meer →</div>
+      </div>`;
+    grid.appendChild(kaart);
+  });
+}
+
+function renderVerhalenPreview() {
+  // Update de 3 preview kaarten op de homepage
+  const previews = document.querySelectorAll('#verhalen-preview .kaart');
+  const vArr = Object.values(verhalen).slice(0, 3);
+  previews.forEach((kaart, i) => {
+    if (!vArr[i]) return;
+    const v = vArr[i];
+    const cfg = rubriekConfig[v.rubriek] || { label: v.rubriek, kleur: '#f5c400', bg: 'rgba(245,196,0,0.15)' };
+    kaart.onclick = () => { toonSectie('verhalen'); openVerhaal(v.id); };
+    const titleEl = kaart.querySelector('h3');
+    const introEl = kaart.querySelector('p');
+    if (titleEl) titleEl.textContent = v.titel;
+    if (introEl) introEl.textContent = v.intro || '';
+  });
+}
+
+function renderShop() {
+  const grid = document.getElementById('shop-grid');
+  if (!grid || kunstwerken.length === 0) return;
+  // Behoud de bundel kaart
+  const bundelKaart = grid.querySelector('.bundel-kaart');
+  grid.innerHTML = '';
+
+  kunstwerken.forEach(k => {
+    const kaart = document.createElement('div');
+    kaart.className = 'kaart group';
+    const heeftAfb = k.afbeelding && k.afbeelding.length > 0;
+    kaart.innerHTML = `
+      <div class="relative overflow-hidden" style="height:320px;background:linear-gradient(135deg,#1a1400,#0a0a0a);">
+        ${heeftAfb
+          ? `<img src="${k.afbeelding}" alt="${k.titel}" style="width:100%;height:100%;object-fit:cover;opacity:0.85;" />`
+          : `<div style="position:absolute;inset:0;background:radial-gradient(circle at 40% 50%,rgba(245,196,0,0.18),transparent 60%);display:flex;align-items:center;justify-content:center;"><span style="font-size:5rem;opacity:0.15;">🖼️</span></div>`
+        }
+        <div class="absolute bottom-0 left-0 right-0 p-4" style="background:linear-gradient(0deg,rgba(0,0,0,0.85),transparent);">
+          <div class="mono text-xs" style="color:rgba(245,196,0,0.7);">Editie ${k.editie || '–'}</div>
+        </div>
+      </div>
+      <div class="p-6">
+        <div class="text-xs text-gray-500 mono mb-1">${k.collectie || ''}</div>
+        <h3 class="font-bold text-lg mb-1">${k.titel}</h3>
+        <p class="text-gray-500 text-sm mb-4">${k.beschrijving || ''}</p>
+        <div class="flex items-center justify-between">
+          <span class="text-xl font-bold" style="color:var(--geel);">€ ${k.prijs},–</span>
+          ${k.mollie_link
+            ? `<a href="${k.mollie_link}" target="_blank" class="btn-geel text-sm">Kopen</a>`
+            : `<button class="btn-geel text-sm" onclick="contactKopen('${k.titel}')">Bestellen</button>`
+          }
+        </div>
+      </div>`;
+    grid.appendChild(kaart);
+  });
+
+  // Voeg bundel kaart terug toe
+  if (bundelKaart) grid.appendChild(bundelKaart);
+}
+
+function renderNieuws() {
+  const container = document.getElementById('nieuws-container');
+  if (!container || nieuwsItems.length === 0) return;
+  container.innerHTML = '';
+  nieuwsItems.forEach(n => {
+    const art = document.createElement('article');
+    art.className = 'kaart p-8 flex flex-col md:flex-row gap-6 items-start';
+    art.innerHTML = `
+      <div class="mono text-xs whitespace-nowrap pt-1" style="color:rgba(245,196,0,0.7);">${n.datum}</div>
+      <div>
+        <div class="text-xs text-gray-600 mono mb-2 uppercase tracking-wide">${n.categorie || ''}</div>
+        <h2 class="font-bold text-xl mb-2">${n.titel}</h2>
+        <p class="text-gray-400 text-sm leading-relaxed">${n.tekst}</p>
+      </div>`;
+    container.appendChild(art);
+  });
+}
+
+function contactKopen(titel) {
+  toonSectie('contact');
+  setTimeout(() => {
+    const onderwerp = document.querySelector('select');
+    if (onderwerp) onderwerp.value = 'Vraag over de kunst';
+    const bericht = document.querySelector('textarea');
+    if (bericht) bericht.value = `Hallo, ik heb interesse in het kunstwerk "${titel}". Kunt u mij meer informatie sturen?`;
+  }, 300);
+}
+
+// Laad alles bij pagina start
+document.addEventListener('DOMContentLoaded', laadContent);
 
 // ─── Navigatie ───────────────────────────────────────────────────────────────
 let huidigeSectie = 'home';

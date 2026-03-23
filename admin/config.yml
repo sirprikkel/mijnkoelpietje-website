@@ -1,0 +1,60 @@
+backend:
+  name: github
+  repo: sirprikkel/mijnkoelpietje-website
+  branch: main
+
+media_folder: "uploads"
+public_folder: "/uploads"
+
+locale: 'nl'
+
+collections:
+  - name: "verhalen"
+    label: "Verhalen"
+    label_singular: "Verhaal"
+    folder: "content/verhalen"
+    create: true
+    slug: "{{slug}}"
+    format: json
+    fields:
+      - {label: "Titel", name: "titel", widget: "string"}
+      - {label: "Rubriek", name: "rubriek", widget: "select", options: [
+          {label: "Herinneringen", value: "herinneringen"},
+          {label: "Geschiedenis", value: "geschiedenis"},
+          {label: "AI & Kunst", value: "ai-kunst"},
+          {label: "Mijnleven", value: "mijnleven"},
+          {label: "Natuur & Kanarie", value: "natuur"}
+        ]}
+      - {label: "Datum", name: "datum", widget: "string", hint: "Bijv: 12 januari 2026"}
+      - {label: "Korte intro (voor kaart)", name: "intro", widget: "text"}
+      - {label: "Volledige tekst", name: "tekst", widget: "markdown"}
+      - {label: "Afbeelding (optioneel)", name: "afbeelding", widget: "image", required: false}
+
+  - name: "kunstwerken"
+    label: "Kunstwerken (Shop)"
+    label_singular: "Kunstwerk"
+    folder: "content/kunstwerken"
+    create: true
+    slug: "{{slug}}"
+    format: json
+    fields:
+      - {label: "Titel", name: "titel", widget: "string"}
+      - {label: "Collectie", name: "collectie", widget: "string", hint: "Bijv: Kanarie Serie"}
+      - {label: "Beschrijving", name: "beschrijving", widget: "text"}
+      - {label: "Prijs (€)", name: "prijs", widget: "string"}
+      - {label: "Editie", name: "editie", widget: "string", hint: "Bijv: 1 van 12"}
+      - {label: "Afbeelding", name: "afbeelding", widget: "image", required: false}
+      - {label: "Mollie betaallink", name: "mollie_link", widget: "string", required: false, hint: "Plak hier je Mollie betaallink"}
+
+  - name: "nieuws"
+    label: "Nieuws"
+    label_singular: "Nieuwsbericht"
+    folder: "content/nieuws"
+    create: true
+    slug: "{{slug}}"
+    format: json
+    fields:
+      - {label: "Titel", name: "titel", widget: "string"}
+      - {label: "Categorie", name: "categorie", widget: "string", hint: "Bijv: Collectie, Website, Evenement"}
+      - {label: "Datum", name: "datum", widget: "string"}
+      - {label: "Tekst", name: "tekst", widget: "text"}
