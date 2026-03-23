@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mijn Koelpietje — AI Kunst &amp; Verhalen uit de Mijn</title>
+  <meta name="description" content="Mijn Koelpietje — AI-kunstwerken en verhalen over het leven in de steenkolenmijn. Mijnerfgoed in pixels: duisternis, geel licht en de geest van de kanarie." />
+  <meta property="og:title" content="Mijn Koelpietje — AI Kunst &amp; Verhalen uit de Mijn" />
+  <meta property="og:description" content="AI-kunstwerken en verhalen over het steenkolenmijn thema. Met de kanarie als mascotte." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.mijnkoelpietje.nl" />
+
+  <!-- Umami Analytics -->
+  <script defer src="https://analytics.code-lieshout.nl/prikkel" data-website-id="KOELPIETJE-WEBSITE-ID"></script>
+
+  <!-- Fonts: Poiret One (display) + Didact Gothic (body) + Space Mono (mono) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Didact+Gothic&family=Poiret+One&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Poiret One', 'sans-serif'],
+            sans: ['Didact Gothic', 'sans-serif'],
+            mono: ['Space Mono', 'monospace'],
+          },
+          colors: {
+            geel: '#f5c400',
+            'geel-dim': '#c49e00',
+            zwart: '#000000',
+            donker: '#0a0a0a',
+            oppervlak: '#121212',
+            grijs: '#1a1a1a',
+            tekst: '#e8e8e8',
+          },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --geel: #f5c400;
+      --geel-dim: #c49e00;
+      --zwart: #000000;
+      --donker: #0a0a0a;
+      --oppervlak: #121212;
+      --grijs: #1a1a1a;
+      --tekst: #e8e8e8;
+      --animation-duration: 300ms;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: 'Didact Gothic', sans-serif;
+      background: var(--zwart);
+      color: var(--tekst);
+      margin: 0;
+      color-scheme: dark;
+    }
+
+    h1, h2, h3, h4, .font-display {
+      font-family: 'Poiret One', sans-serif;
+    }
+
+    .mono { font-family: 'Space Mono', monospace; }
+
+    /* Kanarie glow */
+    .kanarie-glow {
+      text-shadow: 0 0 30px rgba(245,196,0,0.5), 0 0 60px rgba(245,196,0,0.2);
+    }
+
+    /* Shaft glow lijn */
+    .shaft-glow {
+      background: linear-gradient(90deg, transparent 0%, var(--geel) 30%, #fff9e6 50%, var(--geel) 70%, transparent 100%);
+      height: 2px;
+      opacity: 0.6;
+      animation: pulse-line 3s ease-in-out infinite;
+    }
+    @keyframes pulse-line {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 0.8; }
+    }
+
+    /* Nav */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(0,0,0,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(245,196,0,0.12);
+    }
+
+    .nav-link {
+      color: #777;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: color var(--animation-duration), border-color var(--animation-duration);
+      padding: 0.2rem 0;
+      border-bottom: 1px solid transparent;
+      background: none;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+    }
+    .nav-link:hover, .nav-link.active {
+      color: var(--geel);
+      border-bottom-color: var(--geel);
+    }
+    .nav-link:focus {
+      outline: 2px solid var(--geel);
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+
+    /* Kaart */
+    .kaart {
+      background: var(--oppervlak);
+      border: 1px solid rgba(245,196,0,0.08);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: border-color var(--animation-duration), transform var(--animation-duration);
+      cursor: pointer;
+    }
+    .kaart:hover {
+      border-color: rgba(245,196,0,0.4);
+      transform: translateY(-3px);
+    }
+
+    /* Rubriek balk */
+    .rubriek-balk { height: 3px; width: 100%; }
+
+    /* Knoppen */
+    .btn-geel {
+      background: var(--geel);
+      color: #000;
+      font-family: 'Space Mono', monospace;
+      font-weight: 700;
+      border-radius: 8px;
+      padding: 0.7rem 1.6rem;
+      font-size: 0.82rem;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      border: none;
+      transition: background var(--animation-duration), transform 150ms;
+      display: inline-block;
+      min-height: 44px;
+    }
+    .btn-geel:hover { background: #ffd700; transform: translateY(-1px); }
+    .btn-geel:focus { outline: 2px solid #fff; outline-offset: 2px; }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--geel);
+      font-family: 'Space Mono', monospace;
+      font-weight: 400;
+      border: 1px solid rgba(245,196,0,0.6);
+      border-radius: 8px;
+      padding: 0.65rem 1.5rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      transition: background var(--animation-duration), border-color var(--animation-duration);
+      display: inline-block;
+      min-height: 44px;
+    }
+    .btn-outline:hover { background: rgba(245,196,0,0.1); border-color: var(--geel); }
+    .btn-outline:focus { outline: 2px solid var(--geel); outline-offset: 2px; }
+
+    /* Secties */
+    .sectie { display: none; }
+    .sectie.actief { display: block; }
+
+    /* Hero tunnel */
+    .tunnel-bg {
+      background:
+        radial-gradient(ellipse 80% 50% at 50% 70%, rgba(245,196,0,0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 30% at 50% 50%, rgba(245,196,0,0.03) 0%, transparent 60%),
+        linear-gradient(180deg, #000 0%, #0a0800 50%, #000 100%);
+    }
+
+    /* Zoekbalk */
+    .zoek-input {
+      background: var(--grijs);
+      border: 1px solid rgba(245,196,0,0.15);
+      border-radius: 8px;
+      color: var(--tekst);
+      padding: 0.7rem 1rem;
+      font-family: 'Didact Gothic', sans-serif;
+      font-size: 0.9rem;
+      width: 100%;
+      outline: none;
+      transition: border-color var(--animation-duration);
+      min-height: 44px;
+    }
+    .zoek-input:focus { border-color: var(--geel); }
+    .zoek-input::placeholder { color: #555; }
+
+    /* Rubriek tag */
+    .rubriek-tag {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 99px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: opacity var(--animation-duration);
+      min-height: 28px;
+      line-height: 1.8;
+    }
+    .rubriek-tag:hover { opacity: 0.75; }
+    .rubriek-tag.actief { opacity: 1; box-shadow: 0 0 0 1.5px currentColor; }
+
+    /* Scroll reveal animaties */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.zichtbaar {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+    }
+
+    /* Kanarie SVG animatie */
+    .kanarie-flutter {
+      animation: flutter 2.5s ease-in-out infinite;
+      display: inline-block;
+    }
+    @keyframes flutter {
+      0%, 100% { transform: translateY(0) rotate(-3deg); }
+      50% { transform: translateY(-5px) rotate(3deg); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .kanarie-flutter { animation: none; }
+    }
+
+    /* HR decoratief */
+    .hr-geel {
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(245,196,0,0.25), transparent);
+      margin: 0;
+    }
+
+    /* Mobiel menu */
+    #mob-menu { display: none; }
+    @media (max-width: 768px) {
+      #desk-menu { display: none !important; }
+      #mob-menu-btn { display: flex !important; }
+    }
+    @media (min-width: 769px) {
+      #mob-menu-btn { display: none !important; }
+    }
+
+    /* Verhaal detail */
+    .verhaal-detail { display: none; }
+    .verhaal-detail.open { display: block; }
+    .verhaal-overzicht.verborgen { display: none; }
+
+    /* Scrollbar stijl */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: #000; }
+    ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--geel); }
+
+    /* Lightbox */
+    #lightbox {
+      display: none;
+      position: fixed; inset: 0; z-index: 200;
+      background: rgba(0,0,0,0.95);
+      align-items: center; justify-content: center;
+      cursor: zoom-out;
+    }
+    #lightbox.open { display: flex; }
+    #lightbox img {
+      max-width: 90vw; max-height: 90vh;
+      border-radius: 8px;
+      object-fit: contain;
+    }
+    #lightbox-close {
+      position: absolute; top: 1.5rem; right: 1.5rem;
+      color: #888; font-size: 2rem; cursor: pointer;
+      background: none; border: none;
+      transition: color var(--animation-duration);
+      min-height: 44px; min-width: 44px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    #lightbox-close:hover { color: var(--geel); }
+
+    /* Mijn decor pilaar */
+    .mijn-decor {
+      position: absolute; bottom: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 1px; height: 80px;
+      background: linear-gradient(180deg, var(--geel), transparent);
+      opacity: 0.3;
+    }
+
+    /* Prose */
+    .prose p { margin-bottom: 1.25rem; line-height: 1.8; color: #ccc; }
+    .prose blockquote {
+      border-left: 3px solid var(--geel);
+      padding-left: 1.5rem;
+      color: #999;
+      margin: 2rem 0;
+      font-style: italic;
+    }
+    .prose em { color: var(--geel); font-style: normal; }
+
+    /* Kunst plaatsholder */
+    .kunst-placeholder {
+      height: 280px;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .kunst-placeholder svg {
+      width: 80px; height: 80px;
+      opacity: 0.15;
+    }
+    .kunst-glow {
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at 45% 55%, rgba(245,196,0,0.18), transparent 60%);
+    }
+  </style>
+</head>
+<body>
+
+<!-- Lightbox -->
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="Afbeeldingsvergroting" onclick="sluitLightbox()">
+  <button id="lightbox-close" onclick="sluitLightbox()" aria-label="Sluiten">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="24" height="24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+  </button>
+  <img id="lightbox-img" src="" alt="" />
+</div>
+
+<!-- NAV -->
+<nav aria-label="Hoofdnavigatie">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
+
+    <button onclick="toonSectie('home')" class="flex items-center gap-3 cursor-pointer bg-transparent border-none" aria-label="Naar homepage">
+      <span class="kanarie-flutter" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#f5c400" width="28" height="28"><path d="M12 3C8 3 5 6 5 10c0 2.4 1.1 4.6 2.9 6L6 21h12l-1.9-5c1.8-1.4 2.9-3.6 2.9-6 0-4-3-7-7-7zm0 2c2.8 0 5 2.2 5 5s-2.2 5-5 5-5-2.2-5-5 2.2-5 5-5z"/></svg>
+      </span>
+      <span style="font-family:'Poiret One',sans-serif;" class="text-xl tracking-wide text-white">
+        Mijn<span style="color:var(--geel);">Koelpietje</span>
+      </span>
+    </button>
+
+    <!-- Desktop menu -->
+    <div id="desk-menu" class="flex items-center gap-8">
+      <button class="nav-link" onclick="toonSectie('verhalen')">Verhalen</button>
+      <button class="nav-link" onclick="toonSectie('nieuws')">Nieuws</button>
+      <button class="nav-link" onclick="toonSectie('shop')">Shop</button>
+      <button class="nav-link" onclick="toonSectie('activiteiten')">Activiteiten</button>
+      <button class="nav-link" onclick="toonSectie('contact')">Contact</button>
+    </div>
+
+    <!-- Mobiel hamburger -->
+    <button id="mob-menu-btn" onclick="toggleMobMenu()" class="hidden items-center justify-center min-w-[44px] min-h-[44px] cursor-pointer bg-transparent border-none" style="color:var(--geel);" aria-label="Menu openen/sluiten" aria-expanded="false">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="24" height="24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
+    </button>
+  </div>
+
+  <!-- Mobiel dropdown -->
+  <div id="mob-menu" class="border-t px-6 pb-4" style="border-color:rgba(245,196,0,0.12);">
+    <div class="flex flex-col gap-4 pt-4">
+      <button class="nav-link text-left min-h-[44px]" onclick="toonSectie('verhalen');toggleMobMenu()">Verhalen</button>
+      <button class="nav-link text-left min-h-[44px]" onclick="toonSectie('nieuws');toggleMobMenu()">Nieuws</button>
+      <button class="nav-link text-left min-h-[44px]" onclick="toonSectie('shop');toggleMobMenu()">Shop</button>
+      <button class="nav-link text-left min-h-[44px]" onclick="toonSectie('activiteiten');toggleMobMenu()">Activiteiten</button>
+      <button class="nav-link text-left min-h-[44px]" onclick="toonSectie('contact');toggleMobMenu()">Contact</button>
+    </div>
+  </div>
+</nav>
+
+
+<!-- ══════════════════════════════════════════════════════ HOME ══ -->
+<div id="sectie-home" class="sectie actief">
+
+  <!-- HERO — Chapter 1: Intro Hook -->
+  <section class="tunnel-bg min-h-screen flex flex-col items-center justify-center relative pt-24 pb-32 px-4 sm:px-6 overflow-hidden">
+
+    <!-- Achtergrond decoratie -->
+    <div class="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+      <div style="position:absolute;top:25%;left:15%;width:500px;height:500px;background:radial-gradient(circle,rgba(245,196,0,0.05),transparent 70%);border-radius:50%;"></div>
+      <div style="position:absolute;top:55%;right:10%;width:350px;height:350px;background:radial-gradient(circle,rgba(245,196,0,0.03),transparent 70%);border-radius:50%;"></div>
+    </div>
+
+    <div class="relative z-10 text-center max-w-4xl">
+      <div class="mono text-xs tracking-widest mb-6 uppercase" style="color:rgba(245,196,0,0.7);">
+        AI Kunst &nbsp;·&nbsp; Verhalen &nbsp;·&nbsp; Mijnerfgoed
+      </div>
+
+      <h1 style="font-family:'Poiret One',sans-serif;font-size:clamp(2.8rem,8vw,7rem);line-height:1.05;font-weight:400;margin-bottom:1.5rem;">
+        In het donker<br/>
+        <span style="color:var(--geel);" class="kanarie-glow">zingt de kanarie</span>
+      </h1>
+
+      <p class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-10">
+        Een reis door de steenkolenmijn — vastgelegd in AI-kunst, verhalen en herinneringen.
+        Het koelpietje als gids, diep onder de grond.
+      </p>
+
+      <div class="flex flex-wrap gap-4 justify-center">
+        <button onclick="toonSectie('verhalen')" class="btn-geel">Lees de verhalen</button>
+        <button onclick="toonSectie('shop')" class="btn-outline">Bekijk de kunst</button>
+      </div>
+    </div>
+
+    <div class="absolute bottom-0 left-0 right-0 shaft-glow" aria-hidden="true"></div>
+    <div class="mijn-decor" aria-hidden="true"></div>
+  </section>
+
+  <div class="hr-geel"></div>
+
+  <!-- COLLECTIE — Chapter 2 -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 py-20">
+    <div class="reveal flex items-end justify-between mb-12 flex-wrap gap-4">
+      <div>
+        <div class="mono text-xs tracking-widest uppercase mb-2" style="color:rgba(245,196,0,0.7);">Uitgelichte Collectie</div>
+        <h2 style="font-family:'Poiret One',sans-serif;font-size:clamp(1.8rem,4vw,2.5rem);font-weight:400;">AI Kunst uit de Mijn</h2>
+      </div>
+      <button onclick="toonSectie('shop')" class="btn-outline hidden md:block">Alle werken</button>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="kaart reveal" onclick="toonSectie('shop')">
+        <div class="kunst-placeholder" style="background:linear-gradient(135deg,#1a1400,#0a0a0a);">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#f5c400" aria-hidden="true"><path d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008z"/></svg>
+          <div class="kunst-glow" aria-hidden="true"></div>
+          <div class="absolute top-3 right-3 rounded-lg px-2 py-1 mono text-xs" style="background:rgba(0,0,0,0.7);color:var(--geel);">#001</div>
+        </div>
+        <div class="p-5">
+          <div class="mono text-xs text-gray-600 mb-1">Koelpietje Collectie</div>
+          <h3 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-lg mb-1">Afdaling</h3>
+          <p class="text-gray-500 text-sm">De lift daalt. Het geel van de kanarie — het enige licht.</p>
+        </div>
+      </div>
+
+      <div class="kaart reveal" onclick="toonSectie('shop')">
+        <div class="kunst-placeholder" style="background:linear-gradient(135deg,#0f0c00,#1a1400);">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#f5c400" aria-hidden="true"><path d="M12 3C8 3 5 6 5 10c0 2.4 1.1 4.6 2.9 6L6 21h12l-1.9-5c1.8-1.4 2.9-3.6 2.9-6 0-4-3-7-7-7zm0 2c2.8 0 5 2.2 5 5s-2.2 5-5 5-5-2.2-5-5 2.2-5 5-5z"/></svg>
+          <div class="kunst-glow" aria-hidden="true"></div>
+          <div class="absolute top-3 right-3 rounded-lg px-2 py-1 mono text-xs" style="background:rgba(0,0,0,0.7);color:var(--geel);">#002</div>
+        </div>
+        <div class="p-5">
+          <div class="mono text-xs text-gray-600 mb-1">Kanarie Serie</div>
+          <h3 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-lg mb-1">Het Kleine Licht</h3>
+          <p class="text-gray-500 text-sm">Geel op zwart. Leven in duisternis. Hoop in een kooi.</p>
+        </div>
+      </div>
+
+      <div class="kaart reveal" onclick="toonSectie('shop')">
+        <div class="kunst-placeholder" style="background:linear-gradient(135deg,#0a0a00,#111108);">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#f5c400" aria-hidden="true"><path d="M2.25 7.125C2.25 6.504 2.754 6 3.375 6h6c.621 0 1.125.504 1.125 1.125v3.75c0 .621-.504 1.125-1.125 1.125h-6a1.125 1.125 0 01-1.125-1.125v-3.75zM14.25 8.625c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v8.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 01-1.125-1.125v-8.25zM3.75 16.125c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v2.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 01-1.125-1.125v-2.25z"/></svg>
+          <div class="kunst-glow" aria-hidden="true"></div>
+          <div class="absolute top-3 right-3 rounded-lg px-2 py-1 mono text-xs" style="background:rgba(0,0,0,0.7);color:var(--geel);">#003</div>
+        </div>
+        <div class="p-5">
+          <div class="mono text-xs text-gray-600 mb-1">Mijn Erfgoed</div>
+          <h3 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-lg mb-1">De Gang</h3>
+          <p class="text-gray-500 text-sm">Eindeloze donkere gangen. Elke stap een verhaal dieper.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center mt-8 md:hidden">
+      <button onclick="toonSectie('shop')" class="btn-outline">Alle werken</button>
+    </div>
+  </section>
+
+  <div class="hr-geel"></div>
+
+  <!-- VERHALEN PREVIEW — Chapter 3 -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 py-20">
+    <div class="reveal flex items-end justify-between mb-12 flex-wrap gap-4">
+      <div>
+        <div class="mono text-xs tracking-widest uppercase mb-2" style="color:rgba(245,196,0,0.7);">Verhalen</div>
+        <h2 style="font-family:'Poiret One',sans-serif;font-size:clamp(1.8rem,4vw,2.5rem);font-weight:400;">Uit de Diepte</h2>
+      </div>
+      <button onclick="toonSectie('verhalen')" class="btn-outline hidden md:block">Alle verhalen</button>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="kaart reveal overflow-hidden" onclick="openVerhaal('v1')">
+        <div class="rubriek-balk" style="background:var(--geel);"></div>
+        <div class="p-6">
+          <span class="rubriek-tag" style="background:rgba(245,196,0,0.12);color:var(--geel);">Herinneringen</span>
+          <h3 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mt-3 mb-2">Mijn eerste dag onder de grond</h3>
+          <p class="text-gray-500 text-sm leading-relaxed">Het was koud. De lift kreunde. Mijn vader legde zijn hand op mijn schouder: "Luister naar de kanarie."</p>
+          <div class="mt-4 mono text-xs" style="color:rgba(245,196,0,0.7);">Lees meer →</div>
+        </div>
+      </div>
+
+      <div class="kaart reveal overflow-hidden" onclick="openVerhaal('v2')">
+        <div class="rubriek-balk" style="background:#3b82f6;"></div>
+        <div class="p-6">
+          <span class="rubriek-tag" style="background:rgba(59,130,246,0.12);color:#60a5fa;">Geschiedenis</span>
+          <h3 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mt-3 mb-2">De kanarie als levensredder</h3>
+          <p class="text-gray-500 text-sm leading-relaxed">Eeuwenlang namen mijnwerkers een kanarie mee. Als het vogeltje stil werd, was het tijd om te vluchten.</p>
+          <div class="mt-4 mono text-xs text-blue-400">Lees meer →</div>
+        </div>
+      </div>
+
+      <div class="kaart reveal overflow-hidden" onclick="openVerhaal('v3')">
+        <div class="rubriek-balk" style="background:#10b981;"></div>
+        <div class="p-6">
+          <span class="rubriek-tag" style="background:rgba(16,185,129,0.12);color:#34d399;">AI &amp; Kunst</span>
+          <h3 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mt-3 mb-2">Hoe ik mijn beelden maak</h3>
+          <p class="text-gray-500 text-sm leading-relaxed">Met AI-tools geef ik oude beelden een nieuw leven. Duisternis, geel licht, en de geest van de mijn in pixels.</p>
+          <div class="mt-4 mono text-xs text-emerald-400">Lees meer →</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center mt-8 md:hidden">
+      <button onclick="toonSectie('verhalen')" class="btn-outline">Alle verhalen</button>
+    </div>
+  </section>
+
+  <!-- CLIMAX CTA — Chapter 5: Nieuwsbrief -->
+  <section class="py-24 px-4 sm:px-6 text-center border-t border-b" style="background:linear-gradient(135deg,#0a0800,#000);border-color:rgba(245,196,0,0.1);">
+    <div class="max-w-xl mx-auto reveal">
+      <div class="kanarie-flutter inline-block mb-6" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#f5c400" width="56" height="56"><path d="M12 3C8 3 5 6 5 10c0 2.4 1.1 4.6 2.9 6L6 21h12l-1.9-5c1.8-1.4 2.9-3.6 2.9-6 0-4-3-7-7-7zm0 2c2.8 0 5 2.2 5 5s-2.2 5-5 5-5-2.2-5-5 2.2-5 5-5z"/></svg>
+      </div>
+      <h2 style="font-family:'Poiret One',sans-serif;font-size:clamp(1.8rem,4vw,2.5rem);font-weight:400;" class="mb-4">Blijf op de hoogte</h2>
+      <p class="text-gray-400 mb-8">Nieuwe verhalen, kunst en activiteiten — rechtstreeks in je inbox.</p>
+      <div class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+        <input type="email" placeholder="jouw@email.nl" class="zoek-input flex-1" aria-label="E-mailadres" />
+        <button class="btn-geel">Aanmelden</button>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /home -->
+
+
+<!-- ══════════════════════════════════════════════════ VERHALEN ══ -->
+<div id="sectie-verhalen" class="sectie">
+  <div class="pt-24 pb-32 max-w-6xl mx-auto px-4 sm:px-6">
+
+    <div class="text-center mb-16 pt-8">
+      <div class="mono text-xs tracking-widest uppercase mb-3" style="color:rgba(245,196,0,0.7);">Van diep onder de grond</div>
+      <h1 style="font-family:'Poiret One',sans-serif;font-size:clamp(2.5rem,6vw,4rem);font-weight:400;" class="mb-4">Verhalen</h1>
+      <p class="text-gray-500 max-w-xl mx-auto">Herinneringen, geschiedenis, kunst en meer — elk verhaal een lamp in het donker.</p>
+    </div>
+
+    <!-- Verhaal detail (verborgen tot klik) -->
+    <div id="verhaal-detail" class="verhaal-detail mb-12" role="article">
+      <button onclick="sluitVerhaal()" class="flex items-center gap-2 mb-8 transition-colors text-sm mono cursor-pointer bg-transparent border-none min-h-[44px]" style="color:rgba(245,196,0,0.8);" aria-label="Terug naar overzicht">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/></svg>
+        Terug naar overzicht
+      </button>
+      <div id="verhaal-content" class="max-w-2xl"><!-- dynamisch --></div>
+    </div>
+
+    <!-- Overzicht -->
+    <div id="verhalen-overzicht" class="verhaal-overzicht">
+
+      <!-- Zoeken -->
+      <div class="mb-6">
+        <input type="search" id="zoek-verhalen" placeholder="Zoek op trefwoord..." class="zoek-input max-w-md" oninput="filterVerhalen()" aria-label="Zoeken in verhalen" />
+      </div>
+
+      <!-- Rubriek filters -->
+      <div class="flex flex-wrap gap-2 mb-10" id="rubriek-filters" role="group" aria-label="Filter op rubriek">
+        <button class="rubriek-tag actief" style="background:rgba(245,196,0,0.12);color:var(--geel);" onclick="filterRubriek('alle',this)">Alle</button>
+        <button class="rubriek-tag" style="background:rgba(245,196,0,0.06);color:#777;" onclick="filterRubriek('herinneringen',this)">Herinneringen</button>
+        <button class="rubriek-tag" style="background:rgba(59,130,246,0.06);color:#777;" onclick="filterRubriek('geschiedenis',this)">Geschiedenis</button>
+        <button class="rubriek-tag" style="background:rgba(16,185,129,0.06);color:#777;" onclick="filterRubriek('ai-kunst',this)">AI &amp; Kunst</button>
+        <button class="rubriek-tag" style="background:rgba(168,85,247,0.06);color:#777;" onclick="filterRubriek('mijnleven',this)">Mijnleven</button>
+        <button class="rubriek-tag" style="background:rgba(239,68,68,0.06);color:#777;" onclick="filterRubriek('natuur',this)">Natuur &amp; Kanarie</button>
+      </div>
+
+      <!-- Grid -->
+      <div id="verhalen-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" role="list">
+
+        <div class="kaart overflow-hidden" data-rubriek="herinneringen" data-tags="eerste dag vader mijn diepte lift koud" onclick="openVerhaal('v1')" role="listitem">
+          <div class="rubriek-balk" style="background:var(--geel);"></div>
+          <div class="p-6">
+            <span class="rubriek-tag" style="background:rgba(245,196,0,0.12);color:var(--geel);">Herinneringen</span>
+            <h3 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mt-3 mb-2">Mijn eerste dag onder de grond</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">Het was koud. De lift kreunde. Mijn vader legde zijn hand op mijn schouder: "Luister naar de kanarie."</p>
+            <div class="mt-4 mono text-xs" style="color:rgba(245,196,0,0.7);">Lees meer →</div>
+          </div>
+        </div>
+
+        <div class="kaart overflow-hidden" data-rubriek="geschiedenis" data-tags="kanarie mijnwerkers veiligheid gas detector haldane" onclick="openVerhaal('v2')" role="listitem">
+          <div class="rubriek-balk" style="background:#3b82f6;"></div>
+          <div class="p-6">
+            <span class="rubriek-tag" style="background:rgba(59,130,246,0.12);color:#60a5fa;">Geschiedenis</span>
+            <h3 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mt-3 mb-2">De kanarie als levensredder</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">Eeuwenlang namen mijnwerkers een kanarie mee. Als het vogeltje stil werd, was het tijd om te vluchten.</p>
+            <div class="mt-4 mono text-xs text-blue-400">Lees meer →</div>
+          </div>
+        </div>
+
+        <div class="kaart overflow-hidden" data-rubriek="ai-kunst" data-tags="ai kunst beelden maken tools techniek midjourney stable diffusion" onclick="openVerhaal('v3')" role="listitem">
+          <div class="rubriek-balk" style="background:#10b981;"></div>
+          <div class="p-6">
+            <span class="rubriek-tag" style="background:rgba(16,185,129,0.12);color:#34d399;">AI &amp; Kunst</span>
+            <h3 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mt-3 mb-2">Hoe ik mijn beelden maak</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">Met AI-tools geef ik oude beelden een nieuw leven. Duisternis, geel licht, en de geest van de mijn in pixels.</p>
+            <div class="mt-4 mono text-xs text-emerald-400">Lees meer →</div>
+          </div>
+        </div>
+
+        <div class="kaart overflow-hidden" data-rubriek="mijnleven" data-tags="dagelijks leven eten brooddoos lamp helm ritueel" onclick="openVerhaal('v4')" role="listitem">
+          <div class="rubriek-balk" style="background:#a855f7;"></div>
+          <div class="p-6">
+            <span class="rubriek-tag" style="background:rgba(168,85,247,0.12);color:#c084fc;">Mijnleven</span>
+            <h3 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mt-3 mb-2">De brooddoos en de lamp</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">Elke ochtend dezelfde rituelen: de helm, de lamp, de brooddoos. Kleine dingen die het leven onder de grond draaglijk maakten.</p>
+            <div class="mt-4 mono text-xs text-purple-400">Lees meer →</div>
+          </div>
+        </div>
+
+        <div class="kaart overflow-hidden" data-rubriek="natuur" data-tags="kanarie vogel zingen geluid natuur zorgzaam koelpietje" onclick="openVerhaal('v5')" role="listitem">
+          <div class="rubriek-balk" style="background:#ef4444;"></div>
+          <div class="p-6">
+            <span class="rubriek-tag" style="background:rgba(239,68,68,0.12);color:#f87171;">Natuur &amp; Kanarie</span>
+            <h3 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mt-3 mb-2">Het zingen stopt nooit</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">Een kanarie die zingt is een levende kanarie. In de mijn was dat geluid de mooiste melodie die je kon horen.</p>
+            <div class="mt-4 mono text-xs text-red-400">Lees meer →</div>
+          </div>
+        </div>
+
+        <div class="kaart overflow-hidden" data-rubriek="herinneringen" data-tags="vrienden kameraadschap saamhorigheid ploeg Jan Piet Toon" onclick="openVerhaal('v6')" role="listitem">
+          <div class="rubriek-balk" style="background:var(--geel);"></div>
+          <div class="p-6">
+            <span class="rubriek-tag" style="background:rgba(245,196,0,0.12);color:var(--geel);">Herinneringen</span>
+            <h3 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mt-3 mb-2">Vrienden in het donker</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">Je kent niemand beter dan degene die naast je werkt in het pikkedonker. Saamhorigheid als je enige licht.</p>
+            <div class="mt-4 mono text-xs" style="color:rgba(245,196,0,0.7);">Lees meer →</div>
+          </div>
+        </div>
+
+      </div><!-- /grid -->
+
+      <!-- Geen resultaten -->
+      <div id="geen-resultaten" class="hidden text-center py-20 text-gray-600" aria-live="polite">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#333" width="48" height="48" class="mx-auto mb-4"><path d="M12 3C8 3 5 6 5 10c0 2.4 1.1 4.6 2.9 6L6 21h12l-1.9-5c1.8-1.4 2.9-3.6 2.9-6 0-4-3-7-7-7zm0 2c2.8 0 5 2.2 5 5s-2.2 5-5 5-5-2.2-5-5 2.2-5 5-5z"/></svg>
+        <p>Geen verhalen gevonden voor "<span id="zoek-term-display"></span>"</p>
+      </div>
+
+    </div><!-- /overzicht -->
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════ NIEUWS ══ -->
+<div id="sectie-nieuws" class="sectie">
+  <div class="pt-24 pb-32 max-w-4xl mx-auto px-4 sm:px-6">
+    <div class="text-center mb-16 pt-8">
+      <div class="mono text-xs tracking-widest uppercase mb-3" style="color:rgba(245,196,0,0.7);">Actueel</div>
+      <h1 style="font-family:'Poiret One',sans-serif;font-size:clamp(2.5rem,6vw,4rem);font-weight:400;" class="mb-4">Nieuws</h1>
+      <p class="text-gray-500 max-w-xl mx-auto">Updates over nieuwe kunstwerken, evenementen en verhalen.</p>
+    </div>
+
+    <div class="flex flex-col gap-6">
+
+      <article class="kaart p-6 sm:p-8 flex flex-col md:flex-row gap-6 items-start">
+        <div class="mono text-xs whitespace-nowrap pt-1" style="color:rgba(245,196,0,0.7);min-width:80px;">23 mrt 2026</div>
+        <div>
+          <div class="mono text-xs text-gray-600 mb-2 uppercase tracking-wide">Collectie</div>
+          <h2 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mb-2">Nieuwe AI-kunstserie gelanceerd</h2>
+          <p class="text-gray-400 text-sm leading-relaxed">De eerste serie van 12 werken is nu beschikbaar in de shop. Elk beeld toont een ander aspect van het leven in de steenkolenmijn — van de afdaling tot de stilte na de dienst.</p>
+          <button class="mt-4 mono text-xs transition-colors cursor-pointer bg-transparent border-none min-h-[44px]" style="color:rgba(245,196,0,0.8);">Lees meer →</button>
+        </div>
+      </article>
+
+      <article class="kaart p-6 sm:p-8 flex flex-col md:flex-row gap-6 items-start">
+        <div class="mono text-xs whitespace-nowrap pt-1" style="color:rgba(245,196,0,0.7);min-width:80px;">15 mrt 2026</div>
+        <div>
+          <div class="mono text-xs text-gray-600 mb-2 uppercase tracking-wide">Website</div>
+          <h2 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mb-2">MijnKoelpietje.nl is live!</h2>
+          <p class="text-gray-400 text-sm leading-relaxed">Na maanden van werken aan verhalen en beelden is de website eindelijk live. Een plek voor alles wat met de steenkolenmijn, de kanarie en mijn AI-kunstprojecten te maken heeft.</p>
+          <button class="mt-4 mono text-xs transition-colors cursor-pointer bg-transparent border-none min-h-[44px]" style="color:rgba(245,196,0,0.8);">Lees meer →</button>
+        </div>
+      </article>
+
+      <article class="kaart p-6 sm:p-8 flex flex-col md:flex-row gap-6 items-start">
+        <div class="mono text-xs whitespace-nowrap pt-1" style="color:rgba(245,196,0,0.7);min-width:80px;">3 mrt 2026</div>
+        <div>
+          <div class="mono text-xs text-gray-600 mb-2 uppercase tracking-wide">Evenement</div>
+          <h2 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mb-2">Tentoonstelling aangekondigd</h2>
+          <p class="text-gray-400 text-sm leading-relaxed">In samenwerking met het Steenkolenmijn Museum in Valkenburg komt er een kleine tentoonstelling van de AI-kunstwerken. Meer details volgen binnenkort.</p>
+          <button class="mt-4 mono text-xs transition-colors cursor-pointer bg-transparent border-none min-h-[44px]" style="color:rgba(245,196,0,0.8);">Lees meer →</button>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════ SHOP ══ -->
+<div id="sectie-shop" class="sectie">
+  <div class="pt-24 pb-32 max-w-6xl mx-auto px-4 sm:px-6">
+    <div class="text-center mb-16 pt-8">
+      <div class="mono text-xs tracking-widest uppercase mb-3" style="color:rgba(245,196,0,0.7);">AI Kunstwerken</div>
+      <h1 style="font-family:'Poiret One',sans-serif;font-size:clamp(2.5rem,6vw,4rem);font-weight:400;" class="mb-4">Shop</h1>
+      <p class="text-gray-500 max-w-xl mx-auto">Prints, digitale werken en collectors items. Elk stuk gemaakt met AI — elk stuk uniek.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+      <div class="kaart">
+        <div class="kunst-placeholder" style="background:linear-gradient(135deg,#1a1400,#0a0a0a);">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#f5c400" width="90" height="90" style="opacity:0.18;" aria-hidden="true"><path d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008z"/></svg>
+          <div class="kunst-glow" aria-hidden="true"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-4" style="background:linear-gradient(0deg,rgba(0,0,0,0.8),transparent);">
+            <div class="mono text-xs" style="color:rgba(245,196,0,0.7);">Editie 1 van 12</div>
+          </div>
+        </div>
+        <div class="p-6">
+          <h3 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mb-1">Afdaling #001</h3>
+          <p class="text-gray-500 text-sm mb-4">High-res digitale print · 4K</p>
+          <div class="flex items-center justify-between gap-3">
+            <span class="text-xl font-bold" style="color:var(--geel);">€ 35,–</span>
+            <button class="btn-geel text-sm">Kopen</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="kaart">
+        <div class="kunst-placeholder" style="background:linear-gradient(135deg,#0f0c00,#111108);">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#f5c400" width="90" height="90" style="opacity:0.18;" aria-hidden="true"><path d="M12 3C8 3 5 6 5 10c0 2.4 1.1 4.6 2.9 6L6 21h12l-1.9-5c1.8-1.4 2.9-3.6 2.9-6 0-4-3-7-7-7zm0 2c2.8 0 5 2.2 5 5s-2.2 5-5 5-5-2.2-5-5 2.2-5 5-5z"/></svg>
+          <div class="kunst-glow" aria-hidden="true"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-4" style="background:linear-gradient(0deg,rgba(0,0,0,0.8),transparent);">
+            <div class="mono text-xs" style="color:rgba(245,196,0,0.7);">Editie 1 van 8</div>
+          </div>
+        </div>
+        <div class="p-6">
+          <h3 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mb-1">Het Kleine Licht #002</h3>
+          <p class="text-gray-500 text-sm mb-4">High-res digitale print · 4K</p>
+          <div class="flex items-center justify-between gap-3">
+            <span class="text-xl font-bold" style="color:var(--geel);">€ 35,–</span>
+            <button class="btn-geel text-sm">Kopen</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="kaart">
+        <div class="kunst-placeholder" style="background:linear-gradient(135deg,#0a0800,#0d0d00);">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#f5c400" width="90" height="90" style="opacity:0.18;" aria-hidden="true"><path d="M2.25 7.125C2.25 6.504 2.754 6 3.375 6h6c.621 0 1.125.504 1.125 1.125v3.75c0 .621-.504 1.125-1.125 1.125h-6a1.125 1.125 0 01-1.125-1.125v-3.75zM14.25 8.625c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v8.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 01-1.125-1.125v-8.25zM3.75 16.125c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v2.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 01-1.125-1.125v-2.25z"/></svg>
+          <div class="kunst-glow" aria-hidden="true"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-4" style="background:linear-gradient(0deg,rgba(0,0,0,0.8),transparent);">
+            <div class="mono text-xs" style="color:rgba(245,196,0,0.7);">Editie 1 van 10</div>
+          </div>
+        </div>
+        <div class="p-6">
+          <h3 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mb-1">De Gang #003</h3>
+          <p class="text-gray-500 text-sm mb-4">High-res digitale print · 4K</p>
+          <div class="flex items-center justify-between gap-3">
+            <span class="text-xl font-bold" style="color:var(--geel);">€ 35,–</span>
+            <button class="btn-geel text-sm">Kopen</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bundel -->
+      <div class="kaart md:col-span-2 lg:col-span-3" style="border-color:rgba(245,196,0,0.25);">
+        <div class="p-8 flex flex-col md:flex-row items-center gap-8">
+          <div class="text-center md:text-left flex-1">
+            <div class="mono text-xs mb-2 uppercase tracking-widest" style="color:rgba(245,196,0,0.7);">Bestseller</div>
+            <h3 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-2xl mb-2">Complete Koelpietje Collectie</h3>
+            <p class="text-gray-500 mb-4 text-sm">Alle 12 werken uit de eerste serie als digitale download. Perfect voor thuis afdrukken of als wallpaper.</p>
+            <div class="flex items-center gap-4 flex-wrap">
+              <span class="text-2xl font-bold" style="color:var(--geel);">€ 79,–</span>
+              <span class="text-gray-600 line-through text-sm">€ 120,–</span>
+              <span class="mono text-xs px-2 py-1 rounded-full" style="background:rgba(245,196,0,0.12);color:var(--geel);">-34%</span>
+            </div>
+          </div>
+          <button class="btn-geel text-base px-8 py-3 whitespace-nowrap">Bundel kopen</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════ ACTIVITEITEN ══ -->
+<div id="sectie-activiteiten" class="sectie">
+  <div class="pt-24 pb-32 max-w-4xl mx-auto px-4 sm:px-6">
+    <div class="text-center mb-16 pt-8">
+      <div class="mono text-xs tracking-widest uppercase mb-3" style="color:rgba(245,196,0,0.7);">Evenementen &amp; meer</div>
+      <h1 style="font-family:'Poiret One',sans-serif;font-size:clamp(2.5rem,6vw,4rem);font-weight:400;" class="mb-4">Activiteiten</h1>
+      <p class="text-gray-500 max-w-xl mx-auto">Tentoonstellingen, lezingen en bijzondere evenementen rondom mijnerfgoed en AI-kunst.</p>
+    </div>
+
+    <div class="flex flex-col gap-8">
+
+      <div class="kaart p-6 sm:p-8">
+        <div class="flex flex-col md:flex-row gap-6">
+          <div class="text-center md:text-left flex-shrink-0">
+            <div class="rounded-xl p-3 inline-block text-center" style="background:rgba(245,196,0,0.1);">
+              <div class="mono text-xs uppercase" style="color:rgba(245,196,0,0.7);">Apr</div>
+              <div style="font-family:'Poiret One',sans-serif;font-size:2rem;font-weight:400;color:var(--geel);">12</div>
+              <div class="mono text-xs" style="color:rgba(245,196,0,0.4);">2026</div>
+            </div>
+          </div>
+          <div>
+            <span class="rubriek-tag" style="background:rgba(245,196,0,0.12);color:var(--geel);">Tentoonstelling</span>
+            <h2 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mt-2 mb-2">AI Kunst uit de Mijn — Valkenburg</h2>
+            <p class="text-gray-400 text-sm leading-relaxed mb-3">Een selectie van 12 AI-kunstwerken over het leven in de steenkolenmijn. Te zien in samenwerking met het Steenkolenmijn Museum te Valkenburg.</p>
+            <div class="mono text-xs text-gray-600 mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="12" height="12" class="inline mr-1" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>
+              Steenkolenmijn Museum, Valkenburg · 10:00–17:00
+            </div>
+            <button class="btn-outline text-sm">Meer info</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="kaart p-6 sm:p-8">
+        <div class="flex flex-col md:flex-row gap-6">
+          <div class="text-center md:text-left flex-shrink-0">
+            <div class="rounded-xl p-3 inline-block text-center" style="background:rgba(59,130,246,0.1);">
+              <div class="mono text-xs uppercase text-blue-400">Mei</div>
+              <div style="font-family:'Poiret One',sans-serif;font-size:2rem;font-weight:400;" class="text-blue-300">20</div>
+              <div class="mono text-xs text-blue-800">2026</div>
+            </div>
+          </div>
+          <div>
+            <span class="rubriek-tag" style="background:rgba(59,130,246,0.12);color:#60a5fa;">Lezing</span>
+            <h2 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mt-2 mb-2">Van pikzwart naar pixels: AI en mijnerfgoed</h2>
+            <p class="text-gray-400 text-sm leading-relaxed mb-3">Hoe gebruik ik AI om herinneringen aan de mijn te visualiseren? Een lezing over creativiteit, technologie en het bewaren van erfgoed.</p>
+            <div class="mono text-xs text-gray-600 mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="12" height="12" class="inline mr-1" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>
+              Bibliotheek Limburg, Maastricht · 19:30
+            </div>
+            <button class="btn-outline text-sm">Aanmelden</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="kaart p-6 sm:p-8">
+        <div class="flex flex-col md:flex-row gap-6">
+          <div class="text-center md:text-left flex-shrink-0">
+            <div class="rounded-xl p-3 inline-block text-center" style="background:rgba(16,185,129,0.1);">
+              <div class="mono text-xs uppercase text-emerald-400">Jun</div>
+              <div style="font-family:'Poiret One',sans-serif;font-size:2rem;font-weight:400;" class="text-emerald-300">7</div>
+              <div class="mono text-xs text-emerald-900">2026</div>
+            </div>
+          </div>
+          <div>
+            <span class="rubriek-tag" style="background:rgba(16,185,129,0.12);color:#34d399;">Workshop</span>
+            <h2 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mt-2 mb-2">Maak je eigen mijn-AI-kunst</h2>
+            <p class="text-gray-400 text-sm leading-relaxed mb-3">Doe mee aan deze hands-on workshop en maak je eigen AI-kunstwerk geïnspireerd op het mijnverleden van Limburg. Geen technische kennis vereist.</p>
+            <div class="mono text-xs text-gray-600 mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="12" height="12" class="inline mr-1" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0H3"/></svg>
+              Online via Zoom · 14:00–16:30 · max. 20 deelnemers
+            </div>
+            <button class="btn-geel text-sm">Inschrijven</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════ CONTACT ══ -->
+<div id="sectie-contact" class="sectie">
+  <div class="pt-24 pb-32 max-w-xl mx-auto px-4 sm:px-6">
+    <div class="text-center mb-16 pt-8">
+      <div class="mono text-xs tracking-widest uppercase mb-3" style="color:rgba(245,196,0,0.7);">Kom in contact</div>
+      <h1 style="font-family:'Poiret One',sans-serif;font-size:clamp(2.5rem,6vw,4rem);font-weight:400;" class="mb-4">Contact</h1>
+      <p class="text-gray-500 max-w-xl mx-auto">Vragen over de kunst, verhalen, of wil je samenwerken? Stuur een bericht!</p>
+    </div>
+
+    <div class="kaart p-8 mb-8">
+      <form onsubmit="verstuurContact(event)" novalidate>
+        <div class="flex flex-col gap-5">
+          <div>
+            <label for="contact-naam" class="block mono text-xs text-gray-500 uppercase tracking-wide mb-2">Naam</label>
+            <input id="contact-naam" type="text" placeholder="Je naam" class="zoek-input" required autocomplete="name" />
+          </div>
+          <div>
+            <label for="contact-email" class="block mono text-xs text-gray-500 uppercase tracking-wide mb-2">E-mail</label>
+            <input id="contact-email" type="email" placeholder="jouw@email.nl" class="zoek-input" required autocomplete="email" />
+          </div>
+          <div>
+            <label for="contact-onderwerp" class="block mono text-xs text-gray-500 uppercase tracking-wide mb-2">Onderwerp</label>
+            <select id="contact-onderwerp" class="zoek-input">
+              <option value="">Kies een onderwerp...</option>
+              <option>Vraag over de kunst</option>
+              <option>Samenwerking</option>
+              <option>Tentoonstelling</option>
+              <option>Anders</option>
+            </select>
+          </div>
+          <div>
+            <label for="contact-bericht" class="block mono text-xs text-gray-500 uppercase tracking-wide mb-2">Bericht</label>
+            <textarea id="contact-bericht" placeholder="Jouw bericht..." class="zoek-input" rows="5" required style="resize:vertical;"></textarea>
+          </div>
+          <button type="submit" class="btn-geel w-full text-center">
+            Verstuur bericht
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Socials -->
+    <div class="flex gap-4 justify-center flex-wrap">
+      <a href="https://www.mijnkoelpietje.nl" class="kaart px-5 py-3 mono text-xs transition-colors" style="color:rgba(245,196,0,0.8);" target="_blank" rel="noopener">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="14" height="14" class="inline mr-1" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418"/></svg>
+        Website
+      </a>
+      <a href="https://www.facebook.com/profile.php?id=61584617014708" target="_blank" rel="noopener" class="kaart px-5 py-3 mono text-xs transition-colors text-blue-400">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="14" height="14" class="inline mr-1" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        Facebook
+      </a>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════ FOOTER ══ -->
+<footer class="border-t py-12 px-4 sm:px-6" style="background:#000;border-color:rgba(245,196,0,0.1);">
+  <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+    <div class="flex items-center gap-3">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#f5c400" width="24" height="24" aria-hidden="true"><path d="M12 3C8 3 5 6 5 10c0 2.4 1.1 4.6 2.9 6L6 21h12l-1.9-5c1.8-1.4 2.9-3.6 2.9-6 0-4-3-7-7-7zm0 2c2.8 0 5 2.2 5 5s-2.2 5-5 5-5-2.2-5-5 2.2-5 5-5z"/></svg>
+      <div>
+        <div style="font-family:'Poiret One',sans-serif;" class="text-lg">Mijn<span style="color:var(--geel);">Koelpietje</span></div>
+        <div class="mono text-gray-600 text-xs">AI Kunst · Verhalen · Mijnerfgoed</div>
+      </div>
+    </div>
+    <nav aria-label="Footer navigatie">
+      <div class="flex gap-6 flex-wrap justify-center">
+        <button onclick="toonSectie('verhalen')" class="nav-link">Verhalen</button>
+        <button onclick="toonSectie('nieuws')" class="nav-link">Nieuws</button>
+        <button onclick="toonSectie('shop')" class="nav-link">Shop</button>
+        <button onclick="toonSectie('activiteiten')" class="nav-link">Activiteiten</button>
+        <button onclick="toonSectie('contact')" class="nav-link">Contact</button>
+      </div>
+    </nav>
+    <div class="mono text-gray-700 text-xs text-center">
+      © 2026 MijnKoelpietje.nl<br/>
+      Gebouwd door <a href="https://www.code-lieshout.nl" class="transition-colors" style="color:rgba(245,196,0,0.5);" target="_blank" rel="noopener">Code Lieshout</a>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ══════════════════════════════════════════ VERHAAL DATA + SCRIPTS ══ -->
+<script>
+// ─── Verhaal data ───────────────────────────────────────────────────────────
+const verhalen = {
+  v1: {
+    titel: 'Mijn eerste dag onder de grond',
+    rubriek: 'Herinneringen',
+    rubriekKleur: '#f5c400',
+    datum: '12 januari 2026',
+    tekst: `
+      <p>Het was koud die ochtend. Koud zoals alleen een januariochtend in Limburg koud kan zijn — de mist hing laag over de velden, en de fietswielen lieten sporen achter in de rijp op het pad naar de schacht.</p>
+      <p>Ik was zeventien. Mijn vader was al tien jaar mijnwerker. Hij had nooit veel gezegd over het werk, maar die ochtend, in de kleedkamer, terwijl hij zijn helm opzette en de lamp controleerde, zei hij: <em>"Luister altijd naar de kanarie. Als zij stil is — ren."</em></p>
+      <p>De kooi hing in het hoekje van de lift. Een klein geel vogeltje, niet groter dan mijn vuist. Het zong onophoudelijk terwijl de lift daalde — een tinkelend liedje dat echode tegen de vochtige stenen wanden.</p>
+      <p>Dieper. Donkerder. Tot het licht van boven verdween en alleen de lampen op onze helmen de weg wezen.</p>
+      <p>Ik herinner me de geur het sterkst. Steen en oud hout en iets wat ik niet kon benoemen — de adem van de aarde zelf. En door alles heen: het zingen van de kanarie.</p>
+      <blockquote>"Als zij zingt, leven wij."</blockquote>
+      <p>Dat was de regel. Zo simpel. Zo onontkoombaar.</p>
+      <p>Die eerste dag heb ik meer geleerd dan in een jaar schoolbanken. Over samenwerken in het donker, over vertrouwen, over de kleine dingen die het leven draaglijk maken wanneer de wereld boven je hoofd kilometers steen is.</p>
+      <p>En over de kanarie. Over hoe een klein geel vogeltje groter kan zijn dan de berg zelf.</p>
+    `
+  },
+  v2: {
+    titel: 'De kanarie als levensredder',
+    rubriek: 'Geschiedenis',
+    rubriekKleur: '#3b82f6',
+    datum: '28 februari 2026',
+    tekst: `
+      <p>Lang voordat er gasdetectoren bestonden, hadden mijnwerkers een simpel maar geniaal systeem: de kanarie.</p>
+      <p>Kanaries zijn extreem gevoelig voor koolmonoxide en andere giftige gassen. Ze ademen sneller dan mensen en reageren eerder op gevaarlijke concentraties. Als een kanarie flauwvalt of sterft, is dat een waarschuwing: verlaat de mijn, onmiddellijk.</p>
+      <p>Deze praktijk begon officieel in Engeland in 1911, geïntroduceerd door mijnbouwingenieur John Scott Haldane. Maar informeel gebruikten mijnwerkers al veel langer vogels als vroege-waarschuwingssystemen.</p>
+      <blockquote>"De kanarie sterft zodat wij leven. Dat vergeet je nooit."</blockquote>
+      <p>In Nederland, en met name in de Limburgse mijnen, werden kanaries tot in de jaren zeventig gebruikt. Pas toen betrouwbare elektronische gasdetectoren gemeengoed werden, verdwenen de kleine gele vogeltjes uit de schachten.</p>
+      <p>Het laatste koelpietje werd in 1987 uit een Britse mijn gehaald. Op dat moment stapten de mijnwerkers op om het vogeltje een erehaag te geven.</p>
+      <p>Het woord "koelpietje" — zoals de kanarie in de mijn werd genoemd — is daarmee niet alleen een naam, maar een symbool. Van solidariteit, van opoffering, van het kleine dat het grote beschermt.</p>
+    `
+  },
+  v3: {
+    titel: 'Hoe ik mijn beelden maak',
+    rubriek: 'AI & Kunst',
+    rubriekKleur: '#10b981',
+    datum: '5 maart 2026',
+    tekst: `
+      <p>Mensen vragen me vaak: hoe maak jij die beelden? Zijn ze echt? Zijn ze nep? Het antwoord is: ze zijn allebei tegelijk.</p>
+      <p>Ik begin altijd met een gevoel. Een herinnering, een oud foto uit een boek, een geur. Die verander ik in woorden — een zogenaamde "prompt." Woorden als: <em>dark mine tunnel, single yellow canary light, coal dust in the air, photorealistic, cinematic, high contrast</em>.</p>
+      <p>Dan laat ik de AI zijn werk doen. Midjourney, Dall-E, Stable Diffusion — ik experimenteer met allemaal. Het resultaat is nooit precies wat ik bedoelde, maar altijd iets wat ik niet zelf had kunnen maken.</p>
+      <blockquote>"AI geeft vorm aan wat ik voel maar niet kan tekenen."</blockquote>
+      <p>Dan begint het echte werk: selecteren, bijwerken, nabewerken in Photoshop en Lightroom. De kleuren precies goed krijgen — het zwart zwart genoeg, het geel fel genoeg. Het gevoel van benauwd donker met dat ene gloeiende plekje licht.</p>
+      <p>Elk beeld is een samenwerking. Ik lever de intentie, de herinnering, het gevoel. De AI levert de technische uitvoering. Samen maken we iets wat noch ik noch de machine alleen had kunnen maken.</p>
+      <p>Dat vind ik juist mooi aan AI-kunst: het is een gesprek.</p>
+    `
+  },
+  v4: {
+    titel: 'De brooddoos en de lamp',
+    rubriek: 'Mijnleven',
+    rubriekKleur: '#a855f7',
+    datum: '10 maart 2026',
+    tekst: `
+      <p>Elke mijnwerker had zijn rituelen. Kleine dingen die het leven in de schacht draaglijk maakten — misschien zelfs mooi.</p>
+      <p>De brooddoos was heilig. Altijd dezelfde: een metalen doos met een klik-deksel, deuken en krassen van jaren gebruik. Daarin: boterhammen met leverworst of kaas, een appel, misschien een koekje dat zijn vrouw er 's ochtends bij had gedaan.</p>
+      <p>De lamp was van een ander soort heiligheid. Die checkte je tweemaal voor je de schacht inging. Niet omdat je het vergat, maar omdat het een ritueel was. Een belofte aan jezelf: <em>ik kom boven.</em></p>
+      <blockquote>"Een mijnwerker zonder lamp is blind. Een mijnwerker zonder brood is gebroken."</blockquote>
+      <p>Halverwege de dienst, in een nisje in de gang, aten de mannen samen. Zwijgend meestal. Het was donker, het was lawaaiig, de machines sloegen niet om. Maar die tien minuten waren van hen.</p>
+      <p>Ik denk wel eens: als je zou proberen het leven in de mijn samen te vatten in twee voorwerpen, dan zouden het de lamp en de brooddoos zijn. Het ene houdt je bij de weg. Het andere houdt je bij het leven.</p>
+    `
+  },
+  v5: {
+    titel: 'Het zingen stopt nooit',
+    rubriek: 'Natuur & Kanarie',
+    rubriekKleur: '#ef4444',
+    datum: '17 maart 2026',
+    tekst: `
+      <p>Er is iets mysterieus aan een kanarie die zingt in het donker.</p>
+      <p>Boven de grond zitten kanaries bij ramen, in lichte kamers, in de zon. In de mijn zitten ze in het diepst van de duisternis, omgeven door het geluid van machines en steen. En ze zingen.</p>
+      <p>Mijnwerkers luisterden naar dat gezang met een intensiteit die nergens anders voor wordt bewaard. Want dat gezang was het bewijs: de lucht is goed. Wij leven. We kunnen doorgaan.</p>
+      <blockquote>"Als de kanarie zingt, is alles goed. Als ze stopt — ren je voor je leven."</blockquote>
+      <p>Er zijn verhalen van mijnwerkers die hun koelpietje jaar na jaar meenamen, die ze kenden aan hun stem, die verdriet hadden als het vogeltje stierf. Niet alleen omdat een nieuwe moest worden aangeschaft, maar omdat een kameraad was verloren.</p>
+      <p>Dat is het mooie en het tragische tegelijk: het kleine gele vogeltje dat zijn leven geeft voor de grote zwarte mijnwerkers. Ongelijke ruil, oneerlijk misschien — maar ook een van de meest menselijke verhalen die ik ken.</p>
+      <p>Ik noem mijn project "Mijn Koelpietje" als eerbetoon aan die vogels. En aan de mannen die naar hen luisterden.</p>
+    `
+  },
+  v6: {
+    titel: 'Vrienden in het donker',
+    rubriek: 'Herinneringen',
+    rubriekKleur: '#f5c400',
+    datum: '20 maart 2026',
+    tekst: `
+      <p>Je kent niemand beter dan degene die naast je werkt in het pikkedonker.</p>
+      <p>Ik had drie vaste ploeggenoten. Jan, die altijd grappen maakte ook als niemand er zin in had. Piet, die zo stil kon zijn dat je bijna vergat dat hij er was — totdat je hem nodig had, en dan stond hij er. En Toon, de oudste, die met zijn ogen dicht nog de weg wist door de gangen.</p>
+      <p>We spraken weinig. Het lawaai liet dat ook niet toe. Maar je leerde de ander kennen op een manier die woorden niet kunnen. Je kende zijn bewegingen. Je wist hoe hij ademde als hij moe was. Je voelde het als hij zich zorgen maakte.</p>
+      <blockquote>"Boven de grond heb je kennissen. Onder de grond heb je broeders."</blockquote>
+      <p>Die saamhorigheid verdwijnt niet als de mijn sluit. Mijnwerkers treffen elkaar decennia later nog, en het is alsof de tijd heeft stilgestaan. De lamp is weg, de brooddoos is weg, de kanarie is weg — maar de band blijft.</p>
+      <p>Ik schrijf deze verhalen ook voor hen. Voor Jan en Piet en Toon, en voor alle mannen die hun beste jaren diep onder de grond hebben gegeven. Zodat niemand vergeet wat daar gebeurde.</p>
+    `
+  }
+};
+
+// ─── Navigatie ───────────────────────────────────────────────────────────────
+let huidigeSectie = 'home';
+
+function toonSectie(naam) {
+  document.querySelectorAll('.sectie').forEach(s => s.classList.remove('actief'));
+  const el = document.getElementById('sectie-' + naam);
+  if (el) el.classList.add('actief');
+
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+  document.querySelectorAll('.nav-link').forEach(l => {
+    const oc = l.getAttribute('onclick') || '';
+    if (naam !== 'home' && oc.includes("'" + naam + "'")) l.classList.add('active');
+  });
+
+  huidigeSectie = naam;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  if (naam === 'verhalen') sluitVerhaal();
+
+  // Trigger scroll reveals voor nieuwe sectie
+  setTimeout(initScrollReveals, 50);
+}
+
+// ─── Verhalen ────────────────────────────────────────────────────────────────
+let actieveRubriek = 'alle';
+
+function openVerhaal(id) {
+  if (huidigeSectie !== 'verhalen') toonSectie('verhalen');
+  const v = verhalen[id];
+  if (!v) return;
+
+  const content = document.getElementById('verhaal-content');
+  content.innerHTML = `
+    <div style="border-left:3px solid ${v.rubriekKleur};padding-left:1.5rem;margin-bottom:2.5rem;">
+      <div class="mono text-xs mb-2 uppercase" style="color:${v.rubriekKleur};letter-spacing:0.1em;">${v.rubriek}</div>
+      <h1 style="font-family:'Poiret One',sans-serif;font-weight:400;font-size:clamp(1.8rem,4vw,2.8rem);line-height:1.2;margin-bottom:0.5rem;">${v.titel}</h1>
+      <div class="mono text-xs text-gray-600">${v.datum || ''}</div>
+    </div>
+    <div class="prose leading-relaxed" style="max-width:65ch;">${v.tekst}</div>
+    <div style="margin-top:3rem;">
+      <button onclick="sluitVerhaal()" class="btn-outline">← Terug naar overzicht</button>
+    </div>
+  `;
+
+  document.getElementById('verhaal-detail').classList.add('open');
+  document.getElementById('verhalen-overzicht').classList.add('verborgen');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function sluitVerhaal() {
+  document.getElementById('verhaal-detail').classList.remove('open');
+  document.getElementById('verhalen-overzicht').classList.remove('verborgen');
+}
+
+// ─── Filteren ────────────────────────────────────────────────────────────────
+function filterRubriek(rubriek, btn) {
+  actieveRubriek = rubriek;
+  document.querySelectorAll('#rubriek-filters .rubriek-tag').forEach(b => {
+    b.classList.remove('actief');
+    b.style.color = '#777';
+  });
+  btn.classList.add('actief');
+  btn.style.color = '';
+  filterVerhalen();
+}
+
+function filterVerhalen() {
+  const zoek = document.getElementById('zoek-verhalen').value.toLowerCase().trim();
+  const kaarten = document.querySelectorAll('#verhalen-grid .kaart');
+  let zichtbaar = 0;
+
+  kaarten.forEach(kaart => {
+    const rubriek = kaart.dataset.rubriek || '';
+    const tags = kaart.dataset.tags || '';
+    const tekst = kaart.innerText.toLowerCase();
+    const rubriekMatch = actieveRubriek === 'alle' || rubriek === actieveRubriek;
+    const zoekMatch = !zoek || tekst.includes(zoek) || tags.includes(zoek);
+    kaart.style.display = (rubriekMatch && zoekMatch) ? '' : 'none';
+    if (rubriekMatch && zoekMatch) zichtbaar++;
+  });
+
+  const geenRes = document.getElementById('geen-resultaten');
+  const termDisplay = document.getElementById('zoek-term-display');
+  if (termDisplay) termDisplay.textContent = zoek;
+  geenRes.classList.toggle('hidden', zichtbaar !== 0);
+}
+
+// ─── Mobiel menu ────────────────────────────────────────────────────────────
+function toggleMobMenu() {
+  const m = document.getElementById('mob-menu');
+  const btn = document.getElementById('mob-menu-btn');
+  const open = m.style.display === 'block';
+  m.style.display = open ? 'none' : 'block';
+  btn.setAttribute('aria-expanded', String(!open));
+}
+
+// ─── Contact ─────────────────────────────────────────────────────────────────
+function verstuurContact(e) {
+  e.preventDefault();
+  const btn = e.target.querySelector('button[type=submit]');
+  btn.textContent = '✓ Verstuurd!';
+  btn.style.background = '#10b981';
+  btn.style.color = '#fff';
+  setTimeout(() => {
+    btn.textContent = 'Verstuur bericht';
+    btn.style.background = '';
+    btn.style.color = '';
+    e.target.reset();
+  }, 3000);
+}
+
+// ─── Lightbox ────────────────────────────────────────────────────────────────
+function openLightbox(src, alt) {
+  const lb = document.getElementById('lightbox');
+  const img = document.getElementById('lightbox-img');
+  img.src = src;
+  img.alt = alt || '';
+  lb.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function sluitLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') sluitLightbox();
+});
+
+// ─── Scroll reveals (Intersection Observer) ─────────────────────────────────
+function initScrollReveals() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('zichtbaar');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.sectie.actief .reveal').forEach(el => {
+    if (!el.classList.contains('zichtbaar')) obs.observe(el);
+  });
+}
+
+// Init on load
+document.addEventListener('DOMContentLoaded', () => {
+  initScrollReveals();
+  // Stagger reveal delays
+  document.querySelectorAll('.reveal').forEach((el, i) => {
+    el.style.transitionDelay = (i * 80) + 'ms';
+  });
+});
+</script>
+
+</body>
+</html>
