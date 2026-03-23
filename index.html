@@ -369,10 +369,12 @@
     </div>
 
     <!-- Dieptemeter -->
-    <div class="dieptemeter" id="dieptemeter" title="Huidige scroldiepte">
-      <span class="depth-icon">⛏️</span>
-      <span class="depth-getal" id="depth-getal">0</span>
-      <span>m</span>
+    <div class="dieptemeter" id="dieptemeter">
+      <span class="depth-label">Diepte</span>
+      <div class="depth-row">
+        <span class="depth-getal" id="depth-getal">0</span>
+        <span class="depth-eenheid">m</span>
+      </div>
     </div>
 
     <!-- Mobiel hamburger -->
@@ -1378,12 +1380,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const afgerond = Math.round(huidigeDepth);
     getal.textContent = afgerond;
 
-    // Kleur en animatie op basis van diepte
-    if (afgerond > 5) {
-      meter.classList.add('actief');
-    } else {
-      meter.classList.remove('actief');
-    }
+
 
     // Getal kleur verandert naarmate dieper
     if (afgerond > 200) {
