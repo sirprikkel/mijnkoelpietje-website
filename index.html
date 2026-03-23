@@ -262,17 +262,8 @@
       margin: 0;
     }
 
-    /* Mobiel menu */
-    #mob-menu { display: none; }
-    #desk-menu { display: flex; }
-    @media (max-width: 768px) {
-      #desk-menu { display: none !important; }
-      #mob-menu-btn { display: flex !important; }
-    }
-    @media (min-width: 769px) {
-      #mob-menu-btn { display: none !important; }
-      #mob-menu { display: none !important; }
-    }
+    /* Mobiel menu — volledig via JS/inline styles */
+    /* Geen CSS regels hier — voorkomt Tailwind conflicts */
 
     /* Verhaal detail */
     .verhaal-detail { display: none; }
@@ -382,7 +373,7 @@
   </div>
 
   <!-- Mobiel dropdown -->
-  <div id="mob-menu" style="display:none;" class="border-t px-6 pb-4" style="border-color:rgba(245,196,0,0.12);">
+  <div id="mob-menu" style="display:none;border-top:1px solid rgba(245,196,0,0.12);" class="px-6 pb-4">
     <div class="flex flex-col gap-4 pt-4">
       <button class="nav-link text-left min-h-[44px]" onclick="toonSectie('verhalen');toggleMobMenu()">Verhalen</button>
       <button class="nav-link text-left min-h-[44px]" onclick="toonSectie('nieuws');toggleMobMenu()">Nieuws</button>
@@ -1152,6 +1143,23 @@ function filterVerhalen() {
 }
 
 // ─── Mobiel menu ────────────────────────────────────────────────────────────
+function updateNav() {
+  const deskMenu = document.getElementById('desk-menu');
+  const mobBtn = document.getElementById('mob-menu-btn');
+  const mobMenu = document.getElementById('mob-menu');
+  if (window.innerWidth <= 768) {
+    deskMenu.style.display = 'none';
+    mobBtn.style.display = 'flex';
+  } else {
+    deskMenu.style.display = 'flex';
+    mobBtn.style.display = 'none';
+    mobMenu.style.display = 'none'; // sluit mobiel menu bij resize
+  }
+}
+window.addEventListener('resize', updateNav);
+document.addEventListener('DOMContentLoaded', updateNav);
+updateNav(); // direct uitvoeren
+
 function toggleMobMenu() {
   const m = document.getElementById('mob-menu');
   const btn = document.getElementById('mob-menu-btn');
