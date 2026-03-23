@@ -389,15 +389,22 @@
 <div id="sectie-home" class="sectie actief">
 
   <!-- HERO — Chapter 1: Intro Hook -->
-  <section class="tunnel-bg min-h-screen flex flex-col items-center justify-center relative pt-24 pb-32 px-4 sm:px-6 overflow-hidden">
+  <section class="min-h-screen flex flex-col items-center justify-center relative pt-24 pb-32 px-4 sm:px-6 overflow-hidden" style="background:#000;">
 
-    <!-- Achtergrond decoratie -->
-    <div class="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
-      <div style="position:absolute;top:25%;left:15%;width:500px;height:500px;background:radial-gradient(circle,rgba(245,196,0,0.05),transparent 70%);border-radius:50%;"></div>
-      <div style="position:absolute;top:55%;right:10%;width:350px;height:350px;background:radial-gradient(circle,rgba(245,196,0,0.03),transparent 70%);border-radius:50%;"></div>
-    </div>
+    <!-- Video achtergrond -->
+    <video autoplay muted loop playsinline
+      style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:0.55;"
+      aria-hidden="true">
+      <source src="hero-koelpietje.mp4" type="video/mp4" />
+    </video>
 
-    <div class="relative z-10 text-center max-w-4xl">
+    <!-- Donkere overlay voor leesbaarheid tekst -->
+    <div style="position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(0,0,0,0.55) 0%,rgba(0,0,0,0.35) 40%,rgba(0,0,0,0.75) 100%);"></div>
+
+    <!-- Gele gloed onderin -->
+    <div style="position:absolute;bottom:0;left:0;right:0;height:200px;z-index:1;background:linear-gradient(0deg,rgba(245,196,0,0.08),transparent);"></div>
+
+    <div class="relative text-center max-w-4xl" style="z-index:2;">
       <div class="mono text-xs tracking-widest mb-6 uppercase" style="color:rgba(245,196,0,0.7);">
         AI Kunst &nbsp;·&nbsp; Verhalen &nbsp;·&nbsp; Mijnerfgoed
       </div>
@@ -418,7 +425,7 @@
       </div>
     </div>
 
-    <div class="absolute bottom-0 left-0 right-0 shaft-glow" aria-hidden="true"></div>
+    <div class="absolute bottom-0 left-0 right-0 shaft-glow" style="z-index:2;" aria-hidden="true"></div>
     <div class="mijn-decor" aria-hidden="true"></div>
   </section>
 
