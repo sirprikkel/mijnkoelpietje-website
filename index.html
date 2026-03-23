@@ -264,12 +264,14 @@
 
     /* Mobiel menu */
     #mob-menu { display: none; }
+    #desk-menu { display: flex; }
     @media (max-width: 768px) {
       #desk-menu { display: none !important; }
       #mob-menu-btn { display: flex !important; }
     }
     @media (min-width: 769px) {
       #mob-menu-btn { display: none !important; }
+      #mob-menu { display: none !important; }
     }
 
     /* Verhaal detail */
