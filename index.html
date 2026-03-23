@@ -335,6 +335,8 @@
       background: radial-gradient(circle at 45% 55%, rgba(245,196,0,0.18), transparent 60%);
     }
   </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 </head>
 <body>
 
@@ -364,6 +366,13 @@
       <button class="nav-link" onclick="toonSectie('shop')">Shop</button>
       <button class="nav-link" onclick="toonSectie('activiteiten')">Activiteiten</button>
       <button class="nav-link" onclick="toonSectie('contact')">Contact</button>
+    </div>
+
+    <!-- Dieptemeter -->
+    <div class="dieptemeter" id="dieptemeter" title="Huidige scroldiepte">
+      <span class="depth-icon">⛏️</span>
+      <span class="depth-getal" id="depth-getal">0</span>
+      <span>m</span>
     </div>
 
     <!-- Mobiel hamburger -->
@@ -1346,6 +1355,59 @@ document.addEventListener('DOMContentLoaded', () => {
     el.style.transitionDelay = (i * 80) + 'ms';
   });
 });
+</script>
+
+
+<!-- Dieptemeter scroll animatie -->
+<script>
+(function() {
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Max diepte = 300m (aan het einde van de pagina)
+  const MAX_DIEPTE = 300;
+  const meter = document.getElementById('dieptemeter');
+  const getal = document.getElementById('depth-getal');
+
+  // Huidige diepte bijhouden
+  let huidigeDepth = 0;
+  let doelDepth = 0;
+
+  // Smooth counter update
+  function updateGetal() {
+    huidigeDepth += (doelDepth - huidigeDepth) * 0.12;
+    const afgerond = Math.round(huidigeDepth);
+    getal.textContent = afgerond;
+
+    // Kleur en animatie op basis van diepte
+    if (afgerond > 5) {
+      meter.classList.add('actief');
+    } else {
+      meter.classList.remove('actief');
+    }
+
+    // Getal kleur verandert naarmate dieper
+    if (afgerond > 200) {
+      getal.style.color = '#ff6b35'; // oranje-rood diep
+    } else if (afgerond > 100) {
+      getal.style.color = '#ffd700'; // goud middel
+    } else {
+      getal.style.color = 'var(--geel)';
+    }
+
+    requestAnimationFrame(updateGetal);
+  }
+  requestAnimationFrame(updateGetal);
+
+  // ScrollTrigger: koppel scroll positie aan diepte
+  ScrollTrigger.create({
+    trigger: 'body',
+    start: 'top top',
+    end: 'bottom bottom',
+    onUpdate: (self) => {
+      doelDepth = Math.round(self.progress * MAX_DIEPTE);
+    }
+  });
+})();
 </script>
 
 </body>
