@@ -19,11 +19,11 @@ collections:
     fields:
       - {label: "Titel", name: "titel", widget: "string"}
       - {label: "Rubriek", name: "rubriek", widget: "select", options: [
-          {label: "Herinneringen", value: "herinneringen"},
-          {label: "Geschiedenis", value: "geschiedenis"},
-          {label: "AI & Kunst", value: "ai-kunst"},
-          {label: "Mijnleven", value: "mijnleven"},
-          {label: "Natuur & Kanarie", value: "natuur"}
+          {label: "Ondergronds", value: "ondergronds"},
+          {label: "Bovengronds", value: "bovengronds"},
+          {label: "De Sporen", value: "de-sporen"},
+          {label: "Knipoog", value: "knipoog"},
+          {label: "De Stem", value: "de-stem"}
         ]}
       - {label: "Datum", name: "datum", widget: "string", hint: "Bijv: 12 januari 2026"}
       - {label: "Korte intro (voor kaart)", name: "intro", widget: "text"}
@@ -45,6 +45,19 @@ collections:
       - {label: "Editie", name: "editie", widget: "string", hint: "Bijv: 1 van 12"}
       - {label: "Afbeelding", name: "afbeelding", widget: "image", required: false}
       - {label: "Mollie betaallink", name: "mollie_link", widget: "string", required: false, hint: "Plak hier je Mollie betaallink"}
+
+  - name: "sponsoren"
+    label: "Vrienden & Sponsoren"
+    label_singular: "Sponsor"
+    folder: "content/sponsoren"
+    create: true
+    slug: "{{slug}}"
+    format: json
+    fields:
+      - {label: "Naam", name: "naam", widget: "string"}
+      - {label: "Omschrijving", name: "omschrijving", widget: "text", required: false}
+      - {label: "Website", name: "website", widget: "string", required: false, hint: "Bijv: https://www.voorbeeld.nl"}
+      - {label: "Logo", name: "logo", widget: "image", required: false}
 
   - name: "nieuws"
     label: "Nieuws"
