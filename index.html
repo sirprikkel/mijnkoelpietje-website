@@ -1198,9 +1198,15 @@ const sbClient = (typeof supabase !== 'undefined' && SUPABASE_URL !== 'JOUW_SUPA
 
 async function laadLikes(verhaalId) {
   if (!sbClient) return 0;
-  const { data, error } = await sbClient.from('likes').select('id').eq('verhaal_id', verhaalId);
-  if (error) { console.error('Likes laden mislukt:', error); return 0; }
-  return (data || []).length;
+  try {
+    // Probeer count via head request (efficienter)
+    const { count, error: countErr } = await sbClient.from('likes').select('*', { count: 'exact', head: true }).eq('verhaal_id', verhaalId);
+    if (!countErr && count !== null) return count;
+    // Fallback: haal alle rijen op
+    const { data, error } = await sbClient.from('likes').select('*').eq('verhaal_id', verhaalId);
+    if (error) { console.error('Likes laden mislukt:', error.message); return 0; }
+    return (data || []).length;
+  } catch(e) { console.error('Likes exception:', e); return 0; }
 }
 
 function meterKleur(totaal) {
