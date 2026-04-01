@@ -527,12 +527,38 @@ function toggleMobMenu() {
 }
 
 // ─── Contact ─────────────────────────────────────────────────────────────────
-function verstuurContact(e) {
+async function verstuurContact(e) {
   e.preventDefault();
   const btn = e.target.querySelector('button[type=submit]');
+  const naam = document.getElementById('contact-naam')?.value.trim();
+  const email = document.getElementById('contact-email')?.value.trim();
+  const onderwerp = document.getElementById('contact-onderwerp')?.value || '';
+  const bericht = document.getElementById('contact-bericht')?.value.trim();
+
+  if (!naam || !bericht) {
+    alert('Vul minimaal je naam en bericht in.');
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Bezig met versturen...';
+
+  if (sbClient) {
+    const { error } = await sbClient.from('contact_berichten').insert({
+      naam, email, onderwerp, bericht
+    });
+    if (error) {
+      btn.disabled = false;
+      btn.textContent = 'Verstuur bericht';
+      alert('Er ging iets mis. Probeer het later opnieuw.');
+      return;
+    }
+  }
+
   btn.textContent = '\u2713 Verstuurd!';
   btn.style.background = '#10b981';
   btn.style.color = '#fff';
+  btn.disabled = false;
   setTimeout(() => {
     btn.textContent = 'Verstuur bericht';
     btn.style.background = '';
