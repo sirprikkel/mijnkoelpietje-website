@@ -567,6 +567,51 @@ async function verstuurContact(e) {
   }, 3000);
 }
 
+// ─── Nieuwsbrief ─────────────────────────────────────────────────────────────
+async function aanmeldenNieuwsbrief(e) {
+  e.preventDefault();
+  const emailInput = document.getElementById('nieuwsbrief-email');
+  const btn = document.getElementById('nieuwsbrief-btn');
+  const email = emailInput?.value.trim();
+
+  if (!email) return;
+
+  btn.disabled = true;
+  btn.textContent = 'Bezig...';
+
+  if (sbClient) {
+    const { error } = await sbClient.from('nieuwsbrief').insert({ email });
+    if (error) {
+      if (error.code === '23505') {
+        btn.textContent = 'Al aangemeld!';
+        btn.style.background = '#f97316';
+      } else {
+        btn.textContent = 'Fout opgetreden';
+        btn.style.background = '#ef4444';
+      }
+      btn.style.color = '#fff';
+      btn.disabled = false;
+      setTimeout(() => {
+        btn.textContent = 'Aanmelden';
+        btn.style.background = '';
+        btn.style.color = '';
+      }, 3000);
+      return;
+    }
+  }
+
+  btn.textContent = '\u2713 Aangemeld!';
+  btn.style.background = '#10b981';
+  btn.style.color = '#fff';
+  emailInput.value = '';
+  btn.disabled = false;
+  setTimeout(() => {
+    btn.textContent = 'Aanmelden';
+    btn.style.background = '';
+    btn.style.color = '';
+  }, 4000);
+}
+
 // ─── Lightbox ────────────────────────────────────────────────────────────────
 function openLightbox(src, alt) {
   const lb = document.getElementById('lightbox');
