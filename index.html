@@ -1426,7 +1426,9 @@ function renderVerhalenGrid() {
     kaart.dataset.tags = (v.intro || '') + ' ' + (v.titel || '');
     kaart.setAttribute('role', 'listitem');
     kaart.onclick = () => openVerhaal(v.id);
+    const heeftAfb = v.afbeelding && v.afbeelding.length > 0;
     kaart.innerHTML = `
+      ${heeftAfb ? `<div class="relative overflow-hidden" style="height:180px;background:linear-gradient(135deg,#1a1400,#0a0a0a);"><img src="${v.afbeelding}" alt="${v.titel}" style="width:100%;height:100%;object-fit:cover;opacity:0.75;" /></div>` : ''}
       <div style="height:3px;background:${cfg.kleur};width:100%;"></div>
       <div class="p-6">
         <span class="rubriek-tag" style="background:${cfg.bg};color:${cfg.kleur};">${cfg.label}</span>
