@@ -17,6 +17,7 @@ collections:
     slug: "{{slug}}"
     format: json
     fields:
+      - {label: "ID", name: "id", widget: "string", hint: "Unieke code, bijv: v4 of mijn-verhaal-naam"}
       - {label: "Titel", name: "titel", widget: "string"}
       - {label: "Rubriek", name: "rubriek", widget: "select", options: [
           {label: "Ondergronds", value: "ondergronds"},
@@ -38,6 +39,7 @@ collections:
     slug: "{{slug}}"
     format: json
     fields:
+      - {label: "ID", name: "id", widget: "string", hint: "Unieke code, bijv: k4 of afdaling-2"}
       - {label: "Titel", name: "titel", widget: "string"}
       - {label: "Collectie", name: "collectie", widget: "string", hint: "Bijv: Kanarie Serie"}
       - {label: "Beschrijving", name: "beschrijving", widget: "text"}
@@ -54,6 +56,7 @@ collections:
     slug: "{{slug}}"
     format: json
     fields:
+      - {label: "ID", name: "id", widget: "string", hint: "Unieke code, bijv: code-lieshout"}
       - {label: "Naam", name: "naam", widget: "string"}
       - {label: "Omschrijving", name: "omschrijving", widget: "text", required: false}
       - {label: "Website", name: "website", widget: "string", required: false, hint: "Bijv: https://www.voorbeeld.nl"}
@@ -67,6 +70,7 @@ collections:
     slug: "{{slug}}"
     format: json
     fields:
+      - {label: "ID", name: "id", widget: "string", hint: "Unieke code, bijv: n3 of lancering-serie-2"}
       - {label: "Titel", name: "titel", widget: "string"}
       - {label: "Categorie", name: "categorie", widget: "string", hint: "Bijv: Collectie, Website, Evenement"}
       - {label: "Datum", name: "datum", widget: "string"}
