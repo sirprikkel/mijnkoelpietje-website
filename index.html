@@ -1584,7 +1584,9 @@ function openVerhaal(id) {
   if (!v) return;
 
   const content = document.getElementById('verhaal-content');
+  const heeftAfb = v.afbeelding && v.afbeelding.length > 0;
   content.innerHTML = `
+    ${heeftAfb ? `<div style="margin-bottom:2rem;border-radius:12px;overflow:hidden;max-height:300px;"><img src="${v.afbeelding}" alt="${v.titel}" style="width:100%;height:300px;object-fit:cover;opacity:0.85;" /></div>` : ''}
     <div style="border-left:3px solid ${v.rubriekKleur};padding-left:1.5rem;margin-bottom:2.5rem;">
       <div class="mono text-xs mb-2 uppercase" style="color:${v.rubriekKleur};letter-spacing:0.1em;">${v.rubriekLabel || v.rubriek}</div>
       <h1 style="font-family:'Poiret One',sans-serif;font-weight:400;font-size:clamp(1.8rem,4vw,2.8rem);line-height:1.2;margin-bottom:0.5rem;">${v.titel}</h1>
