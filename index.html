@@ -1243,8 +1243,18 @@ async function stemLike(verhaalId) {
 async function renderLikeKnop(verhaalId) {
   const el = document.getElementById('like-sectie-' + verhaalId);
   if (!el) return;
-  const totaal = await laadLikes(verhaalId);
-  const gestemd = localStorage.getItem('like_' + verhaalId);
+  let totaal = await laadLikes(verhaalId);
+  let gestemd = localStorage.getItem('like_' + verhaalId);
+
+  // Fix: als localStorage zegt gestemd maar Supabase heeft 0 likes,
+  // dan is de eerdere stem nooit aangekomen — opnieuw inserten
+  if (gestemd && totaal === 0 && sbClient) {
+    console.log('[KoelPietje] Herstel verloren like voor', verhaalId);
+    await sbClient.from('likes').insert({ verhaal_id: verhaalId, type: 'like' });
+    localStorage.setItem('like_' + verhaalId, 'like');
+    totaal = await laadLikes(verhaalId);
+  }
+
   const kleur = meterKleur(totaal);
   const label = meterLabel(totaal);
 
