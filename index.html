@@ -1192,21 +1192,29 @@
 // ─── Supabase configuratie ────────────────────────────────────────
 const SUPABASE_URL  = 'https://nwufmlayvaofmjetacfd.supabase.co';
 const SUPABASE_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im53dWZtbGF5dmFvZm1qZXRhY2ZkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5ODYzMjksImV4cCI6MjA5MDU2MjMyOX0._TUyvaHByhC0BeOpwt9Z9pFLEN0o0yi3c13lsvd76Kg';
-const sbClient = (typeof supabase !== 'undefined' && SUPABASE_URL !== 'JOUW_SUPABASE_URL_HIER')
-  ? supabase.createClient(SUPABASE_URL, SUPABASE_KEY)
-  : null;
+let sbClient = null;
+try {
+  if (typeof supabase !== 'undefined' && SUPABASE_URL !== 'JOUW_SUPABASE_URL_HIER') {
+    sbClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    console.log('[KoelPietje] Supabase verbonden');
+  } else {
+    console.warn('[KoelPietje] Supabase NIET beschikbaar — typeof supabase:', typeof supabase);
+  }
+} catch(e) {
+  console.error('[KoelPietje] Supabase init fout:', e);
+}
 
 async function laadLikes(verhaalId) {
-  if (!sbClient) return 0;
+  if (!sbClient) { console.warn('[KoelPietje] Geen sbClient voor likes'); return 0; }
   try {
-    // Probeer count via head request (efficienter)
     const { count, error: countErr } = await sbClient.from('likes').select('*', { count: 'exact', head: true }).eq('verhaal_id', verhaalId);
+    console.log('[KoelPietje] Likes voor', verhaalId, ':', count, countErr ? 'ERROR: ' + countErr.message : 'OK');
     if (!countErr && count !== null) return count;
-    // Fallback: haal alle rijen op
     const { data, error } = await sbClient.from('likes').select('*').eq('verhaal_id', verhaalId);
-    if (error) { console.error('Likes laden mislukt:', error.message); return 0; }
+    if (error) { console.error('[KoelPietje] Likes fallback mislukt:', error.message); return 0; }
+    console.log('[KoelPietje] Likes fallback voor', verhaalId, ':', data?.length);
     return (data || []).length;
-  } catch(e) { console.error('Likes exception:', e); return 0; }
+  } catch(e) { console.error('[KoelPietje] Likes exception:', e); return 0; }
 }
 
 function meterKleur(totaal) {
