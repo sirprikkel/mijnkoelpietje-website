@@ -1,10 +1,10 @@
 {
-  "id": "Ditishet verhaal",
   "titel": "Er was eens",
   "rubriek": "de-stem",
   "datum": "3 april 2026",
   "intro": "none",
   "tekst": "komt een verhaal",
   "afbeelding": "/uploads/test_afbeelding_400_400.png",
-  "afbeelding_formaat": ""
+  "afbeelding_formaat": "staand",
+  "id": "Ditishet verhaal"
 }
