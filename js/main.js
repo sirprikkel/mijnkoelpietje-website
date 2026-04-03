@@ -155,7 +155,7 @@ async function fetchJSON(url) {
 }
 
 async function laadVerhalen() {
-  const bekende = ['v1','v2','v3','v4','v5','v6'];
+  const bekende = Array.from({length: 50}, (_, i) => 'v' + (i + 1));
   verhalen = {};
   const promises = bekende.map(id => fetchJSON(`/content/verhalen/${id}.json`));
   const results = await Promise.all(promises);
@@ -177,7 +177,7 @@ async function laadVerhalen() {
 }
 
 async function laadKunstwerken() {
-  const bekende = ['k1','k2','k3','k4','k5','k6','k7','k8'];
+  const bekende = Array.from({length: 50}, (_, i) => 'k' + (i + 1));
   const promises = bekende.map(id => fetchJSON(`/content/kunstwerken/${id}.json`));
   const results = await Promise.all(promises);
   kunstwerken = results.filter(k => k && k.id);
@@ -196,7 +196,7 @@ async function laadKunstwerken() {
 }
 
 async function laadNieuws() {
-  const bekende = ['n1','n2','n3','n4','n5'];
+  const bekende = Array.from({length: 50}, (_, i) => 'n' + (i + 1));
   const promises = bekende.map(id => fetchJSON(`/content/nieuws/${id}.json`));
   const results = await Promise.all(promises);
   nieuwsItems = results.filter(n => n && n.id);
