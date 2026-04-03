@@ -156,56 +156,42 @@ async function fetchJSON(url) {
 
 async function laadVerhalen() {
   verhalen = {};
-  let misses = 0;
-  for (let i = 1; i <= 50 && misses < 5; i++) {
-    const v = await fetchJSON(`/content/verhalen/v${i}.json`);
-    if (v && v.id) { verhalen[v.id] = v; misses = 0; }
-    else { misses++; }
-  }
-
   try {
     const r = await fetch('/content/verhalen/index.json');
     if (r.ok) {
       const idx = await r.json();
-      const extra = await Promise.all(idx.map(id => fetchJSON(`/content/verhalen/${id}.json`)));
-      extra.forEach(v => { if (v && v.id) verhalen[v.id] = v; });
+      const results = await Promise.all(idx.map(slug => fetchJSON(`/content/verhalen/${slug}.json`)));
+      results.forEach(v => { if (v) { if (!v.id) v.id = v.titel || 'onbekend'; verhalen[v.id] = v; } });
     }
-  } catch(e) {}
-
+  } catch(e) { console.log('[KoelPietje] Verhalen laden mislukt:', e); }
   renderVerhalenGrid();
   renderVerhalenPreview();
 }
 
 async function laadKunstwerken() {
   kunstwerken = [];
-  let misses = 0;
-  for (let i = 1; i <= 50 && misses < 5; i++) {
-    const k = await fetchJSON(`/content/kunstwerken/k${i}.json`);
-    if (k && k.id) { kunstwerken.push(k); misses = 0; }
-    else { misses++; }
-  }
-
   try {
     const r = await fetch('/content/kunstwerken/index.json');
     if (r.ok) {
       const idx = await r.json();
-      const extra = await Promise.all(idx.map(id => fetchJSON(`/content/kunstwerken/${id}.json`)));
-      extra.forEach(k => { if (k && k.id && !kunstwerken.find(x => x.id === k.id)) kunstwerken.push(k); });
+      const results = await Promise.all(idx.map(slug => fetchJSON(`/content/kunstwerken/${slug}.json`)));
+      kunstwerken = results.filter(k => k).map(k => { if (!k.id) k.id = k.titel || 'onbekend'; return k; });
     }
-  } catch(e) {}
-
+  } catch(e) { console.log('[KoelPietje] Kunstwerken laden mislukt:', e); }
   renderShop();
   renderShopPreview();
 }
 
 async function laadNieuws() {
   nieuwsItems = [];
-  let misses = 0;
-  for (let i = 1; i <= 50 && misses < 5; i++) {
-    const n = await fetchJSON(`/content/nieuws/n${i}.json`);
-    if (n && n.id) { nieuwsItems.push(n); misses = 0; }
-    else { misses++; }
-  }
+  try {
+    const r = await fetch('/content/nieuws/index.json');
+    if (r.ok) {
+      const idx = await r.json();
+      const results = await Promise.all(idx.map(slug => fetchJSON(`/content/nieuws/${slug}.json`)));
+      nieuwsItems = results.filter(n => n).map(n => { if (!n.id) n.id = n.titel || 'onbekend'; return n; });
+    }
+  } catch(e) { console.log('[KoelPietje] Nieuws laden mislukt:', e); }
   renderNieuws();
 }
 
