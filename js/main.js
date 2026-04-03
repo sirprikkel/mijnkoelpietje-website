@@ -192,6 +192,7 @@ async function laadKunstwerken() {
   } catch(e) {}
 
   renderShop();
+  renderShopPreview();
 }
 
 async function laadNieuws() {
@@ -313,6 +314,35 @@ function renderShop() {
   });
 
   if (bundelKaart) grid.appendChild(bundelKaart);
+}
+
+function renderShopPreview() {
+  const grid = document.getElementById('shop-preview');
+  if (!grid || kunstwerken.length === 0) return;
+  grid.innerHTML = '';
+  kunstwerken.slice(0, 3).forEach(k => {
+    const kaart = document.createElement('div');
+    kaart.className = 'kaart reveal';
+    kaart.style.cursor = 'pointer';
+    kaart.onclick = () => toonSectie('shop');
+    const heeftAfb = k.afbeelding && k.afbeelding.length > 0;
+    kaart.innerHTML = `
+      <div class="relative overflow-hidden" style="height:200px;background:linear-gradient(135deg,#1a1400,#0a0a0a);">
+        ${heeftAfb
+          ? `<img src="${k.afbeelding}" alt="${k.titel}" style="width:100%;height:100%;object-fit:cover;opacity:0.85;" />`
+          : `<div style="position:absolute;inset:0;background:radial-gradient(circle at 40% 50%,rgba(245,196,0,0.18),transparent 60%);display:flex;align-items:center;justify-content:center;"><span style="font-size:3rem;opacity:0.15;">\ud83d\uddbc\ufe0f</span></div>`
+        }
+      </div>
+      <div class="p-5">
+        <div class="mono text-xs text-gray-600 mb-1">${k.collectie || ''}</div>
+        <h3 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-lg mb-1">${k.titel}</h3>
+        <div class="flex items-center justify-between mt-2">
+          <span class="font-bold" style="color:var(--geel);">\u20ac ${k.prijs},\u2013</span>
+          <span class="mono text-xs" style="color:var(--geel);">Bekijk \u2192</span>
+        </div>
+      </div>`;
+    grid.appendChild(kaart);
+  });
 }
 
 function renderNieuws() {
