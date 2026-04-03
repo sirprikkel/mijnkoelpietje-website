@@ -4,8 +4,8 @@
   "rubriek": "knipoog",
   "datum": "5 maart 2026",
   "intro": "test",
-  "tekst": "# De energierekening de grond in boren, koelpietje op jacht naar het Zwarte Goud.\n\nDe energieprijzen blijven stijgen, dus ik neem het heft in eigen handen. Ik ga als Koelpietje de mijngangen in mijn tuin weer blootleggen. Ik heb de techniek onder de knie en weet precies waar de kolen liggen.\n\n Wie niet waagt, wie niet wint (en wie niet stookt, heeft het koud).\n\nGa je een keer met me mee onder de grond?\n\nDan halen we samen dat zwarte goud naar boven en kun je ook iets aan je energierekening doen.",
+  "tekst": "<article> <h1>De energierekening de grond in boren: Koelpietje op jacht naar het Zwarte Goud</h1> <p><strong>De energieprijzen blijven stijgen, dus ik neem het heft in eigen handen.</strong></p> <p>Ik ga als <em>Koelpietje</em> de mijngangen in mijn tuin weer blootleggen. Ik heb de techniek onder de knie en weet precies waar de kolen liggen. Wie niet waagt, wie niet wint (en wie niet stookt, heeft het koud).</p> <p>Ga je een keer met me mee onder de grond? Dan halen we samen dat zwarte goud naar boven en kun je ook iets aan je energierekening doen.</p> <div style=\"margin-top: 20px;\"> <a href=\"#contact\" style=\"background-color: #333; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 5px;\">Ga mee op jacht!</a> </div> </article>",
   "afbeelding": "/uploads/gasop_kp.jpg",
-  "rubriekLabel": "Knipoog",
-  "rubriekKleur": "#f97316"
+  "rubriekKleur": "#f97316",
+  "rubriekLabel": "Knipoog"
 }
