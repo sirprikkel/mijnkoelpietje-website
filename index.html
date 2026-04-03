@@ -10,8 +10,14 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://www.mijnkoelpietje.nl" />
 
-  <!-- Umami Analytics -->
-  <script defer src="https://analytics.code-lieshout.nl/prikkel" data-website-id="KOELPIETJE-WEBSITE-ID"></script>
+  <!-- Google Analytics 4 — vervang G-XXXXXXXXXX door je eigen Measurement ID -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
 
   <!-- Fonts: Poiret One (display) + Didact Gothic (body) + Space Mono (mono) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
