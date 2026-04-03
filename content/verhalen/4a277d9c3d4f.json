@@ -1,10 +1,10 @@
 {
-  "id": "v6",
-  "titel": "testverhaal",
+  "titel": "v4",
   "rubriek": "ondergronds",
   "datum": "12 januari 2026",
   "intro": "None indeling",
   "tekst": "teskst",
   "afbeelding": "/uploads/test_afbeelding_400_400.png",
-  "afbeelding_formaat": ""
+  "afbeelding_formaat": "",
+  "id": "v6"
 }
