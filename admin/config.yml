@@ -73,6 +73,22 @@ collections:
       - {label: "Website", name: "website", widget: "string", required: false, hint: "Bijv: https://www.voorbeeld.nl"}
       - {label: "Logo", name: "logo", widget: "image", required: false}
 
+  - name: "activiteiten"
+    label: "Activiteiten"
+    label_singular: "Activiteit"
+    folder: "content/activiteiten"
+    create: true
+    slug: "{{slug}}"
+    identifier_field: titel
+    format: json
+    fields:
+      - {label: "Titel", name: "titel", widget: "string"}
+      - {label: "Type", name: "type", widget: "select", options: ["Tentoonstelling", "Lezing", "Workshop", "Evenement", "Anders"]}
+      - {label: "Datum", name: "datum", widget: "string", hint: "Bijv: 12 april 2026"}
+      - {label: "Beschrijving", name: "beschrijving", widget: "markdown"}
+      - {label: "Locatie", name: "locatie", widget: "string", hint: "Bijv: Museum Valkenburg · 10:00–17:00"}
+      - {label: "Afbeelding (optioneel)", name: "afbeelding", widget: "image", required: false}
+
   - name: "nieuws"
     label: "Nieuws"
     label_singular: "Nieuwsbericht"

@@ -141,7 +141,8 @@ async function laadContent() {
       laadVerhalen(),
       laadKunstwerken(),
       laadNieuws(),
-      laadSponsoren()
+      laadSponsoren(),
+      laadActiviteiten()
     ]);
   } catch(e) {
     console.log('Content laden via directe fetch...');
@@ -149,6 +150,7 @@ async function laadContent() {
     await laadKunstwerken();
     await laadNieuws();
     await laadSponsoren();
+    await laadActiviteiten();
   }
 }
 
@@ -212,6 +214,53 @@ async function laadSponsoren() {
     }
   } catch(e) {}
   renderSponsoren();
+}
+
+let activiteiten = [];
+
+async function laadActiviteiten() {
+  activiteiten = [];
+  try {
+    const r = await fetch('/content/activiteiten/index.json');
+    if (r.ok) {
+      const idx = await r.json();
+      const results = await Promise.all(idx.map(slug => fetchJSON(`/content/activiteiten/${slug}.json`)));
+      activiteiten = results.filter(a => a && a.titel);
+    }
+  } catch(e) { console.log('[KoelPietje] Activiteiten laden mislukt:', e); }
+  renderActiviteiten();
+}
+
+const typeKleuren = {
+  'Tentoonstelling': { bg: 'rgba(245,196,0,0.12)', kleur: 'var(--geel)' },
+  'Lezing': { bg: 'rgba(59,130,246,0.12)', kleur: '#60a5fa' },
+  'Workshop': { bg: 'rgba(16,185,129,0.12)', kleur: '#34d399' },
+  'Evenement': { bg: 'rgba(168,85,247,0.12)', kleur: '#a855f7' },
+  'Anders': { bg: 'rgba(245,196,0,0.12)', kleur: 'var(--geel)' }
+};
+
+function renderActiviteiten() {
+  const grid = document.getElementById('activiteiten-grid');
+  if (!grid) return;
+  if (activiteiten.length === 0) {
+    grid.innerHTML = '<p class="text-gray-600 text-center py-8">Er zijn momenteel geen activiteiten gepland.</p>';
+    return;
+  }
+  grid.innerHTML = '';
+  activiteiten.forEach(a => {
+    const tc = typeKleuren[a.type] || typeKleuren['Anders'];
+    const kaart = document.createElement('div');
+    kaart.className = 'kaart p-6 sm:p-8';
+    kaart.innerHTML = `
+      <div>
+        <span class="rubriek-tag" style="background:${tc.bg};color:${tc.kleur};">${a.type || 'Evenement'}</span>
+        <h2 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mt-2 mb-2">${a.titel}</h2>
+        <p class="text-gray-400 text-sm leading-relaxed mb-3">${cleanTekst(a.beschrijving) || ''}</p>
+        ${a.locatie ? `<div class="mono text-xs text-gray-600 mb-3">${a.locatie}</div>` : ''}
+        <div class="mono text-xs" style="color:${tc.kleur};">${a.datum || ''}</div>
+      </div>`;
+    grid.appendChild(kaart);
+  });
 }
 
 // ─── Render functies ──────────────────────────────────────────

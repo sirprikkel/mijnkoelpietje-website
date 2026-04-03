@@ -1,5 +1,5 @@
 const fs = require('fs');
-const dirs = ['content/verhalen', 'content/kunstwerken', 'content/nieuws', 'content/sponsoren'];
+const dirs = ['content/verhalen', 'content/kunstwerken', 'content/nieuws', 'content/sponsoren', 'content/activiteiten'];
 dirs.forEach(dir => {
   if (!fs.existsSync(dir)) return;
   const ids = fs.readdirSync(dir).filter(f => f.endsWith('.json') && f !== 'index.json').map(f => f.replace('.json', ''));
