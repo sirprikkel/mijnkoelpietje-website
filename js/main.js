@@ -2,6 +2,13 @@
 // MijnKoelPietje — Hoofd JavaScript
 // ═══════════════════════════════════════════════════════════
 
+// ─── Afbeelding formaat helper ────────────────────────────────────
+function afbStijl(formaat, standaardHoogte) {
+  if (formaat === 'staand') return { height: Math.round(standaardHoogte * 1.6) + 'px', objectPosition: 'center 20%' };
+  if (formaat === 'vierkant') return { height: standaardHoogte + 'px', objectPosition: 'center center' };
+  return { height: standaardHoogte + 'px', objectPosition: 'center center' }; // liggend (default)
+}
+
 // ─── Supabase configuratie ────────────────────────────────────────
 const SUPABASE_URL  = 'https://nwufmlayvaofmjetacfd.supabase.co';
 const SUPABASE_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im53dWZtbGF5dmFvZm1qZXRhY2ZkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5ODYzMjksImV4cCI6MjA5MDU2MjMyOX0._TUyvaHByhC0BeOpwt9Z9pFLEN0o0yi3c13lsvd76Kg';
@@ -240,8 +247,9 @@ function renderVerhalenGrid() {
     kaart.setAttribute('role', 'listitem');
     kaart.onclick = () => openVerhaal(v.id);
     const heeftAfb = v.afbeelding && v.afbeelding.length > 0;
+    const vStijl = afbStijl(v.afbeelding_formaat, 180);
     kaart.innerHTML = `
-      ${heeftAfb ? `<div class="relative overflow-hidden" style="height:180px;background:linear-gradient(135deg,#1a1400,#0a0a0a);"><img src="${v.afbeelding}" alt="${v.titel}" style="width:100%;height:100%;object-fit:cover;opacity:0.75;" /></div>` : ''}
+      ${heeftAfb ? `<div class="relative overflow-hidden" style="height:${vStijl.height};background:linear-gradient(135deg,#1a1400,#0a0a0a);"><img src="${v.afbeelding}" alt="${v.titel}" style="width:100%;height:100%;object-fit:cover;object-position:${vStijl.objectPosition};opacity:0.75;" /></div>` : ''}
       <div style="height:3px;background:${cfg.kleur};width:100%;"></div>
       <div class="p-6">
         <span class="rubriek-tag" style="background:${cfg.bg};color:${cfg.kleur};">${cfg.label}</span>
@@ -278,10 +286,11 @@ function renderShop() {
     const kaart = document.createElement('div');
     kaart.className = 'kaart group';
     const heeftAfb = k.afbeelding && k.afbeelding.length > 0;
+    const kStijl = afbStijl(k.afbeelding_formaat, 320);
     kaart.innerHTML = `
-      <div class="relative overflow-hidden" style="height:320px;background:linear-gradient(135deg,#1a1400,#0a0a0a);">
+      <div class="relative overflow-hidden" style="height:${kStijl.height};background:linear-gradient(135deg,#1a1400,#0a0a0a);">
         ${heeftAfb
-          ? `<img src="${k.afbeelding}" alt="${k.titel}" style="width:100%;height:100%;object-fit:cover;opacity:0.85;" />`
+          ? `<img src="${k.afbeelding}" alt="${k.titel}" style="width:100%;height:100%;object-fit:cover;object-position:${kStijl.objectPosition};opacity:0.85;" />`
           : `<div style="position:absolute;inset:0;background:radial-gradient(circle at 40% 50%,rgba(245,196,0,0.18),transparent 60%);display:flex;align-items:center;justify-content:center;"><span style="font-size:5rem;opacity:0.15;">\ud83d\uddbc\ufe0f</span></div>`
         }
         <div class="absolute bottom-0 left-0 right-0 p-4" style="background:linear-gradient(0deg,rgba(0,0,0,0.85),transparent);">
@@ -404,8 +413,9 @@ function openVerhaal(id) {
 
   const content = document.getElementById('verhaal-content');
   const heeftAfb = v.afbeelding && v.afbeelding.length > 0;
+  const detailStijl = afbStijl(v.afbeelding_formaat, 300);
   content.innerHTML = `
-    ${heeftAfb ? `<div style="margin-bottom:2rem;border-radius:12px;overflow:hidden;max-height:300px;"><img src="${v.afbeelding}" alt="${v.titel}" style="width:100%;height:300px;object-fit:cover;opacity:0.85;" /></div>` : ''}
+    ${heeftAfb ? `<div style="margin-bottom:2rem;border-radius:12px;overflow:hidden;max-height:${detailStijl.height};"><img src="${v.afbeelding}" alt="${v.titel}" style="width:100%;height:${detailStijl.height};object-fit:cover;object-position:${detailStijl.objectPosition};opacity:0.85;" /></div>` : ''}
     <div style="border-left:3px solid ${v.rubriekKleur};padding-left:1.5rem;margin-bottom:2.5rem;">
       <div class="mono text-xs mb-2 uppercase" style="color:${v.rubriekKleur};letter-spacing:0.1em;">${v.rubriekLabel || v.rubriek}</div>
       <h1 style="font-family:'Poiret One',sans-serif;font-weight:400;font-size:clamp(1.8rem,4vw,2.8rem);line-height:1.2;margin-bottom:0.5rem;">${v.titel}</h1>

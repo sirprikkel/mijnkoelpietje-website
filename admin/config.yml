@@ -30,7 +30,12 @@ collections:
       - {label: "Datum", name: "datum", widget: "string", hint: "Bijv: 12 januari 2026"}
       - {label: "Korte intro (voor kaart)", name: "intro", widget: "text"}
       - {label: "Volledige tekst", name: "tekst", widget: "markdown"}
-      - {label: "Afbeelding (optioneel)", name: "afbeelding", widget: "image", required: false, hint: "Liggend formaat werkt het best, minimaal 800px breed"}
+      - {label: "Afbeelding (optioneel)", name: "afbeelding", widget: "image", required: false}
+      - {label: "Afbeelding formaat", name: "afbeelding_formaat", widget: "select", required: false, default: "liggend", options: [
+          {label: "Liggend (landscape)", value: "liggend"},
+          {label: "Staand (portrait)", value: "staand"},
+          {label: "Vierkant (square)", value: "vierkant"}
+        ]}
 
   - name: "kunstwerken"
     label: "Kunstwerken (Shop)"
@@ -47,6 +52,11 @@ collections:
       - {label: "Prijs (€)", name: "prijs", widget: "string"}
       - {label: "Editie", name: "editie", widget: "string", hint: "Bijv: 1 van 12"}
       - {label: "Afbeelding", name: "afbeelding", widget: "image", required: false}
+      - {label: "Afbeelding formaat", name: "afbeelding_formaat", widget: "select", required: false, default: "liggend", options: [
+          {label: "Liggend (landscape)", value: "liggend"},
+          {label: "Staand (portrait)", value: "staand"},
+          {label: "Vierkant (square)", value: "vierkant"}
+        ]}
       - {label: "Mollie betaallink", name: "mollie_link", widget: "string", required: false, hint: "Plak hier je Mollie betaallink"}
 
   - name: "sponsoren"
