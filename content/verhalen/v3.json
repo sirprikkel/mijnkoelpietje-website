@@ -2,10 +2,10 @@
   "id": "v3",
   "titel": "Hoe ik mijn beelden maak",
   "rubriek": "knipoog",
-  "rubriekLabel": "Knipoog",
-  "rubriekKleur": "#f97316",
   "datum": "5 maart 2026",
-  "afbeelding": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600&q=80",
   "intro": "Met AI-tools geef ik oude beelden een nieuw leven. Duisternis, geel licht, en de geest van de mijn in pixels.",
-  "tekst": "<p>Mensen vragen me vaak: hoe maak jij die beelden? Zijn ze echt? Zijn ze nep? Het antwoord is: ze zijn allebei tegelijk.</p><p>Ik begin altijd met een gevoel. Een herinnering, een oud foto uit een boek, een geur. Die verander ik in woorden — een zogenaamde prompt.</p><blockquote style=\"border-left:3px solid #10b981;padding-left:1.5rem;color:#aaa;margin:2rem 0;font-style:italic;\">\"AI geeft vorm aan wat ik voel maar niet kan tekenen.\"</blockquote><p>Elk beeld is een samenwerking. Ik lever de intentie, de herinnering, het gevoel. De AI levert de technische uitvoering.</p>"
+  "tekst": "<p>Mensen vragen me vaak: hoe maak jij die beelden? Zijn ze echt? Zijn ze nep? Het antwoord is: ze zijn allebei tegelijk.</p><p>Ik begin altijd met een gevoel. Een herinnering, een oud foto uit een boek, een geur. Die verander ik in woorden — een zogenaamde prompt.</p><blockquote style=\"border-left:3px solid #10b981;padding-left:1.5rem;color:#aaa;margin:2rem 0;font-style:italic;\">\"AI geeft vorm aan wat ik voel maar niet kan tekenen.\"</blockquote><p>Elk beeld is een samenwerking. Ik lever de intentie, de herinnering, het gevoel. De AI levert de technische uitvoering.</p>",
+  "afbeelding": "/uploads/artworks-000264200132-fpdymq-t500x500-Photoroom.png",
+  "rubriekKleur": "#f97316",
+  "rubriekLabel": "Knipoog"
 }
