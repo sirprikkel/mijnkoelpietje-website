@@ -2,10 +2,10 @@
   "id": "v2",
   "titel": "De kanarie als levensredder",
   "rubriek": "de-stem",
-  "rubriekLabel": "De Stem",
-  "rubriekKleur": "#a855f7",
   "datum": "28 februari 2026",
-  "afbeelding": "https://images.unsplash.com/photo-1557401622-cfc0aa5d4115?w=600&q=80",
   "intro": "Eeuwenlang namen mijnwerkers een kanarie mee. Als het vogeltje stil werd, was het tijd om te vluchten.",
-  "tekst": "<p>Lang voordat er gasdetectoren bestonden, hadden mijnwerkers een simpel maar geniaal systeem: de kanarie.</p><p>Kanaries zijn extreem gevoelig voor koolmonoxide en andere giftige gassen. Als een kanarie flauwvalt of sterft, is dat een waarschuwing: verlaat de mijn, onmiddellijk.</p><blockquote style=\"border-left:3px solid #3b82f6;padding-left:1.5rem;color:#aaa;margin:2rem 0;font-style:italic;\">\"De kanarie sterft zodat wij leven. Dat vergeet je nooit.\"</blockquote><p>In Nederland werden kanaries tot in de jaren zeventig gebruikt. Het laatste koelpietje werd in 1987 uit een Britse mijn gehaald.</p>"
+  "tekst": "<article> <h1>De energierekening de grond in boren: Koelpietje op jacht naar het Zwarte Goud</h1> <p><strong>De energieprijzen blijven stijgen, dus ik neem het heft in eigen handen.</strong></p> <p>Ik ga als <em>Koelpietje</em> de mijngangen in mijn tuin weer blootleggen. Ik heb de techniek onder de knie en weet precies waar de kolen liggen. Wie niet waagt, wie niet wint (en wie niet stookt, heeft het koud).</p> <p>Ga je een keer met me mee onder de grond? Dan halen we samen dat zwarte goud naar boven en kun je ook iets aan je energierekening doen.</p> <div style=\"margin-top: 20px;\"> <a href=\"#contact\" style=\"background-color: #333; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 5px;\">Ga mee op jacht!</a> </div> </article>",
+  "afbeelding": "https://images.unsplash.com/photo-1557401622-cfc0aa5d4115?w=600&q=80",
+  "rubriekKleur": "#a855f7",
+  "rubriekLabel": "De Stem"
 }
