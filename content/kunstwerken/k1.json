@@ -1,10 +1,10 @@
 {
   "id": "k1",
-  "titel": "Afdaling",
+  "titel": "Afbeeldingen",
   "collectie": "Koelpietje Collectie",
-  "beschrijving": "De lift daalt. Het geel van de kanarie — het enige licht.",
-  "prijs": "Gratis",
-  "editie": "printkwaliteit",
+  "beschrijving": "Leuke afbeelding in printkwaliteit",
+  "prijs": "0",
+  "editie": "Gratis",
   "afbeelding": "/uploads/test_afbeelding_500_500.jpeg",
   "mollie_link": ""
 }
