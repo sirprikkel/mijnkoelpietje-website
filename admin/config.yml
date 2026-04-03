@@ -2,6 +2,8 @@ backend:
   name: github
   repo: sirprikkel/mijnkoelpietje-website
   branch: main
+  auth_type: pkce
+  app_id: Ov23liOIQR1jriV5pkUw
 
 media_folder: "uploads"
 public_folder: "/uploads"
