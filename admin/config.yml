@@ -15,7 +15,7 @@ collections:
     label_singular: "Verhaal"
     folder: "content/verhalen"
     create: true
-    slug: "{{id}}"
+    slug: "{{fields.id}}"
     format: json
     fields:
       - {label: "ID", name: "id", widget: "string", hint: "Verplicht: v4, v5, v6 etc. (oplopend nummer)"}
@@ -42,7 +42,7 @@ collections:
     label_singular: "Kunstwerk"
     folder: "content/kunstwerken"
     create: true
-    slug: "{{id}}"
+    slug: "{{fields.id}}"
     format: json
     fields:
       - {label: "ID", name: "id", widget: "string", hint: "Verplicht: k4, k5, k6 etc. (oplopend nummer)"}
@@ -64,7 +64,7 @@ collections:
     label_singular: "Sponsor"
     folder: "content/sponsoren"
     create: true
-    slug: "{{id}}"
+    slug: "{{fields.id}}"
     format: json
     fields:
       - {label: "ID", name: "id", widget: "string", hint: "Verplicht: korte naam, bijv: code-lieshout"}
@@ -78,7 +78,7 @@ collections:
     label_singular: "Nieuwsbericht"
     folder: "content/nieuws"
     create: true
-    slug: "{{id}}"
+    slug: "{{fields.id}}"
     format: json
     fields:
       - {label: "ID", name: "id", widget: "string", hint: "Verplicht: n3, n4, n5 etc. (oplopend nummer)"}
