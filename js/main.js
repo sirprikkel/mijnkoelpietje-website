@@ -269,17 +269,28 @@ function renderVerhalenGrid() {
 }
 
 function renderVerhalenPreview() {
-  const previews = document.querySelectorAll('#verhalen-preview .kaart');
+  const grid = document.getElementById('verhalen-preview');
+  if (!grid) return;
   const vArr = verhalenGesorteerd().slice(0, 3);
-  previews.forEach((kaart, i) => {
-    if (!vArr[i]) return;
-    const v = vArr[i];
+  if (vArr.length === 0) return;
+  grid.innerHTML = '';
+  vArr.forEach(v => {
     const cfg = rubriekConfig[v.rubriek] || { label: v.rubriek, kleur: '#f5c400', bg: 'rgba(245,196,0,0.15)' };
+    const heeftAfb = v.afbeelding && v.afbeelding.length > 0;
+    const kaart = document.createElement('div');
+    kaart.className = 'kaart reveal overflow-hidden';
+    kaart.style.cursor = 'pointer';
     kaart.onclick = () => { toonSectie('verhalen'); openVerhaal(v.id); };
-    const titleEl = kaart.querySelector('h3');
-    const introEl = kaart.querySelector('p');
-    if (titleEl) titleEl.textContent = v.titel;
-    if (introEl) introEl.textContent = v.intro || '';
+    kaart.innerHTML = `
+      ${heeftAfb ? `<div class="relative overflow-hidden" style="height:180px;background:linear-gradient(135deg,#1a1400,#0a0a0a);"><img src="${v.afbeelding}" alt="${v.titel}" style="width:100%;height:100%;object-fit:cover;opacity:0.75;" /></div>` : ''}
+      <div style="height:3px;background:${cfg.kleur};width:100%;"></div>
+      <div class="p-6">
+        <span class="rubriek-tag" style="background:${cfg.bg};color:${cfg.kleur};">${cfg.label}</span>
+        <h3 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mt-3 mb-2">${v.titel}</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">${v.intro || ''}</p>
+        <div class="mt-4 mono text-xs" style="color:${cfg.kleur};">Lees meer \u2192</div>
+      </div>`;
+    grid.appendChild(kaart);
   });
 }
 
