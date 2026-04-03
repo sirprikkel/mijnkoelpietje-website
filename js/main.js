@@ -35,7 +35,7 @@ async function stemLike(verhaalId) {
   const sleutel = 'like_' + verhaalId;
   if (localStorage.getItem(sleutel)) return;
   if (sbClient) {
-    await sbClient.from('likes').insert({ verhaal_id: verhaalId, type: 'like' });
+    await sbClient.from('likes').insert({ verhaal_id: verhaalId, type: 'groen' });
   }
   localStorage.setItem(sleutel, 'like');
   renderLikeKnop(verhaalId);
