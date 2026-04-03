@@ -30,7 +30,7 @@ collections:
       - {label: "Datum", name: "datum", widget: "string", hint: "Bijv: 12 januari 2026"}
       - {label: "Korte intro (voor kaart)", name: "intro", widget: "text"}
       - {label: "Volledige tekst", name: "tekst", widget: "markdown"}
-      - {label: "Afbeelding (optioneel)", name: "afbeelding", widget: "image", required: false}
+      - {label: "Afbeelding (optioneel)", name: "afbeelding", widget: "image", required: false, hint: "Liggend formaat werkt het best, minimaal 800px breed"}
 
   - name: "kunstwerken"
     label: "Kunstwerken (Shop)"
@@ -43,7 +43,7 @@ collections:
       - {label: "ID", name: "id", widget: "string", hint: "Unieke code, bijv: k4 of afdaling-2"}
       - {label: "Titel", name: "titel", widget: "string"}
       - {label: "Collectie", name: "collectie", widget: "string", hint: "Bijv: Kanarie Serie"}
-      - {label: "Beschrijving", name: "beschrijving", widget: "text"}
+      - {label: "Beschrijving", name: "beschrijving", widget: "markdown"}
       - {label: "Prijs (€)", name: "prijs", widget: "string"}
       - {label: "Editie", name: "editie", widget: "string", hint: "Bijv: 1 van 12"}
       - {label: "Afbeelding", name: "afbeelding", widget: "image", required: false}
@@ -75,4 +75,4 @@ collections:
       - {label: "Titel", name: "titel", widget: "string"}
       - {label: "Categorie", name: "categorie", widget: "string", hint: "Bijv: Collectie, Website, Evenement"}
       - {label: "Datum", name: "datum", widget: "string"}
-      - {label: "Tekst", name: "tekst", widget: "text"}
+      - {label: "Tekst", name: "tekst", widget: "markdown"}
