@@ -2,6 +2,12 @@
 // MijnKoelPietje — Hoofd JavaScript
 // ═══════════════════════════════════════════════════════════
 
+// ─── Tekst cleanup — strip per ongeluk ingevoerde formaatwoorden ──
+function cleanTekst(txt) {
+  if (!txt) return '';
+  return txt.replace(/^(staand|liggend|vierkant|none|None)\s*/gi, '').trim();
+}
+
 // ─── Afbeelding formaat helper ────────────────────────────────────
 function afbStijl(formaat, standaardHoogte) {
   if (formaat === 'staand') return { height: Math.round(standaardHoogte * 1.6) + 'px', objectPosition: 'center 20%' };
@@ -247,7 +253,7 @@ function renderVerhalenGrid() {
       <div class="p-6">
         <span class="rubriek-tag" style="background:${cfg.bg};color:${cfg.kleur};">${cfg.label}</span>
         <h3 class="font-bold text-lg mt-3 mb-2">${v.titel}</h3>
-        <p class="text-gray-500 text-sm leading-relaxed">${v.intro || ''}</p>
+        <p class="text-gray-500 text-sm leading-relaxed">${cleanTekst(v.intro)}</p>
         <div class="mt-4 text-xs mono" style="color:${cfg.kleur};">Lees meer \u2192</div>
       </div>`;
     grid.appendChild(kaart);
@@ -273,7 +279,7 @@ function renderVerhalenPreview() {
       <div class="p-6">
         <span class="rubriek-tag" style="background:${cfg.bg};color:${cfg.kleur};">${cfg.label}</span>
         <h3 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mt-3 mb-2">${v.titel}</h3>
-        <p class="text-gray-500 text-sm leading-relaxed">${v.intro || ''}</p>
+        <p class="text-gray-500 text-sm leading-relaxed">${cleanTekst(v.intro)}</p>
         <div class="mt-4 mono text-xs" style="color:${cfg.kleur};">Lees meer \u2192</div>
       </div>`;
     grid.appendChild(kaart);
@@ -454,7 +460,7 @@ function openVerhaal(id) {
       <h1 style="font-family:'Poiret One',sans-serif;font-weight:400;font-size:clamp(1.8rem,4vw,2.8rem);line-height:1.2;margin-bottom:0.5rem;">${v.titel}</h1>
       <div class="mono text-xs text-gray-600">${v.datum || ''}</div>
     </div>
-    <div class="prose leading-relaxed" style="max-width:65ch;">${v.tekst}</div>
+    <div class="prose leading-relaxed" style="max-width:65ch;">${cleanTekst(v.tekst)}</div>
     <div id="like-sectie-${v.id}"></div>
     <div id="reacties-sectie-${v.id}"></div>
     <div style="margin-top:3rem;">
