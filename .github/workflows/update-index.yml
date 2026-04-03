@@ -1,0 +1,18 @@
+name: Update content index
+on:
+  push:
+    branches: [main]
+    paths: ['content/**']
+
+jobs:
+  update-index:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: node build-index.js
+      - run: |
+          git config user.name "GitHub Action"
+          git config user.email "action@github.com"
+          git add content/*/index.json
+          git diff --staged --quiet || git commit -m "Auto: update content index"
+          git push
