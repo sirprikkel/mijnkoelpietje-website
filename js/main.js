@@ -545,7 +545,7 @@ async function verstuurContact(e) {
 
   if (sbClient) {
     const { error } = await sbClient.from('contact_berichten').insert({
-      naam, email, onderwerp, bericht
+      naam, email, onderwerp, bericht, datum: new Date().toISOString()
     });
     if (error) {
       btn.disabled = false;
