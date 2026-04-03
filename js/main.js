@@ -155,13 +155,13 @@ async function fetchJSON(url) {
 }
 
 async function laadVerhalen() {
-  const bekende = Array.from({length: 50}, (_, i) => 'v' + (i + 1));
   verhalen = {};
-  const promises = bekende.map(id => fetchJSON(`/content/verhalen/${id}.json`));
-  const results = await Promise.all(promises);
-  results.forEach(v => {
-    if (v && v.id) verhalen[v.id] = v;
-  });
+  let misses = 0;
+  for (let i = 1; i <= 50 && misses < 5; i++) {
+    const v = await fetchJSON(`/content/verhalen/v${i}.json`);
+    if (v && v.id) { verhalen[v.id] = v; misses = 0; }
+    else { misses++; }
+  }
 
   try {
     const r = await fetch('/content/verhalen/index.json');
@@ -177,10 +177,13 @@ async function laadVerhalen() {
 }
 
 async function laadKunstwerken() {
-  const bekende = Array.from({length: 50}, (_, i) => 'k' + (i + 1));
-  const promises = bekende.map(id => fetchJSON(`/content/kunstwerken/${id}.json`));
-  const results = await Promise.all(promises);
-  kunstwerken = results.filter(k => k && k.id);
+  kunstwerken = [];
+  let misses = 0;
+  for (let i = 1; i <= 50 && misses < 5; i++) {
+    const k = await fetchJSON(`/content/kunstwerken/k${i}.json`);
+    if (k && k.id) { kunstwerken.push(k); misses = 0; }
+    else { misses++; }
+  }
 
   try {
     const r = await fetch('/content/kunstwerken/index.json');
@@ -196,10 +199,13 @@ async function laadKunstwerken() {
 }
 
 async function laadNieuws() {
-  const bekende = Array.from({length: 50}, (_, i) => 'n' + (i + 1));
-  const promises = bekende.map(id => fetchJSON(`/content/nieuws/${id}.json`));
-  const results = await Promise.all(promises);
-  nieuwsItems = results.filter(n => n && n.id);
+  nieuwsItems = [];
+  let misses = 0;
+  for (let i = 1; i <= 50 && misses < 5; i++) {
+    const n = await fetchJSON(`/content/nieuws/n${i}.json`);
+    if (n && n.id) { nieuwsItems.push(n); misses = 0; }
+    else { misses++; }
+  }
   renderNieuws();
 }
 
