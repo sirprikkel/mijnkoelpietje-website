@@ -31,19 +31,6 @@ async function laadLikes(verhaalId) {
   } catch(e) { console.error('[KoelPietje] Likes exception:', e); return 0; }
 }
 
-function meterKleur(totaal) {
-  if (totaal >= 6) return '#22c55e';
-  if (totaal >= 4) return '#f97316';
-  return '#ef4444';
-}
-
-function meterLabel(totaal) {
-  if (totaal >= 6) return 'Populair!';
-  if (totaal >= 4) return 'Groeiend';
-  if (totaal >= 2) return 'Warming up';
-  return 'Eerste like?';
-}
-
 async function stemLike(verhaalId) {
   const sleutel = 'like_' + verhaalId;
   if (localStorage.getItem(sleutel)) return;
@@ -58,37 +45,15 @@ async function renderLikeKnop(verhaalId) {
   const el = document.getElementById('like-sectie-' + verhaalId);
   if (!el) return;
   let totaal = await laadLikes(verhaalId);
-  let gestemd = localStorage.getItem('like_' + verhaalId);
-
-  // Fix: als localStorage zegt gestemd maar Supabase heeft 0 likes,
-  // dan is de eerdere stem nooit aangekomen — opnieuw inserten
-  if (gestemd && totaal === 0 && sbClient) {
-    console.log('[KoelPietje] Herstel verloren like voor', verhaalId);
-    await sbClient.from('likes').insert({ verhaal_id: verhaalId, type: 'like' });
-    localStorage.setItem('like_' + verhaalId, 'like');
-    totaal = await laadLikes(verhaalId);
-  }
-
-  const kleur = meterKleur(totaal);
-  const label = meterLabel(totaal);
+  const gestemd = localStorage.getItem('like_' + verhaalId);
 
   el.innerHTML = `
-    <div style="margin-top:2.5rem;padding:1.5rem;background:var(--grijs);border-radius:12px;border:1px solid rgba(245,196,0,0.1);">
-      <div class="mono text-xs tracking-widest uppercase mb-4" style="color:rgba(245,196,0,0.6);">Wat vind jij van dit verhaal?</div>
-      <div class="flex items-center gap-6">
-        <button onclick="stemLike('${verhaalId}')" class="like-meter-btn" style="background:none;border:none;cursor:${gestemd ? 'default' : 'pointer'};padding:0;transition:transform 0.2s;" ${gestemd ? '' : 'onmouseenter="this.style.transform=\'scale(1.15)\'" onmouseleave="this.style.transform=\'scale(1)\'"'}>
-          <svg width="64" height="64" viewBox="0 0 507.9 507.9" fill="${kleur}" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 0 8px ${kleur}40);transition:fill 0.3s,filter 0.3s;">
-            <path d="M402.2,0H105.8C82.5,0,63.5,19,63.5,42.3v423.3c0,23.3,19,42.3,42.3,42.3h296.3c23.3,0,42.3-19,42.3-42.3V42.3C444.5,19,425.5,0,402.2,0z M402.2,479.8H105.8c-7.8,0-14.1-6.3-14.1-14.1v-71.6h16.7c7.8,0,14.1-6.3,14.1-14.1s-6.3-14.1-14.1-14.1H91.7v-28.2h44.9c7.8,0,14.1-6.3,14.1-14.1s-6.3-14.1-14.1-14.1H91.7V42.3c0-7.8,6.3-14.1,14.1-14.1h296.3c7.8,0,14.1,6.3,14.1,14.1v423.4h0.1C416.3,473.5,410,479.8,402.2,479.8z"/>
-            <path d="M254,302.5c-40.9,0-74.1,33.2-74.1,74.1c0,40.9,33.2,74.1,74.1,74.1s74.1-33.2,74.1-74.1C328.1,335.7,294.9,302.5,254,302.5z M208.1,376.6c0-25.3,20.5-45.9,45.9-45.9c7.5,0,14.6,1.8,20.9,5.1l-61.7,61.7C210,391.1,208.1,384.1,208.1,376.6z M254,422.4c-7.5,0-14.6-1.8-20.9-5.1l61.7-61.7c3.2,6.3,5.1,13.3,5.1,20.9C299.9,401.9,279.3,422.4,254,422.4z"/>
-            <path d="M373.9,56.4H134.1c-7.8,0-14.1,6.3-14.1,14.1V254c0,7.8,6.3,14.1,14.1,14.1H374c7.8,0,14.1-6.3,14.1-14.1V70.6C388.1,62.8,381.7,56.4,373.9,56.4z M359.9,239.9h-0.1h-88.2l36.1-111.8c2.4-7.4-1.7-15.4-9.1-17.8c-7.4-2.4-15.4,1.7-17.8,9.1L242,239.9h-93.8V84.7h211.7V239.9z"/>
-          </svg>
-        </button>
-        <div>
-          <div class="mono text-2xl font-bold" style="color:${kleur};">${totaal}</div>
-          <div class="mono text-xs" style="color:${kleur};opacity:0.8;">${label}</div>
-          ${gestemd ? '<div class="mono text-xs text-gray-600 mt-1">Je hebt gestemd!</div>' : '<div class="mono text-xs text-gray-500 mt-1">Klik om te liken</div>'}
-        </div>
-      </div>
+    <div style="margin-top:2.5rem;padding:1rem 1.5rem;background:var(--grijs);border-radius:12px;border:1px solid rgba(245,196,0,0.1);display:flex;align-items:center;gap:1rem;">
+      <button onclick="stemLike('${verhaalId}')" style="background:none;border:none;cursor:${gestemd ? 'default' : 'pointer'};padding:0;display:flex;align-items:center;gap:0.5rem;min-height:44px;" ${gestemd ? '' : 'onmouseenter="this.style.opacity=\'0.7\'" onmouseleave="this.style.opacity=\'1\'"'}>
+        <span style="font-size:1.4rem;">${gestemd ? '\u2764\uFE0F' : '\u2661'}</span>
+        <span class="mono text-lg" style="color:var(--geel);">${totaal}</span>
+      </button>
+      <span class="mono text-xs text-gray-600">${gestemd ? 'Bedankt voor je stem!' : 'Vond je dit verhaal mooi? Geef een like!'}</span>
     </div>
   `;
 }
