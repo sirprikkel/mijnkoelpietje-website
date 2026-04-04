@@ -152,6 +152,8 @@ async function laadContent() {
     await laadSponsoren();
     await laadActiviteiten();
   }
+  // Re-init scroll reveals zodat dynamisch geladen kaarten ook zichtbaar worden
+  initScrollReveals();
 }
 
 async function fetchJSON(url) {
