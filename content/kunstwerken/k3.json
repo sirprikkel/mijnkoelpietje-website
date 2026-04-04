@@ -1,10 +1,11 @@
 {
-  "id": "k3",
   "titel": "De Gang",
   "collectie": "Mijn Erfgoed",
   "beschrijving": "Eindeloze donkere gangen. Elke stap een verhaal dieper.",
   "prijs": "35",
   "editie": "1 van 10",
-  "afbeelding": "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=600&q=80",
-  "mollie_link": ""
+  "afbeelding": "/uploads/MijnKoelPietje_kunstenKitsch.jpg",
+  "afbeelding_formaat": "vierkant",
+  "mollie_link": "",
+  "id": "k3"
 }
