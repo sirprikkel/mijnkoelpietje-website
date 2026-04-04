@@ -1,10 +1,11 @@
 {
-  "id": "k2",
   "titel": "Het Kleine Licht",
   "collectie": "Kanarie Serie",
   "beschrijving": "Geel op zwart. Leven in duisternis. Hoop in een kooi.",
   "prijs": "35",
   "editie": "1 van 8",
-  "afbeelding": "https://images.unsplash.com/photo-1544027993-37dbfe43562a?w=600&q=80",
-  "mollie_link": ""
+  "afbeelding": "/uploads/MijnKoelPietje_schopalgemeen.jpg",
+  "afbeelding_formaat": "vierkant",
+  "mollie_link": "",
+  "id": "k2"
 }
