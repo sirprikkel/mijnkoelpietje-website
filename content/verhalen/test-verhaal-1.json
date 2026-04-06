@@ -3,7 +3,7 @@
   "rubriek": "knipoog",
   "datum": "6 april 2026",
   "intro": "Een test om te kijken hoe het werkt",
-  "tekst": "Er was eens\n<p>\nNa regen komt zonneschijn\n<p>\nZwaai Zwaai\n<p>",
+  "tekst": "Er was eens\n<p>\n**Na regen komt zonneschijn  (dit heb ik vet gemaakt met editor)**\n<p>hier 1 x regeloverslaan\n_Zwaai Zwaai (dit cursief gemaakt)_\n<p",
   "afbeelding": "/uploads/mijnkoelpiet.nl_makenwebsite.jpg",
   "afbeelding_formaat": "staand"
 }
