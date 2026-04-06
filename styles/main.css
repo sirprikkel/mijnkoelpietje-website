@@ -274,7 +274,8 @@ h1, h2, h3, h4, .font-display {
   margin: 2rem 0;
   font-style: italic;
 }
-.prose em { color: var(--geel); font-style: normal; }
+.prose em { font-style: italic; }
+.prose del { text-decoration: none; color: var(--geel); }
 
 /* Kunst plaatsholder */
 .kunst-placeholder {
