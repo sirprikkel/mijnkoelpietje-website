@@ -8,6 +8,22 @@ function cleanTekst(txt) {
   return txt.replace(/^(staand|liggend|vierkant|none|None)\s*/gi, '').trim();
 }
 
+// ─── Markdown naar HTML converter ────────────────────────────────
+function renderMarkdown(txt) {
+  if (!txt) return '';
+  const schoon = cleanTekst(txt);
+  // Als de tekst al HTML bevat (bijv. <p> tags), geef het direct terug
+  if (schoon.match(/<(p|div|blockquote|h[1-6]|ul|ol|li|em|strong)\b/i)) {
+    return schoon;
+  }
+  // Anders: parse als Markdown via marked.js
+  if (typeof marked !== 'undefined') {
+    return marked.parse(schoon);
+  }
+  // Fallback als marked.js niet geladen is
+  return schoon.replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br>');
+}
+
 // ─── Afbeelding formaat helper ────────────────────────────────────
 function afbStijl(formaat, standaardHoogte) {
   if (formaat === 'staand') return { height: Math.round(standaardHoogte * 1.6) + 'px', objectPosition: 'center 20%' };
@@ -142,7 +158,8 @@ async function laadContent() {
       laadKunstwerken(),
       laadNieuws(),
       laadSponsoren(),
-      laadActiviteiten()
+      laadActiviteiten(),
+      laadBundel()
     ]);
   } catch(e) {
     console.log('Content laden via directe fetch...');
@@ -151,6 +168,7 @@ async function laadContent() {
     await laadNieuws();
     await laadSponsoren();
     await laadActiviteiten();
+    await laadBundel();
   }
   // Re-init scroll reveals zodat dynamisch geladen kaarten ook zichtbaar worden
   initScrollReveals();
@@ -200,6 +218,7 @@ async function laadNieuws() {
       const idx = await r.json();
       const results = await Promise.all(idx.map(slug => fetchJSON(`/content/nieuws/${slug}.json`)));
       nieuwsItems = results.filter(n => n).map(n => { if (!n.id) n.id = n.titel || 'onbekend'; return n; });
+      nieuwsItems.sort((a, b) => parseNLDatum(b.datum) - parseNLDatum(a.datum));
     }
   } catch(e) { console.log('[KoelPietje] Nieuws laden mislukt:', e); }
   renderNieuws();
@@ -263,6 +282,41 @@ function renderActiviteiten() {
       </div>`;
     grid.appendChild(kaart);
   });
+}
+
+// ─── Bundel ──────────────────────────────────────────────────────
+let bundelData = null;
+
+async function laadBundel() {
+  try {
+    bundelData = await fetchJSON('/content/shop-instellingen/bundel.json');
+  } catch(e) { console.log('[KoelPietje] Bundel laden mislukt:', e); }
+}
+
+function renderBundel(grid) {
+  if (!bundelData || bundelData.tonen === false) return;
+  const b = bundelData;
+  const bundelKaart = document.createElement('div');
+  bundelKaart.className = 'kaart md:col-span-2 lg:col-span-3';
+  bundelKaart.style.borderColor = 'rgba(245,196,0,0.25)';
+  bundelKaart.innerHTML = `
+    <div class="p-8 flex flex-col md:flex-row items-center gap-8">
+      <div class="text-center md:text-left flex-1">
+        <div class="mono text-xs mb-2 uppercase tracking-widest" style="color:rgba(245,196,0,0.7);">${b.label || ''}</div>
+        <h3 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-2xl mb-2">${b.titel}</h3>
+        <p class="text-gray-500 mb-4 text-sm">${b.beschrijving || ''}</p>
+        <div class="flex items-center gap-4 flex-wrap">
+          <span class="text-2xl font-bold" style="color:var(--geel);">\u20ac ${b.prijs},\u2013</span>
+          ${b.oude_prijs ? `<span class="text-gray-600 line-through text-sm">\u20ac ${b.oude_prijs},\u2013</span>` : ''}
+          ${b.korting ? `<span class="mono text-xs px-2 py-1 rounded-full" style="background:rgba(245,196,0,0.12);color:var(--geel);">${b.korting}</span>` : ''}
+        </div>
+      </div>
+      ${b.mollie_link
+        ? `<a href="${b.mollie_link}" target="_blank" class="btn-geel text-base px-8 py-3 whitespace-nowrap">${b.knop_tekst || 'Bundel kopen'}</a>`
+        : `<button class="btn-geel text-base px-8 py-3 whitespace-nowrap" onclick="contactKopen('${b.titel}')">${b.knop_tekst || 'Bundel kopen'}</button>`
+      }
+    </div>`;
+  grid.appendChild(bundelKaart);
 }
 
 // ─── Render functies ──────────────────────────────────────────
@@ -340,7 +394,6 @@ function renderVerhalenPreview() {
 function renderShop() {
   const grid = document.getElementById('shop-grid');
   if (!grid || kunstwerken.length === 0) return;
-  const bundelKaart = grid.querySelector('.bundel-kaart');
   grid.innerHTML = '';
 
   kunstwerken.forEach(k => {
@@ -373,7 +426,7 @@ function renderShop() {
     grid.appendChild(kaart);
   });
 
-  if (bundelKaart) grid.appendChild(bundelKaart);
+  renderBundel(grid);
 }
 
 function renderShopPreview() {
@@ -501,17 +554,21 @@ function openVerhaal(id) {
   const v = verhalen[id];
   if (!v) return;
 
+  const cfg = rubriekConfig[v.rubriek] || { label: v.rubriek, kleur: '#f5c400', bg: 'rgba(245,196,0,0.15)' };
+  const kleur = cfg.kleur;
+  const label = cfg.label;
+
   const content = document.getElementById('verhaal-content');
   const heeftAfb = v.afbeelding && v.afbeelding.length > 0;
   const detailStijl = afbStijl(v.afbeelding_formaat, 300);
   content.innerHTML = `
     ${heeftAfb ? `<div style="margin-bottom:2rem;border-radius:12px;overflow:hidden;max-height:${detailStijl.height};"><img src="${v.afbeelding}" alt="${v.titel}" style="width:100%;height:${detailStijl.height};object-fit:cover;object-position:${detailStijl.objectPosition};opacity:0.85;" /></div>` : ''}
-    <div style="border-left:3px solid ${v.rubriekKleur};padding-left:1.5rem;margin-bottom:2.5rem;">
-      <div class="mono text-xs mb-2 uppercase" style="color:${v.rubriekKleur};letter-spacing:0.1em;">${v.rubriekLabel || v.rubriek}</div>
+    <div style="border-left:3px solid ${kleur};padding-left:1.5rem;margin-bottom:2.5rem;">
+      <div class="mono text-xs mb-2 uppercase" style="color:${kleur};letter-spacing:0.1em;">${label}</div>
       <h1 style="font-family:'Poiret One',sans-serif;font-weight:400;font-size:clamp(1.8rem,4vw,2.8rem);line-height:1.2;margin-bottom:0.5rem;">${v.titel}</h1>
       <div class="mono text-xs text-gray-600">${v.datum || ''}</div>
     </div>
-    <div class="prose leading-relaxed" style="max-width:65ch;">${cleanTekst(v.tekst)}</div>
+    <div class="prose leading-relaxed" style="max-width:65ch;">${renderMarkdown(v.tekst)}</div>
     <div id="like-sectie-${v.id}"></div>
     <div id="reacties-sectie-${v.id}"></div>
     <div style="margin-top:3rem;">

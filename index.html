@@ -52,6 +52,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
 
@@ -354,36 +355,7 @@
       <p class="text-gray-500 max-w-xl mx-auto">Updates over nieuwtjes die kunnen uitgroeien tot verhalen</p>
     </div>
 
-    <div id="nieuws-container" class="flex flex-col gap-6">      <article class="kaart p-6 sm:p-8 flex flex-col md:flex-row gap-6 items-start">
-        <div class="mono text-xs whitespace-nowrap pt-1" style="color:rgba(245,196,0,0.7);min-width:80px;">23 mrt 2026</div>
-        <div>
-          <div class="mono text-xs text-gray-600 mb-2 uppercase tracking-wide">Collectie</div>
-          <h2 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mb-2">Nieuwe AI-kunstserie gelanceerd</h2>
-          <p class="text-gray-400 text-sm leading-relaxed">De eerste serie van 12 werken is nu beschikbaar in de shop. Elk beeld toont een ander aspect van het leven in de steenkolenmijn — van de afdaling tot de stilte na de dienst.</p>
-          <button class="mt-4 mono text-xs transition-colors cursor-pointer bg-transparent border-none min-h-[44px]" style="color:rgba(245,196,0,0.8);">Lees meer →</button>
-        </div>
-      </article>
-
-      <article class="kaart p-6 sm:p-8 flex flex-col md:flex-row gap-6 items-start">
-        <div class="mono text-xs whitespace-nowrap pt-1" style="color:rgba(245,196,0,0.7);min-width:80px;">15 mrt 2026</div>
-        <div>
-          <div class="mono text-xs text-gray-600 mb-2 uppercase tracking-wide">Website</div>
-          <h2 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mb-2">MijnKoelPietje.nl is live!</h2>
-          <p class="text-gray-400 text-sm leading-relaxed">Na maanden van werken aan verhalen en beelden is de website eindelijk live. Een plek voor alles wat met de steenkolenmijn, de kanarie en mijn AI-kunstprojecten te maken heeft.</p>
-          <button class="mt-4 mono text-xs transition-colors cursor-pointer bg-transparent border-none min-h-[44px]" style="color:rgba(245,196,0,0.8);">Lees meer →</button>
-        </div>
-      </article>
-
-      <article class="kaart p-6 sm:p-8 flex flex-col md:flex-row gap-6 items-start">
-        <div class="mono text-xs whitespace-nowrap pt-1" style="color:rgba(245,196,0,0.7);min-width:80px;">3 mrt 2026</div>
-        <div>
-          <div class="mono text-xs text-gray-600 mb-2 uppercase tracking-wide">Evenement</div>
-          <h2 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mb-2">Tentoonstelling aangekondigd</h2>
-          <p class="text-gray-400 text-sm leading-relaxed">In samenwerking met het Steenkolenmijn Museum in Valkenburg komt er een kleine tentoonstelling van de AI-kunstwerken. Meer details volgen binnenkort.</p>
-          <button class="mt-4 mono text-xs transition-colors cursor-pointer bg-transparent border-none min-h-[44px]" style="color:rgba(245,196,0,0.8);">Lees meer →</button>
-        </div>
-      </article>
-
+    <div id="nieuws-container" class="flex flex-col gap-6">
     </div>
   </div>
 </div>
@@ -399,78 +371,6 @@
     </div>
 
     <div id="shop-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-
-      <div class="kaart">
-        <div class="kunst-placeholder" style="background:linear-gradient(135deg,#1a1400,#0a0a0a);">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#f5c400" width="90" height="90" style="opacity:0.18;" aria-hidden="true"><path d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008z"/></svg>
-          <div class="kunst-glow" aria-hidden="true"></div>
-          <div class="absolute bottom-0 left-0 right-0 p-4" style="background:linear-gradient(0deg,rgba(0,0,0,0.8),transparent);">
-            <div class="mono text-xs" style="color:rgba(245,196,0,0.7);">Editie 1 van 12</div>
-          </div>
-        </div>
-        <div class="p-6">
-          <h3 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mb-1">Afdaling #001</h3>
-          <p class="text-gray-500 text-sm mb-4">High-res digitale print · 4K</p>
-          <div class="flex items-center justify-between gap-3">
-            <span class="text-xl font-bold" style="color:var(--geel);">€ 35,–</span>
-            <button class="btn-geel text-sm">Kopen</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="kaart">
-        <div class="kunst-placeholder" style="background:linear-gradient(135deg,#0f0c00,#111108);">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#f5c400" width="90" height="90" style="opacity:0.18;" aria-hidden="true"><path d="M12 3C8 3 5 6 5 10c0 2.4 1.1 4.6 2.9 6L6 21h12l-1.9-5c1.8-1.4 2.9-3.6 2.9-6 0-4-3-7-7-7zm0 2c2.8 0 5 2.2 5 5s-2.2 5-5 5-5-2.2-5-5 2.2-5 5-5z"/></svg>
-          <div class="kunst-glow" aria-hidden="true"></div>
-          <div class="absolute bottom-0 left-0 right-0 p-4" style="background:linear-gradient(0deg,rgba(0,0,0,0.8),transparent);">
-            <div class="mono text-xs" style="color:rgba(245,196,0,0.7);">Editie 1 van 8</div>
-          </div>
-        </div>
-        <div class="p-6">
-          <h3 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mb-1">Het Kleine Licht #002</h3>
-          <p class="text-gray-500 text-sm mb-4">High-res digitale print · 4K</p>
-          <div class="flex items-center justify-between gap-3">
-            <span class="text-xl font-bold" style="color:var(--geel);">€ 35,–</span>
-            <button class="btn-geel text-sm">Kopen</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="kaart">
-        <div class="kunst-placeholder" style="background:linear-gradient(135deg,#0a0800,#0d0d00);">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#f5c400" width="90" height="90" style="opacity:0.18;" aria-hidden="true"><path d="M2.25 7.125C2.25 6.504 2.754 6 3.375 6h6c.621 0 1.125.504 1.125 1.125v3.75c0 .621-.504 1.125-1.125 1.125h-6a1.125 1.125 0 01-1.125-1.125v-3.75zM14.25 8.625c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v8.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 01-1.125-1.125v-8.25zM3.75 16.125c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v2.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 01-1.125-1.125v-2.25z"/></svg>
-          <div class="kunst-glow" aria-hidden="true"></div>
-          <div class="absolute bottom-0 left-0 right-0 p-4" style="background:linear-gradient(0deg,rgba(0,0,0,0.8),transparent);">
-            <div class="mono text-xs" style="color:rgba(245,196,0,0.7);">Editie 1 van 10</div>
-          </div>
-        </div>
-        <div class="p-6">
-          <h3 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mb-1">De Gang #003</h3>
-          <p class="text-gray-500 text-sm mb-4">High-res digitale print · 4K</p>
-          <div class="flex items-center justify-between gap-3">
-            <span class="text-xl font-bold" style="color:var(--geel);">€ 35,–</span>
-            <button class="btn-geel text-sm">Kopen</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Bundel -->
-      <div class="kaart bundel-kaart md:col-span-2 lg:col-span-3" style="border-color:rgba(245,196,0,0.25);">
-        <div class="p-8 flex flex-col md:flex-row items-center gap-8">
-          <div class="text-center md:text-left flex-1">
-            <div class="mono text-xs mb-2 uppercase tracking-widest" style="color:rgba(245,196,0,0.7);">Bestseller</div>
-            <h3 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-2xl mb-2">Complete KoelPietje Collectie</h3>
-            <p class="text-gray-500 mb-4 text-sm">Alle 12 werken uit de eerste serie als digitale download. Perfect voor thuis afdrukken of als wallpaper.</p>
-            <div class="flex items-center gap-4 flex-wrap">
-              <span class="text-2xl font-bold" style="color:var(--geel);">€ 79,–</span>
-              <span class="text-gray-600 line-through text-sm">€ 120,–</span>
-              <span class="mono text-xs px-2 py-1 rounded-full" style="background:rgba(245,196,0,0.12);color:var(--geel);">-34%</span>
-            </div>
-          </div>
-          <button class="btn-geel text-base px-8 py-3 whitespace-nowrap">Bundel kopen</button>
-        </div>
-      </div>
-
     </div>
   </div>
 </div>

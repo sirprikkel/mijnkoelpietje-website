@@ -89,6 +89,24 @@ collections:
       - {label: "Locatie", name: "locatie", widget: "string", hint: "Bijv: Museum Valkenburg · 10:00–17:00"}
       - {label: "Afbeelding (optioneel)", name: "afbeelding", widget: "image", required: false}
 
+  - name: "shop-instellingen"
+    label: "Shop Instellingen"
+    files:
+      - name: "bundel"
+        label: "Bundel Aanbieding"
+        file: "content/shop-instellingen/bundel.json"
+        format: json
+        fields:
+          - {label: "Titel", name: "titel", widget: "string"}
+          - {label: "Label (bijv. Bestseller)", name: "label", widget: "string"}
+          - {label: "Beschrijving", name: "beschrijving", widget: "text"}
+          - {label: "Prijs (€)", name: "prijs", widget: "string"}
+          - {label: "Oude prijs (€, optioneel)", name: "oude_prijs", widget: "string", required: false}
+          - {label: "Korting tekst (bijv. -34%)", name: "korting", widget: "string", required: false}
+          - {label: "Knop tekst", name: "knop_tekst", widget: "string", default: "Bundel kopen"}
+          - {label: "Mollie betaallink", name: "mollie_link", widget: "string", required: false, hint: "Plak hier je Mollie betaallink"}
+          - {label: "Tonen op website", name: "tonen", widget: "boolean", default: true}
+
   - name: "nieuws"
     label: "Nieuws"
     label_singular: "Nieuwsbericht"
