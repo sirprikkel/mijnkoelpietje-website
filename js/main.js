@@ -16,12 +16,14 @@ function renderMarkdown(txt) {
   if (schoon.match(/<(p|div|blockquote|h[1-6]|ul|ol|li|em|strong)\b/i)) {
     return schoon;
   }
+  // Converteer **~~kopje~~** patroon naar h3 heading (CMS-compatibiliteit)
+  const processed = schoon.replace(/\*\*~~([^~]+)~~\*\*/g, '### $1');
   // Anders: parse als Markdown via marked.js
   if (typeof marked !== 'undefined') {
-    return marked.parse(schoon);
+    return marked.parse(processed);
   }
   // Fallback als marked.js niet geladen is
-  return schoon.replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br>');
+  return processed.replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br>');
 }
 
 // ─── Afbeelding formaat helper ────────────────────────────────────
