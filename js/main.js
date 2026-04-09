@@ -327,10 +327,10 @@ function parseNLDatum(d) {
   if (!d) return 0;
   const maanden = {januari:0,februari:1,maart:2,april:3,mei:4,juni:5,juli:6,augustus:7,september:8,oktober:9,november:10,december:11};
   const delen = d.trim().split(/\s+/);
-  if (delen.length === 3) {
+  if (delen.length >= 2) {
     const dag = parseInt(delen[0]);
     const maand = maanden[delen[1].toLowerCase()];
-    const jaar = parseInt(delen[2]);
+    const jaar = delen.length >= 3 ? parseInt(delen[2]) : new Date().getFullYear();
     if (!isNaN(dag) && maand !== undefined && !isNaN(jaar)) return new Date(jaar, maand, dag).getTime();
   }
   return 0;
