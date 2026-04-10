@@ -282,17 +282,17 @@ function renderActiviteiten() {
     const kaart = document.createElement('div');
     kaart.className = 'kaart overflow-hidden';
     const heeftAfb = a.afbeelding && a.afbeelding.length > 0;
-    const aStijl = afbStijl(a.afbeelding_formaat, 180);
     kaart.innerHTML = `
-      ${heeftAfb ? `<div class="relative overflow-hidden" style="height:${aStijl.height};background:linear-gradient(135deg,#1a1400,#0a0a0a);"><img src="${a.afbeelding}" alt="${a.titel}" style="width:100%;height:100%;object-fit:cover;object-position:${aStijl.objectPosition};opacity:0.75;" /></div>` : ''}
-      <div style="height:3px;background:${tc.kleur};width:100%;"></div>
-      <div class="p-6 sm:p-8">
-        <span class="rubriek-tag" style="background:${tc.bg};color:${tc.kleur};">${a.type || 'Evenement'}</span>
-        <h2 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mt-2 mb-2">${a.titel}</h2>
-        <p class="text-gray-400 text-sm leading-relaxed mb-3">${cleanTekst(a.beschrijving) || ''}</p>
-        ${a.locatie ? `<div class="mono text-xs text-gray-600 mb-3">${a.locatie}</div>` : ''}
-        <div class="mono text-xs" style="color:${tc.kleur};">${a.datum || ''}</div>
-        ${linkHTML(a.link, tc.kleur)}
+      <div class="flex flex-col md:flex-row">
+        ${heeftAfb ? `<div class="relative overflow-hidden md:w-64 shrink-0" style="min-height:180px;background:linear-gradient(135deg,#1a1400,#0a0a0a);"><img src="${a.afbeelding}" alt="${a.titel}" style="width:100%;height:100%;object-fit:cover;opacity:0.75;" /></div>` : ''}
+        <div class="p-6 sm:p-8 flex-1" style="border-left:3px solid ${tc.kleur};">
+          <span class="rubriek-tag" style="background:${tc.bg};color:${tc.kleur};">${a.type || 'Evenement'}</span>
+          <h2 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mt-2 mb-2">${a.titel}</h2>
+          <p class="text-gray-400 text-sm leading-relaxed mb-3">${cleanTekst(a.beschrijving) || ''}</p>
+          ${a.locatie ? `<div class="mono text-xs text-gray-600 mb-3">${a.locatie}</div>` : ''}
+          <div class="mono text-xs" style="color:${tc.kleur};">${a.datum || ''}</div>
+          ${linkHTML(a.link, tc.kleur)}
+        </div>
       </div>`;
     grid.appendChild(kaart);
   });
