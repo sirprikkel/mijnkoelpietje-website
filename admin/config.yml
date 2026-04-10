@@ -86,6 +86,7 @@ collections:
       - {label: "Beschrijving", name: "beschrijving", widget: "markdown"}
       - {label: "Locatie", name: "locatie", widget: "string", hint: "Bijv: Museum Valkenburg · 10:00–17:00"}
       - {label: "Afbeelding (optioneel)", name: "afbeelding", widget: "image", required: false}
+      - {label: "Link (optioneel)", name: "link", widget: "string", required: false, hint: "URL naar externe pagina, bijv: https://www.voorbeeld.nl/evenement"}
 
   - name: "shop-instellingen"
     label: "Shop Instellingen"

@@ -28,7 +28,7 @@ function renderMarkdown(txt) {
 
 // ─── Afbeelding formaat helper ────────────────────────────────────
 function afbStijl(formaat, standaardHoogte) {
-  if (formaat === 'staand') return { height: Math.round(standaardHoogte * 1.6) + 'px', objectPosition: 'center 20%' };
+  if (formaat === 'staand') return { height: Math.round(standaardHoogte * 2.0) + 'px', objectPosition: 'center 20%' };
   if (formaat === 'vierkant') return { height: standaardHoogte + 'px', objectPosition: 'center center' };
   return { height: standaardHoogte + 'px', objectPosition: 'center center' }; // liggend (default)
 }
@@ -274,6 +274,10 @@ function renderActiviteiten() {
     const tc = typeKleuren[a.type] || typeKleuren['Anders'];
     const kaart = document.createElement('div');
     kaart.className = 'kaart p-6 sm:p-8';
+    if (a.link) {
+      kaart.style.cursor = 'pointer';
+      kaart.onclick = () => window.open(a.link, '_blank', 'noopener');
+    }
     kaart.innerHTML = `
       <div>
         <span class="rubriek-tag" style="background:${tc.bg};color:${tc.kleur};">${a.type || 'Evenement'}</span>
@@ -281,6 +285,7 @@ function renderActiviteiten() {
         <p class="text-gray-400 text-sm leading-relaxed mb-3">${cleanTekst(a.beschrijving) || ''}</p>
         ${a.locatie ? `<div class="mono text-xs text-gray-600 mb-3">${a.locatie}</div>` : ''}
         <div class="mono text-xs" style="color:${tc.kleur};">${a.datum || ''}</div>
+        ${a.link ? `<div class="mt-3 mono text-xs" style="color:${tc.kleur};">Meer info \u2192</div>` : ''}
       </div>`;
     grid.appendChild(kaart);
   });
@@ -376,12 +381,13 @@ function renderVerhalenPreview() {
   vArr.forEach(v => {
     const cfg = rubriekConfig[v.rubriek] || { label: v.rubriek, kleur: '#f5c400', bg: 'rgba(245,196,0,0.15)' };
     const heeftAfb = v.afbeelding && v.afbeelding.length > 0;
+    const vStijl = afbStijl(v.afbeelding_formaat, 180);
     const kaart = document.createElement('div');
     kaart.className = 'kaart reveal overflow-hidden';
     kaart.style.cursor = 'pointer';
     kaart.onclick = () => { toonSectie('verhalen'); openVerhaal(v.id); };
     kaart.innerHTML = `
-      ${heeftAfb ? `<div class="relative overflow-hidden" style="height:180px;background:linear-gradient(135deg,#1a1400,#0a0a0a);"><img src="${v.afbeelding}" alt="${v.titel}" style="width:100%;height:100%;object-fit:cover;opacity:0.75;" /></div>` : ''}
+      ${heeftAfb ? `<div class="relative overflow-hidden" style="height:${vStijl.height};background:linear-gradient(135deg,#1a1400,#0a0a0a);"><img src="${v.afbeelding}" alt="${v.titel}" style="width:100%;height:100%;object-fit:cover;object-position:${vStijl.objectPosition};opacity:0.75;" /></div>` : ''}
       <div style="height:3px;background:${cfg.kleur};width:100%;"></div>
       <div class="p-6">
         <span class="rubriek-tag" style="background:${cfg.bg};color:${cfg.kleur};">${cfg.label}</span>
