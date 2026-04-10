@@ -34,6 +34,7 @@ collections:
           {label: "Staand (portrait)", value: "staand"},
           {label: "Vierkant (square)", value: "vierkant"}
         ]}
+      - {label: "Link (optioneel)", name: "link", widget: "string", required: false, hint: "URL naar externe pagina, bijv: https://www.voorbeeld.nl"}
 
   - name: "kunstwerken"
     label: "Kunstwerken (Shop)"
@@ -56,6 +57,7 @@ collections:
           {label: "Vierkant (square)", value: "vierkant"}
         ]}
       - {label: "Mollie betaallink", name: "mollie_link", widget: "string", required: false, hint: "Plak hier je Mollie betaallink"}
+      - {label: "Link (optioneel)", name: "link", widget: "string", required: false, hint: "URL naar externe pagina, bijv: https://www.voorbeeld.nl"}
 
   - name: "sponsoren"
     label: "Vrienden & Sponsoren"
@@ -119,3 +121,4 @@ collections:
       - {label: "Categorie", name: "categorie", widget: "string", hint: "Bijv: Collectie, Website, Evenement"}
       - {label: "Datum", name: "datum", widget: "string"}
       - {label: "Tekst", name: "tekst", widget: "markdown"}
+      - {label: "Link (optioneel)", name: "link", widget: "string", required: false, hint: "URL naar externe pagina, bijv: https://www.voorbeeld.nl"}

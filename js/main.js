@@ -8,6 +8,13 @@ function cleanTekst(txt) {
   return txt.replace(/^(staand|liggend|vierkant|none|None)\s*/gi, '').trim();
 }
 
+// ─── Link helper — zorgt voor correcte URL en geeft HTML-link terug ──
+function linkHTML(url, kleur) {
+  if (!url) return '';
+  const href = url.match(/^https?:\/\//) ? url : 'https://' + url;
+  return `<a href="${href}" target="_blank" rel="noopener" class="mono text-xs mt-2 inline-block" style="color:${kleur || 'var(--geel)'};">Meer info \u2192</a>`;
+}
+
 // ─── Markdown naar HTML converter ────────────────────────────────
 function renderMarkdown(txt) {
   if (!txt) return '';
@@ -274,10 +281,6 @@ function renderActiviteiten() {
     const tc = typeKleuren[a.type] || typeKleuren['Anders'];
     const kaart = document.createElement('div');
     kaart.className = 'kaart p-6 sm:p-8';
-    if (a.link) {
-      kaart.style.cursor = 'pointer';
-      kaart.onclick = () => window.open(a.link, '_blank', 'noopener');
-    }
     kaart.innerHTML = `
       <div>
         <span class="rubriek-tag" style="background:${tc.bg};color:${tc.kleur};">${a.type || 'Evenement'}</span>
@@ -285,7 +288,7 @@ function renderActiviteiten() {
         <p class="text-gray-400 text-sm leading-relaxed mb-3">${cleanTekst(a.beschrijving) || ''}</p>
         ${a.locatie ? `<div class="mono text-xs text-gray-600 mb-3">${a.locatie}</div>` : ''}
         <div class="mono text-xs" style="color:${tc.kleur};">${a.datum || ''}</div>
-        ${a.link ? `<div class="mt-3 mono text-xs" style="color:${tc.kleur};">Meer info \u2192</div>` : ''}
+        ${linkHTML(a.link, tc.kleur)}
       </div>`;
     grid.appendChild(kaart);
   });
@@ -368,7 +371,7 @@ function renderVerhalenGrid() {
         <span class="rubriek-tag" style="background:${cfg.bg};color:${cfg.kleur};">${cfg.label}</span>
         <h3 class="font-bold text-lg mt-3 mb-2">${v.titel}</h3>
         <p class="text-gray-500 text-sm leading-relaxed">${cleanTekst(v.intro)}</p>
-        <div class="mt-4 text-xs mono" style="color:${cfg.kleur};">Lees meer \u2192</div>
+        ${v.link ? linkHTML(v.link, cfg.kleur) : `<div class="mt-4 text-xs mono" style="color:${cfg.kleur};">Lees meer \u2192</div>`}
       </div>`;
     grid.appendChild(kaart);
   });
@@ -425,7 +428,8 @@ function renderShop() {
         <div class="text-xs text-gray-500 mono mb-1">${k.collectie || ''}</div>
         <h3 class="font-bold text-lg mb-1">${k.titel}</h3>
         <p class="text-gray-500 text-sm mb-4">${k.beschrijving || ''}</p>
-        <div class="flex items-center justify-between">
+        ${linkHTML(k.link)}
+        <div class="flex items-center justify-between mt-2">
           <span class="text-xl font-bold" style="color:var(--geel);">\u20ac ${k.prijs},\u2013</span>
           ${k.mollie_link
             ? `<a href="${k.mollie_link}" target="_blank" class="btn-geel text-sm">Kopen</a>`
@@ -481,6 +485,7 @@ function renderNieuws() {
         <div class="text-xs text-gray-600 mono mb-2 uppercase tracking-wide">${n.categorie || ''}</div>
         <h2 class="font-bold text-xl mb-2">${n.titel}</h2>
         <p class="text-gray-400 text-sm leading-relaxed">${n.tekst}</p>
+        ${linkHTML(n.link)}
       </div>`;
     container.appendChild(art);
   });
