@@ -280,9 +280,13 @@ function renderActiviteiten() {
   activiteiten.forEach(a => {
     const tc = typeKleuren[a.type] || typeKleuren['Anders'];
     const kaart = document.createElement('div');
-    kaart.className = 'kaart p-6 sm:p-8';
+    kaart.className = 'kaart overflow-hidden';
+    const heeftAfb = a.afbeelding && a.afbeelding.length > 0;
+    const aStijl = afbStijl(a.afbeelding_formaat, 180);
     kaart.innerHTML = `
-      <div>
+      ${heeftAfb ? `<div class="relative overflow-hidden" style="height:${aStijl.height};background:linear-gradient(135deg,#1a1400,#0a0a0a);"><img src="${a.afbeelding}" alt="${a.titel}" style="width:100%;height:100%;object-fit:cover;object-position:${aStijl.objectPosition};opacity:0.75;" /></div>` : ''}
+      <div style="height:3px;background:${tc.kleur};width:100%;"></div>
+      <div class="p-6 sm:p-8">
         <span class="rubriek-tag" style="background:${tc.bg};color:${tc.kleur};">${a.type || 'Evenement'}</span>
         <h2 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mt-2 mb-2">${a.titel}</h2>
         <p class="text-gray-400 text-sm leading-relaxed mb-3">${cleanTekst(a.beschrijving) || ''}</p>
