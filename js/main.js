@@ -355,6 +355,8 @@ function renderVerhalenGrid() {
     kaart.className = 'kaart overflow-hidden';
     kaart.dataset.rubriek = v.rubriek;
     kaart.dataset.tags = (v.intro || '') + ' ' + (v.titel || '');
+    const parsed = parseNLDatum(v.datum);
+    kaart.dataset.jaar = parsed ? new Date(parsed).getFullYear() : '';
     kaart.setAttribute('role', 'listitem');
     kaart.onclick = () => openVerhaal(v.id);
     const heeftAfb = v.afbeelding && v.afbeelding.length > 0;
@@ -611,6 +613,8 @@ function filterRubriek(rubriek, btn) {
 
 function filterVerhalen() {
   const zoek = document.getElementById('zoek-verhalen').value.toLowerCase().trim();
+  const jaarSelect = document.getElementById('filter-jaar');
+  const actiefJaar = jaarSelect ? jaarSelect.value : 'alle';
   const kaarten = document.querySelectorAll('#verhalen-grid .kaart');
   let zichtbaar = 0;
 
@@ -620,8 +624,9 @@ function filterVerhalen() {
     const tekst = kaart.innerText.toLowerCase();
     const rubriekMatch = actieveRubriek === 'alle' || rubriek === actieveRubriek;
     const zoekMatch = !zoek || tekst.includes(zoek) || tags.includes(zoek);
-    kaart.style.display = (rubriekMatch && zoekMatch) ? '' : 'none';
-    if (rubriekMatch && zoekMatch) zichtbaar++;
+    const jaarMatch = actiefJaar === 'alle' || kaart.dataset.jaar === actiefJaar;
+    kaart.style.display = (rubriekMatch && zoekMatch && jaarMatch) ? '' : 'none';
+    if (rubriekMatch && zoekMatch && jaarMatch) zichtbaar++;
   });
 
   const geenRes = document.getElementById('geen-resultaten');
