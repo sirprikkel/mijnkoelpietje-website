@@ -3,6 +3,16 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
 const NOTIFY_EMAIL = "info@mijnkoelpietje.nl";
 
+function escapeHtml(str: string): string {
+  if (!str) return '';
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
 async function sendEmail(to: string, subject: string, html: string) {
   return fetch("https://api.resend.com/emails", {
     method: "POST",
@@ -11,7 +21,7 @@ async function sendEmail(to: string, subject: string, html: string) {
       Authorization: `Bearer ${RESEND_API_KEY}`,
     },
     body: JSON.stringify({
-      from: "MijnKoelPietje <onboarding@resend.dev>",
+      from: "MijnKoelPietje <info@mijnkoelpietje.nl>",
       to: [to],
       subject,
       html,
@@ -40,6 +50,7 @@ serve(async (req) => {
     }
 
     const { email } = record;
+    const safeEmail = escapeHtml(email);
 
     // 1. Bevestigingsmail naar de aanmelder
     const bevestigingRes = await sendEmail(
@@ -68,7 +79,7 @@ serve(async (req) => {
       "Nieuwe nieuwsbrief aanmelding",
       `
         <h2>Nieuwe nieuwsbrief aanmelding</h2>
-        <p><strong>E-mail:</strong> <a href="mailto:${email}">${email}</a></p>
+        <p><strong>E-mail:</strong> <a href="mailto:${safeEmail}">${safeEmail}</a></p>
         <p><strong>Datum:</strong> ${new Date().toLocaleString("nl-NL", { timeZone: "Europe/Amsterdam" })}</p>
         <hr style="margin:16px 0;border:none;border-top:1px solid #eee;" />
         <p style="color:#999;font-size:12px;">Automatisch verstuurd door MijnKoelPietje.nl</p>
