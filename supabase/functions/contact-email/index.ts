@@ -1,7 +1,7 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
-const NOTIFY_EMAIL = "info@mijnkoelpietje.nl";
+const NOTIFY_EMAIL = "mijnkoelpietje@gmail.com";
 
 function escapeHtml(str: string): string {
   if (!str) return '';
