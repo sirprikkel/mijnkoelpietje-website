@@ -4,14 +4,28 @@
 (function() {
   gsap.registerPlugin(ScrollTrigger);
 
-  // Max diepte = 600m (aan het einde van de pagina)
+  // Max diepte en telsnelheid
   const MAX_DIEPTE = 600;
+  // Meters per pixel: behoud originele snelheid (300m over volledige pagina
+  // bij de oorspronkelijke paginalengte). Bij langere pagina's telt hij door.
+  let metersPerPixel = 0;
   const meter = document.getElementById('dieptemeter');
   const getal = document.getElementById('depth-getal');
 
   // Huidige diepte bijhouden
   let huidigeDepth = 0;
   let doelDepth = 0;
+
+  // Bereken meters-per-pixel op basis van originele verhouding
+  function berekenSnelheid() {
+    const scrollHoogte = document.documentElement.scrollHeight - window.innerHeight;
+    if (scrollHoogte > 0) {
+      // Origineel: 300m over de gehele scrollhoogte
+      metersPerPixel = 300 / scrollHoogte;
+    }
+  }
+  berekenSnelheid();
+  window.addEventListener('resize', berekenSnelheid);
 
   // Smooth counter update
   function updateGetal() {
@@ -38,13 +52,9 @@
   }
   requestAnimationFrame(updateGetal);
 
-  // ScrollTrigger: koppel scroll positie aan diepte
-  ScrollTrigger.create({
-    trigger: 'body',
-    start: 'top top',
-    end: 'bottom bottom',
-    onUpdate: (self) => {
-      doelDepth = Math.round(self.progress * MAX_DIEPTE);
-    }
+  // Scroll listener: diepte op basis van gescrollde pixels
+  window.addEventListener('scroll', () => {
+    const scrolled = window.scrollY;
+    doelDepth = Math.min(Math.round(scrolled * metersPerPixel), MAX_DIEPTE);
   });
 })();
