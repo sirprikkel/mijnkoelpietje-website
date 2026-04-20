@@ -568,8 +568,15 @@ function toonSectie(naam) {
 // ─── Verhalen ────────────────────────────────────────────────────────────────
 let actieveRubriek = 'alle';
 
+let overzichtScrollPositie = null;
+
 function openVerhaal(id) {
-  if (huidigeSectie !== 'verhalen') toonSectie('verhalen');
+  if (huidigeSectie === 'verhalen') {
+    overzichtScrollPositie = window.scrollY;
+  } else {
+    overzichtScrollPositie = null;
+    toonSectie('verhalen');
+  }
   const v = verhalen[id];
   if (!v) return;
 
@@ -606,6 +613,13 @@ function openVerhaal(id) {
 function sluitVerhaal() {
   document.getElementById('verhaal-detail').classList.remove('open');
   document.getElementById('verhalen-overzicht').classList.remove('verborgen');
+  if (overzichtScrollPositie !== null) {
+    const positie = overzichtScrollPositie;
+    overzichtScrollPositie = null;
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: positie, behavior: 'instant' });
+    });
+  }
 }
 
 // ─── Filteren ────────────────────────────────────────────────────────────────
