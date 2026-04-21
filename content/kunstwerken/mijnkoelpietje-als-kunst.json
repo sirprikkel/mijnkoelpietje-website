@@ -5,6 +5,7 @@
   "prijs": "0",
   "editie": "1 van 1",
   "afbeelding": "/uploads/mijnkoelpietje_paulklee.jpg",
-  "afbeelding_formaat": "staand",
-  "mollie_link": ""
+  "afbeelding_formaat": "vierkant",
+  "mollie_link": "",
+  "link": ""
 }
