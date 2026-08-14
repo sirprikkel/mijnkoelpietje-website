@@ -427,7 +427,7 @@ function renderShop() {
       </div>
       <div class="p-6">
         <div class="text-xs text-gray-500 mono mb-1">${k.collectie || ''}</div>
-        <h3 class="font-bold text-lg mb-1">${k.titel}</h3>
+        <h3 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-lg mb-1">${k.titel}</h3>
         <div class="prose prose-kaart mb-4">${renderMarkdown(k.beschrijving)}</div>
         ${linkHTML(k.link)}
         <div class="flex items-center justify-between mt-2">

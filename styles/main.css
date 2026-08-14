@@ -288,8 +288,9 @@ h1, h2, h3, h4, .font-display {
 .prose h3 { font-size: clamp(1.1rem, 2.5vw, 1.4rem); }
 .prose h4 { font-size: clamp(1rem, 2vw, 1.2rem); }
 
-/* Compacte prose-variant voor shopkaarten */
-.prose-kaart p { margin-bottom: 0.9rem; font-size: 0.875rem; line-height: 1.7; color: #aaa; }
+/* Compacte prose-variant voor shopkaarten — zelfde typografie als verhalen */
+.prose-kaart { font-family: 'Didact Gothic', sans-serif; font-size: 0.95rem; line-height: 1.8; color: #ccc; }
+.prose-kaart p { margin-bottom: 0.9rem; }
 .prose-kaart h1, .prose-kaart h2, .prose-kaart h3, .prose-kaart h4 {
   margin-top: 1rem;
   margin-bottom: 0.5rem;
