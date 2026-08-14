@@ -424,14 +424,11 @@ function renderShop() {
           ? `<img src="${k.afbeelding}" alt="${k.titel}" style="width:100%;height:100%;object-fit:cover;object-position:${kStijl.objectPosition};opacity:0.85;" />`
           : `<div style="position:absolute;inset:0;background:radial-gradient(circle at 40% 50%,rgba(245,196,0,0.18),transparent 60%);display:flex;align-items:center;justify-content:center;"><span style="font-size:5rem;opacity:0.15;">\ud83d\uddbc\ufe0f</span></div>`
         }
-        <div class="absolute bottom-0 left-0 right-0 p-4" style="background:linear-gradient(0deg,rgba(0,0,0,0.85),transparent);">
-          <div class="mono text-xs" style="color:rgba(245,196,0,0.7);">Editie ${k.editie || '\u2013'}</div>
-        </div>
       </div>
       <div class="p-6">
         <div class="text-xs text-gray-500 mono mb-1">${k.collectie || ''}</div>
         <h3 class="font-bold text-lg mb-1">${k.titel}</h3>
-        <p class="text-gray-500 text-sm mb-4">${k.beschrijving || ''}</p>
+        <div class="prose prose-kaart mb-4">${renderMarkdown(k.beschrijving)}</div>
         ${linkHTML(k.link)}
         <div class="flex items-center justify-between mt-2">
           <span class="text-xl font-bold" style="color:var(--geel);">\u20ac ${k.prijs},\u2013</span>

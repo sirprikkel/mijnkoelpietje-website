@@ -288,6 +288,15 @@ h1, h2, h3, h4, .font-display {
 .prose h3 { font-size: clamp(1.1rem, 2.5vw, 1.4rem); }
 .prose h4 { font-size: clamp(1rem, 2vw, 1.2rem); }
 
+/* Compacte prose-variant voor shopkaarten */
+.prose-kaart p { margin-bottom: 0.9rem; font-size: 0.875rem; line-height: 1.7; color: #aaa; }
+.prose-kaart h1, .prose-kaart h2, .prose-kaart h3, .prose-kaart h4 {
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.05rem;
+}
+.prose-kaart blockquote { margin: 1rem 0; padding-left: 1rem; }
+
 /* Kunst plaatsholder */
 .kunst-placeholder {
   height: 280px;

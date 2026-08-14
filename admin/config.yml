@@ -49,7 +49,6 @@ collections:
       - {label: "Collectie", name: "collectie", widget: "string", hint: "Bijv: Kanarie Serie"}
       - {label: "Beschrijving", name: "beschrijving", widget: "markdown"}
       - {label: "Prijs (€)", name: "prijs", widget: "string"}
-      - {label: "Editie", name: "editie", widget: "string", hint: "Bijv: 1 van 12"}
       - {label: "Afbeelding", name: "afbeelding", widget: "image", required: false}
       - {label: "Afbeelding formaat", name: "afbeelding_formaat", widget: "select", required: false, default: "liggend", options: [
           {label: "Liggend (landscape)", value: "liggend"},
