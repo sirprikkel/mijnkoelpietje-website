@@ -346,3 +346,20 @@ h1, h2, h3, h4, .font-display {
 @media (prefers-reduced-motion: reduce) {
   .galerij-overlay { transition: none; transform: none; }
 }
+
+/* --- Facebook-icoon in de nav --- */
+.fb-nav-link {
+  color: #777;
+  display: inline-flex;
+  align-items: center;
+  transition: color var(--animation-duration);
+  padding: 0.2rem 0;
+}
+.fb-nav-link:hover {
+  color: var(--geel);
+}
+.fb-nav-link:focus-visible {
+  outline: 2px solid var(--geel);
+  outline-offset: 2px;
+  border-radius: 2px;
+}

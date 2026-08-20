@@ -718,7 +718,8 @@ function updateNav() {
   const deskMenu = document.getElementById('desk-menu');
   const mobBtn = document.getElementById('mob-menu-btn');
   const mobMenu = document.getElementById('mob-menu');
-  if (window.innerWidth <= 768) {
+  // 1060px: onder deze breedte passen de 8 menu-items + Facebook-icoon niet meer naast elkaar
+  if (window.innerWidth < 1060) {
     deskMenu.style.display = 'none';
     mobBtn.style.display = 'flex';
   } else {
@@ -859,10 +860,41 @@ function initScrollReveals() {
   });
 }
 
+// ─── Facebook-icoon in de nav — hover-animatie ───────────────────
+function initFacebookIcoon() {
+  const link = document.getElementById('fb-nav');
+  if (!link) return;
+
+  // Zonder GSAP of bij voorkeur voor minder beweging: gewoon een stille link
+  if (typeof gsap === 'undefined') return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const pad = link.querySelector('.fb-path');
+  const duim = link.querySelector('.fb-duim');
+  if (!pad || !duim) return;
+
+  link.addEventListener('mouseenter', () => {
+    gsap.fromTo(pad, { scale: 1 }, {
+      keyframes: [{ scale: 0.9 }, { scale: 1.05 }, { scale: 1 }],
+      duration: 0.5, ease: 'power1.inOut'
+    });
+    gsap.fromTo(duim, { y: -10, opacity: 0 }, {
+      keyframes: [{ opacity: 1 }, { opacity: 0 }],
+      y: 0, duration: 0.6, ease: 'power2.out'
+    });
+  });
+
+  link.addEventListener('mouseleave', () => {
+    gsap.to(pad, { scale: 1, duration: 0.2, ease: 'power1.inOut' });
+    gsap.set(duim, { y: 0, opacity: 0 });
+  });
+}
+
 // Init on load
 document.addEventListener('DOMContentLoaded', () => {
   initScrollReveals();
   document.querySelectorAll('.reveal').forEach((el, i) => {
     el.style.transitionDelay = (i * 80) + 'ms';
   });
+  initFacebookIcoon();
 });
