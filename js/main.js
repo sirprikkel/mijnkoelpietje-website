@@ -2,6 +2,13 @@
 // MijnKoelPietje — Hoofd JavaScript
 // ═══════════════════════════════════════════════════════════
 
+// ─── Instellingen ─────────────────────────────────────────────────
+// Reacties onder de verhalen. Op verzoek van de klant uitgezet.
+// Op true zetten om ze weer te tonen; de code en de reacties die al in
+// de database staan blijven bewaard. Let op: bij weer aanzetten ook de
+// teksten in index.html terugzetten (cookiebanner + disclaimer).
+const REACTIES_AAN = false;
+
 // ─── Tekst cleanup — strip per ongeluk ingevoerde formaatwoorden ──
 function cleanTekst(txt) {
   if (!txt) return '';
@@ -122,6 +129,7 @@ async function laadReacties(verhaalId) {
 }
 
 async function renderReacties(verhaalId) {
+  if (!REACTIES_AAN) return;   // uitgezet: niets tonen, ook niets ophalen
   const el = document.getElementById('reacties-sectie-' + verhaalId);
   if (!el) return;
   const reacties = await laadReacties(verhaalId);
@@ -151,6 +159,7 @@ async function renderReacties(verhaalId) {
 }
 
 async function verstuurReactie(verhaalId) {
+  if (!REACTIES_AAN) return;   // extra slot: ook niet via de console opslaan
   const naam  = document.getElementById('reactie-naam-'  + verhaalId)?.value.trim();
   const tekst = document.getElementById('reactie-tekst-' + verhaalId)?.value.trim();
   if (!naam || !tekst) { alert('Vul je naam en reactie in.'); return; }
