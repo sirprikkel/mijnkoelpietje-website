@@ -74,6 +74,13 @@
   <button id="lightbox-close" onclick="sluitLightbox()" aria-label="Sluiten">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="24" height="24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
   </button>
+  <button id="lightbox-prev" onclick="event.stopPropagation(); lightboxVorige()" aria-label="Vorige foto">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="28" height="28"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
+  </button>
+  <button id="lightbox-next" onclick="event.stopPropagation(); lightboxVolgende()" aria-label="Volgende foto">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="28" height="28"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
+  </button>
+  <div id="lightbox-teller" class="mono" aria-live="polite"></div>
   <img id="lightbox-img" src="" alt="" />
 </div>
 
@@ -397,13 +404,25 @@
 <!-- ══════════════════════════════════════════════════════ SHOP ══ -->
 <div id="sectie-shop" class="sectie">
   <div class="pt-24 pb-32 max-w-6xl mx-auto px-4 sm:px-6">
-    <div class="text-center mb-16 pt-8">
+    <div id="shop-header" class="text-center mb-16 pt-8">
       <div class="mono text-xs tracking-widest uppercase mb-3" style="color:rgba(245,196,0,0.7);">Daal af in onze shop</div>
       <h1 style="font-family:'Poiret One',sans-serif;font-size:clamp(2.5rem,6vw,4rem);font-weight:400;" class="mb-4">Shop</h1>
       <p class="text-gray-500 max-w-xl mx-auto">Mijn-erfgoed voor thuis unieke prints en hebbedingen met de ziel van ons mijnverleden</p>
     </div>
 
-    <div id="shop-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <!-- Product detail (verborgen tot klik) -->
+    <div id="product-detail" class="product-detail mb-12" role="article">
+      <button onclick="sluitProduct()" class="flex items-center gap-2 mb-8 transition-colors text-sm mono cursor-pointer bg-transparent border-none min-h-[44px]" style="color:rgba(245,196,0,0.8);" aria-label="Terug naar de shop">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/></svg>
+        Terug naar de shop
+      </button>
+      <div id="product-content"><!-- dynamisch --></div>
+    </div>
+
+    <!-- Overzicht -->
+    <div id="shop-overzicht" class="shop-overzicht">
+      <div id="shop-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      </div>
     </div>
   </div>
 </div>

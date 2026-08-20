@@ -40,6 +40,16 @@ function afbStijl(formaat, standaardHoogte) {
   return { height: standaardHoogte + 'px', objectPosition: 'center center' }; // liggend (default)
 }
 
+// ─── Fotolijst van een product ────────────────────────────────────
+// Hoofdafbeelding altijd eerst, daarna de extra foto's uit het CMS.
+// Werkt ook als 'fotos' ontbreekt — dan is de lijst simpelweg 1 foto.
+function productFotos(k) {
+  const lijst = [];
+  if (k.afbeelding) lijst.push(k.afbeelding);
+  (k.fotos || []).forEach(f => { if (f && !lijst.includes(f)) lijst.push(f); });
+  return lijst;
+}
+
 // ─── Supabase configuratie ────────────────────────────────────────
 const SUPABASE_URL  = 'https://nwufmlayvaofmjetacfd.supabase.co';
 const SUPABASE_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im53dWZtbGF5dmFvZm1qZXRhY2ZkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5ODYzMjksImV4cCI6MjA5MDU2MjMyOX0._TUyvaHByhC0BeOpwt9Z9pFLEN0o0yi3c13lsvd76Kg';
@@ -466,36 +476,90 @@ function renderVerhalenPreview() {
   });
 }
 
+// Koop-/bestelknop voor een product. Bindt de handler als functie i.p.v. een
+// onclick-string, zodat een apostrof in de titel de knop niet breekt.
+function koopKnop(k, groot) {
+  const maat = groot ? 'text-base px-8 py-3' : 'text-sm';
+  if (k.mollie_link) {
+    const a = document.createElement('a');
+    a.href = k.mollie_link;
+    a.target = '_blank';
+    a.rel = 'noopener';
+    a.className = 'btn-geel ' + maat;
+    a.textContent = 'Kopen';
+    return a;
+  }
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'btn-geel ' + maat;
+  btn.textContent = 'Bestellen';
+  btn.onclick = (e) => { e.stopPropagation(); contactKopen(k.titel); };
+  return btn;
+}
+
 function renderShop() {
   const grid = document.getElementById('shop-grid');
   if (!grid || kunstwerken.length === 0) return;
   grid.innerHTML = '';
 
-  kunstwerken.forEach(k => {
+  kunstwerken.forEach((k, i) => {
     const kaart = document.createElement('div');
     kaart.className = 'kaart group';
-    const heeftAfb = k.afbeelding && k.afbeelding.length > 0;
+    const fotos = productFotos(k);
+    const heeftAfb = fotos.length > 0;
     const kStijl = afbStijl(k.afbeelding_formaat, 320);
-    kaart.innerHTML = `
-      <div class="relative overflow-hidden" style="height:${kStijl.height};background:linear-gradient(135deg,#1a1400,#0a0a0a);">
-        ${heeftAfb
-          ? `<img src="${k.afbeelding}" alt="${k.titel}" style="width:100%;height:100%;object-fit:cover;object-position:${kStijl.objectPosition};opacity:0.85;" />`
-          : `<div style="position:absolute;inset:0;background:radial-gradient(circle at 40% 50%,rgba(245,196,0,0.18),transparent 60%);display:flex;align-items:center;justify-content:center;"><span style="font-size:5rem;opacity:0.15;">\ud83d\uddbc\ufe0f</span></div>`
-        }
-      </div>
-      <div class="p-6">
-        <div class="text-xs text-gray-500 mono mb-1">${k.collectie || ''}</div>
-        <h3 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-lg mb-1">${k.titel}</h3>
-        <div class="prose prose-kaart mb-4">${renderMarkdown(k.beschrijving)}</div>
-        ${linkHTML(k.link)}
-        <div class="flex items-center justify-between mt-2">
-          <span class="text-xl font-bold" style="color:var(--geel);">\u20ac ${k.prijs},\u2013</span>
-          ${k.mollie_link
-            ? `<a href="${k.mollie_link}" target="_blank" class="btn-geel text-sm">Kopen</a>`
-            : `<button class="btn-geel text-sm" onclick="contactKopen('${k.titel}')">Bestellen</button>`
-          }
-        </div>
+
+    // Beeld-vlak is een button i.p.v. de hele kaart, zodat de bestelknop
+    // en een eventuele 'Meer info'-link geen geneste interactieve elementen worden.
+    const beeldKnop = document.createElement('button');
+    beeldKnop.type = 'button';
+    beeldKnop.className = 'relative overflow-hidden block w-full p-0 border-none galerij-tegel';
+    beeldKnop.style.cssText = `height:${kStijl.height};background:linear-gradient(135deg,#1a1400,#0a0a0a);cursor:pointer;`;
+    beeldKnop.setAttribute('aria-label', 'Bekijk ' + k.titel);
+    beeldKnop.onclick = () => openProduct(i);
+
+    if (heeftAfb) {
+      const img = document.createElement('img');
+      img.src = fotos[0];
+      img.alt = k.titel;
+      img.loading = 'lazy';
+      img.style.cssText = `width:100%;height:100%;object-fit:cover;object-position:${kStijl.objectPosition};opacity:0.85;`;
+      beeldKnop.appendChild(img);
+    } else {
+      const leeg = document.createElement('div');
+      leeg.style.cssText = 'position:absolute;inset:0;background:radial-gradient(circle at 40% 50%,rgba(245,196,0,0.18),transparent 60%);display:flex;align-items:center;justify-content:center;';
+      leeg.innerHTML = '<span style="font-size:5rem;opacity:0.15;">\ud83d\uddbc\ufe0f</span>';
+      beeldKnop.appendChild(leeg);
+    }
+
+    // Indicator dat er meer te zien is
+    if (fotos.length > 1) {
+      const badge = document.createElement('span');
+      badge.className = 'foto-badge mono';
+      badge.textContent = '\ud83d\udcf7 ' + fotos.length;
+      beeldKnop.appendChild(badge);
+    }
+
+    const body = document.createElement('div');
+    body.className = 'p-6';
+    body.innerHTML = `
+      <div class="text-xs text-gray-500 mono mb-1"></div>
+      <h3 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-lg mb-1"></h3>
+      <div class="prose prose-kaart mb-4">${renderMarkdown(k.beschrijving)}</div>
+      ${linkHTML(k.link)}
+      <div class="flex items-center justify-between mt-2">
+        <span class="text-xl font-bold" style="color:var(--geel);">\u20ac ${k.prijs},\u2013</span>
       </div>`;
+    // Titels bevatten &, en-dashes en mogelijk aanhalingstekens \u2014 via textContent
+    // opbouwen zodat escaping vanzelf goed gaat (zelfde aanpak als renderGalerij).
+    body.querySelector('.mono').textContent = k.collectie || '';
+    body.querySelector('h3').textContent = k.titel;
+
+    const knopRij = body.querySelector('.justify-between');
+    knopRij.appendChild(koopKnop(k));
+
+    kaart.appendChild(beeldKnop);
+    kaart.appendChild(body);
     grid.appendChild(kaart);
   });
 
@@ -506,11 +570,11 @@ function renderShopPreview() {
   const grid = document.getElementById('shop-preview');
   if (!grid || kunstwerken.length === 0) return;
   grid.innerHTML = '';
-  kunstwerken.slice(0, 3).forEach(k => {
+  kunstwerken.slice(0, 3).forEach((k, i) => {
     const kaart = document.createElement('div');
     kaart.className = 'kaart reveal';
     kaart.style.cursor = 'pointer';
-    kaart.onclick = () => toonSectie('shop');
+    kaart.onclick = () => openProduct(i);
     const heeftAfb = k.afbeelding && k.afbeelding.length > 0;
     kaart.innerHTML = `
       <div class="relative overflow-hidden" style="height:200px;background:linear-gradient(135deg,#1a1400,#0a0a0a);">
@@ -615,6 +679,7 @@ function toonSectie(naam) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 
   if (naam === 'verhalen') sluitVerhaal();
+  if (naam === 'shop') sluitProduct();
 
   // Trigger scroll reveals voor nieuwe sectie
   setTimeout(initScrollReveals, 50);
@@ -671,6 +736,158 @@ function sluitVerhaal() {
   if (overzichtScrollPositie !== null) {
     const positie = overzichtScrollPositie;
     overzichtScrollPositie = null;
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: positie, behavior: 'instant' });
+    });
+  }
+}
+
+// ─── Product detail (shop) ───────────────────────────────────────────────────
+// Eigen scroll-global: shop en verhalen mogen niet om dezelfde variabele vechten.
+let shopScrollPositie = null;
+let huidigProduct = null;
+// Welke foto staat er groot? Bijgehouden zodat de lightbox op dezelfde foto opent.
+let actieveFotoIndex = 0;
+
+function openProduct(index) {
+  const k = kunstwerken[index];
+  if (!k) return;   // guard vóór het opslaan van de scrollpositie
+  actieveFotoIndex = 0;   // nieuw product start altijd bij de eerste foto
+
+  if (huidigeSectie === 'shop') {
+    shopScrollPositie = window.scrollY;
+  } else {
+    shopScrollPositie = null;
+    toonSectie('shop');
+  }
+
+  huidigProduct = index;
+  const fotos = productFotos(k);
+  const stijl = afbStijl(k.afbeelding_formaat, 300);
+  const content = document.getElementById('product-content');
+  content.innerHTML = '';
+
+  const wrap = document.createElement('div');
+  wrap.className = 'grid grid-cols-1 md:grid-cols-2 gap-10 items-start';
+
+  // ── Linkerkolom: hoofdfoto + thumbnails ──
+  const beeldKol = document.createElement('div');
+
+  if (fotos.length > 0) {
+    const hoofdKnop = document.createElement('button');
+    hoofdKnop.type = 'button';
+    hoofdKnop.className = 'relative overflow-hidden block w-full p-0 border-none galerij-tegel';
+    hoofdKnop.style.cssText = 'border-radius:12px;cursor:zoom-in;background:linear-gradient(135deg,#1a1400,#0a0a0a);';
+    hoofdKnop.setAttribute('aria-label', 'Vergroot foto van ' + k.titel);
+
+    const hoofdImg = document.createElement('img');
+    hoofdImg.id = 'product-hoofdfoto';
+    hoofdImg.src = fotos[0];
+    hoofdImg.alt = k.titel;
+    // In de detailweergave willen we de héle foto zien (contain, niet cover) en
+    // begrensd op de viewporthoogte, zodat staande foto's de thumbnails niet wegdrukken.
+    hoofdImg.style.cssText = `width:100%;max-height:min(${stijl.height}, 62vh);object-fit:contain;display:block;`;
+    hoofdKnop.appendChild(hoofdImg);
+    hoofdKnop.onclick = () => openLightboxSerie(fotos, actieveFotoIndex, k.titel);
+    beeldKol.appendChild(hoofdKnop);
+
+    // Thumbnailstrip alleen zinvol bij meerdere foto's
+    if (fotos.length > 1) {
+      const strip = document.createElement('div');
+      strip.className = 'thumb-strip';
+      fotos.forEach((foto, fi) => {
+        const t = document.createElement('button');
+        t.type = 'button';
+        t.className = 'thumb' + (fi === 0 ? ' actief' : '');
+        t.setAttribute('aria-label', `Foto ${fi + 1} van ${fotos.length}`);
+        const ti = document.createElement('img');
+        ti.src = foto;
+        ti.alt = '';
+        ti.loading = 'lazy';
+        t.appendChild(ti);
+        t.onclick = () => kiesFoto(fi, fotos, k.titel);
+        strip.appendChild(t);
+      });
+      beeldKol.appendChild(strip);
+    }
+  }
+
+  // ── Rechterkolom: tekst ──
+  const tekstKol = document.createElement('div');
+
+  const collectie = document.createElement('div');
+  collectie.className = 'mono text-xs uppercase mb-2';
+  collectie.style.cssText = 'color:rgba(245,196,0,0.7);letter-spacing:0.1em;';
+  collectie.textContent = k.collectie || '';
+  tekstKol.appendChild(collectie);
+
+  const titel = document.createElement('h1');
+  titel.style.cssText = "font-family:'Poiret One',sans-serif;font-weight:400;font-size:clamp(1.6rem,3.5vw,2.4rem);line-height:1.2;margin-bottom:0.75rem;";
+  titel.textContent = k.titel;
+  tekstKol.appendChild(titel);
+
+  const prijsRij = document.createElement('div');
+  prijsRij.className = 'flex items-center gap-4 mb-6 flex-wrap';
+  const prijs = document.createElement('span');
+  prijs.className = 'text-2xl font-bold';
+  prijs.style.color = 'var(--geel)';
+  prijs.textContent = `€ ${k.prijs},–`;
+  prijsRij.appendChild(prijs);
+  if (k.editie) {
+    const ed = document.createElement('span');
+    ed.className = 'mono text-xs text-gray-500';
+    ed.textContent = 'Editie ' + k.editie;
+    prijsRij.appendChild(ed);
+  }
+  tekstKol.appendChild(prijsRij);
+
+  const besch = document.createElement('div');
+  besch.className = 'prose leading-relaxed mb-6';
+  besch.style.maxWidth = '60ch';
+  besch.innerHTML = renderMarkdown(k.beschrijving);   // levert HTML op
+  tekstKol.appendChild(besch);
+
+  if (k.link) {
+    const l = document.createElement('div');
+    l.className = 'mb-6';
+    l.innerHTML = linkHTML(k.link);
+    tekstKol.appendChild(l);
+  }
+
+  tekstKol.appendChild(koopKnop(k, true));
+
+  wrap.appendChild(beeldKol);
+  wrap.appendChild(tekstKol);
+  content.appendChild(wrap);
+
+  document.getElementById('product-detail').classList.add('open');
+  document.getElementById('shop-overzicht').classList.add('verborgen');
+  const kop = document.getElementById('shop-header');
+  if (kop) kop.classList.add('verborgen');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function kiesFoto(index, fotos, alt) {
+  actieveFotoIndex = index;
+  const img = document.getElementById('product-hoofdfoto');
+  if (img) { img.src = fotos[index]; img.alt = alt || ''; }
+  document.querySelectorAll('#product-content .thumb').forEach((t, i) => {
+    t.classList.toggle('actief', i === index);
+  });
+}
+
+function sluitProduct() {
+  const detail = document.getElementById('product-detail');
+  if (!detail) return;
+  detail.classList.remove('open');
+  document.getElementById('shop-overzicht').classList.remove('verborgen');
+  const kop = document.getElementById('shop-header');
+  if (kop) kop.classList.remove('verborgen');
+  huidigProduct = null;
+  actieveFotoIndex = 0;
+  if (shopScrollPositie !== null) {
+    const positie = shopScrollPositie;
+    shopScrollPositie = null;
     requestAnimationFrame(() => {
       window.scrollTo({ top: positie, behavior: 'instant' });
     });
@@ -827,20 +1044,63 @@ async function aanmeldenNieuwsbrief(e) {
 }
 
 // ─── Lightbox ────────────────────────────────────────────────────────────────
+let lightboxFotos = [];
+let lightboxIndex = 0;
+let lightboxAlt = '';
+
+// Enkele foto — blijft werken zoals voorheen.
 function openLightbox(src, alt) {
+  openLightboxSerie([src], 0, alt);
+}
+
+// Serie foto's, met vorige/volgende.
+function openLightboxSerie(fotos, index, alt) {
+  if (!fotos || fotos.length === 0) return;
+  lightboxFotos = fotos;
+  lightboxIndex = Math.min(Math.max(index || 0, 0), fotos.length - 1);
+  lightboxAlt = alt || '';
   const lb = document.getElementById('lightbox');
-  const img = document.getElementById('lightbox-img');
-  img.src = src;
-  img.alt = alt || '';
+  lb.classList.toggle('enkel', fotos.length < 2);
+  toonLightboxFoto();
   lb.classList.add('open');
   document.body.style.overflow = 'hidden';
+  const sluit = document.getElementById('lightbox-close');
+  if (sluit) sluit.focus();
 }
+
+function toonLightboxFoto() {
+  const img = document.getElementById('lightbox-img');
+  if (!img) return;
+  img.src = lightboxFotos[lightboxIndex];
+  img.alt = lightboxAlt;
+  const teller = document.getElementById('lightbox-teller');
+  if (teller) teller.textContent = `${lightboxIndex + 1} / ${lightboxFotos.length}`;
+}
+
+// Modulo zodat je van de laatste foto naar de eerste doorloopt.
+function lightboxVorige() {
+  if (lightboxFotos.length < 2) return;
+  lightboxIndex = (lightboxIndex - 1 + lightboxFotos.length) % lightboxFotos.length;
+  toonLightboxFoto();
+}
+function lightboxVolgende() {
+  if (lightboxFotos.length < 2) return;
+  lightboxIndex = (lightboxIndex + 1) % lightboxFotos.length;
+  toonLightboxFoto();
+}
+
 function sluitLightbox() {
   document.getElementById('lightbox').classList.remove('open');
   document.body.style.overflow = '';
 }
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') sluitLightbox();
+  if (e.key === 'Escape') { sluitLightbox(); return; }
+  // Pijltjes alleen als de lightbox open staat — anders kapen we de
+  // pijltoetsen van bijv. de jaar-dropdown op de verhalenpagina.
+  const lb = document.getElementById('lightbox');
+  if (!lb || !lb.classList.contains('open')) return;
+  if (e.key === 'ArrowLeft')  { e.preventDefault(); lightboxVorige(); }
+  if (e.key === 'ArrowRight') { e.preventDefault(); lightboxVolgende(); }
 });
 
 // ─── Scroll reveals (Intersection Observer) ─────────────────────────────────

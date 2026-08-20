@@ -226,6 +226,47 @@ h1, h2, h3, h4, .font-display {
 .verhaal-detail.open { display: block; }
 .verhaal-overzicht.verborgen { display: none; }
 
+/* Product detail (shop) */
+.product-detail { display: none; }
+.product-detail.open { display: block; }
+.shop-overzicht.verborgen { display: none; }
+/* Sectiekop wijkt bij een open product, zodat foto + thumbnails binnen beeld vallen */
+#shop-header.verborgen { display: none; }
+
+/* Thumbnailstrip in de productdetailweergave */
+.thumb-strip {
+  display: flex; flex-wrap: wrap; gap: 0.6rem;
+  margin-top: 0.85rem;
+}
+.thumb {
+  width: 76px; height: 76px;
+  padding: 0; overflow: hidden;
+  border: 1px solid rgba(245,196,0,0.15);
+  border-radius: 6px;
+  background: var(--oppervlak);
+  cursor: pointer;
+  font: inherit; color: inherit;
+  transition: border-color var(--animation-duration), opacity var(--animation-duration);
+  opacity: 0.6;
+}
+.thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.thumb:hover { opacity: 1; border-color: rgba(245,196,0,0.45); }
+.thumb:focus-visible { outline: 2px solid var(--geel); outline-offset: 3px; }
+.thumb.actief { opacity: 1; border-color: var(--geel); }
+@media (prefers-reduced-motion: reduce) { .thumb { transition: none; } }
+
+/* Aantal-foto's indicator op de shop-tegel */
+.foto-badge {
+  position: absolute; top: 0.7rem; right: 0.7rem;
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  padding: 0.28rem 0.55rem;
+  border-radius: 999px;
+  background: rgba(0,0,0,0.72);
+  color: var(--geel);
+  font-size: 0.7rem;
+  pointer-events: none;
+}
+
 /* Scrollbar stijl */
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: #000; }
@@ -241,7 +282,7 @@ h1, h2, h3, h4, .font-display {
   cursor: zoom-out;
 }
 #lightbox.open { display: flex; }
-#lightbox img {
+#lightbox > img {
   max-width: 90vw; max-height: 90vh;
   border-radius: 8px;
   object-fit: contain;
@@ -255,6 +296,43 @@ h1, h2, h3, h4, .font-display {
   display: flex; align-items: center; justify-content: center;
 }
 #lightbox-close:hover { color: var(--geel); }
+
+/* Lightbox navigatie (vorige/volgende) */
+#lightbox-prev, #lightbox-next {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  color: #888; cursor: pointer;
+  background: rgba(0,0,0,0.45); border: none;
+  border-radius: 999px;
+  transition: color var(--animation-duration), background var(--animation-duration);
+  min-height: 48px; min-width: 48px;
+  display: flex; align-items: center; justify-content: center;
+  z-index: 1;
+}
+#lightbox-prev { left: 1rem; }
+#lightbox-next { right: 1rem; }
+#lightbox-prev:hover, #lightbox-next:hover { color: var(--geel); background: rgba(0,0,0,0.75); }
+#lightbox-prev:focus-visible, #lightbox-next:focus-visible { outline: 2px solid var(--geel); outline-offset: 2px; }
+
+/* Teller linksboven: onderaan zou hij achter de cookiebanner vallen */
+#lightbox-teller {
+  position: absolute; top: 1.5rem; left: 1.5rem;
+  color: #999; font-size: 0.75rem;
+  background: rgba(0,0,0,0.55);
+  padding: 0.35rem 0.75rem; border-radius: 999px;
+}
+
+/* Bij één foto: navigatie en teller verbergen */
+#lightbox.enkel #lightbox-prev,
+#lightbox.enkel #lightbox-next,
+#lightbox.enkel #lightbox-teller { display: none; }
+
+@media (max-width: 640px) {
+  #lightbox-prev { left: 0.35rem; }
+  #lightbox-next { right: 0.35rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #lightbox-prev, #lightbox-next { transition: none; }
+}
 
 /* Mijn decor pilaar */
 .mijn-decor {

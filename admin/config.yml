@@ -56,6 +56,8 @@ collections:
           {label: "Staand (portrait)", value: "staand"},
           {label: "Vierkant (square)", value: "vierkant"}
         ]}
+      - {label: "Extra foto's", name: "fotos", widget: "image", multiple: true, required: false, max: 8, hint: "Meerdere foto's tegelijk selecteren of slepen. De hoofdafbeelding hierboven blijft de eerste foto."}
+      - {label: "Editie", name: "editie", widget: "string", required: false, hint: "Bijv: 1 van 1"}
       - {label: "Mollie betaallink", name: "mollie_link", widget: "string", required: false, hint: "Plak hier je Mollie betaallink"}
       - {label: "Link (optioneel)", name: "link", widget: "string", required: false, hint: "URL naar externe pagina, bijv: https://www.voorbeeld.nl"}
 
