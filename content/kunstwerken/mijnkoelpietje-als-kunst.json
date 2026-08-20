@@ -7,5 +7,9 @@
   "afbeelding_formaat": "staand",
   "mollie_link": "",
   "link": "",
-  "editie": "1 van 1"
+  "editie": "1 van 1",
+  "fotos": [
+    "/uploads/MijnKoelPietje_glasinlood_klein.jpeg",
+    "/uploads/MijnKoelPietje_kunstenKitsch.jpg"
+  ]
 }
