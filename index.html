@@ -91,6 +91,7 @@
     <!-- Desktop menu (verborgen op mobiel via CSS) -->
     <div id="desk-menu" class="flex items-center gap-8">
       <button class="nav-link" onclick="toonSectie('verhalen')">Verhalen</button>
+      <button class="nav-link" onclick="toonSectie('galerij')">Galerij</button>
       <button class="nav-link" onclick="toonSectie('nieuws')">Nieuws</button>
       <button class="nav-link" onclick="toonSectie('shop')">Shop</button>
       <button class="nav-link" onclick="toonSectie('activiteiten')">Activiteiten</button>
@@ -118,6 +119,7 @@
   <div id="mob-menu" style="display:none;border-top:1px solid rgba(245,196,0,0.12);" class="px-6 pb-4">
     <div class="flex flex-col gap-4 pt-4">
       <button class="nav-link text-left min-h-[44px]" onclick="toonSectie('verhalen');toggleMobMenu()">Verhalen</button>
+      <button class="nav-link text-left min-h-[44px]" onclick="toonSectie('galerij');toggleMobMenu()">Galerij</button>
       <button class="nav-link text-left min-h-[44px]" onclick="toonSectie('nieuws');toggleMobMenu()">Nieuws</button>
       <button class="nav-link text-left min-h-[44px]" onclick="toonSectie('shop');toggleMobMenu()">Shop</button>
       <button class="nav-link text-left min-h-[44px]" onclick="toonSectie('activiteiten');toggleMobMenu()">Activiteiten</button>
@@ -365,6 +367,20 @@
   </div>
 </div>
 
+
+<!-- ══════════════════════════════════════════════════════ GALERIJ ══ -->
+<div id="sectie-galerij" class="sectie">
+  <div class="pt-24 pb-32 max-w-6xl mx-auto px-4 sm:px-6">
+    <div class="text-center mb-16 pt-8">
+      <div class="mono text-xs tracking-widest uppercase mb-3" style="color:rgba(245,196,0,0.7);">Beeld uit de mijnstreek</div>
+      <h1 style="font-family:'Poiret One',sans-serif;font-size:clamp(2.5rem,6vw,4rem);font-weight:400;" class="mb-4">Galerij</h1>
+      <p class="text-gray-500 max-w-xl mx-auto">Een selectie van onze mooiste afbeeldingen. Klik op een beeld om het verhaal erachter te lezen.</p>
+    </div>
+
+    <div id="galerij-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    </div>
+  </div>
+</div>
 
 <!-- ══════════════════════════════════════════════════════ SHOP ══ -->
 <div id="sectie-shop" class="sectie">

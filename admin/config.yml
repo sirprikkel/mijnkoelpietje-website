@@ -34,6 +34,7 @@ collections:
           {label: "Staand (portrait)", value: "staand"},
           {label: "Vierkant (square)", value: "vierkant"}
         ]}
+      - {label: "Tonen in galerij", name: "uitgelicht", widget: "boolean", required: false, default: false, hint: "Vink aan om deze afbeelding in de Galerij te tonen"}
       - {label: "Link (optioneel)", name: "link", widget: "string", required: false, hint: "URL naar externe pagina, bijv: https://www.voorbeeld.nl"}
 
   - name: "kunstwerken"

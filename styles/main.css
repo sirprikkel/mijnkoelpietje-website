@@ -312,3 +312,37 @@ h1, h2, h3, h4, .font-display {
   position: absolute; inset: 0;
   background: radial-gradient(circle at 45% 55%, rgba(245,196,0,0.18), transparent 60%);
 }
+
+/* ─── Galerij ─────────────────────────────────────────────── */
+.galerij-tegel {
+  border: 1px solid rgba(245,196,0,0.08);
+  background: var(--oppervlak);
+  font: inherit;
+  color: inherit;
+}
+.galerij-tegel:focus-visible {
+  outline: 2px solid var(--geel);
+  outline-offset: 3px;
+}
+.galerij-overlay {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  padding: 0.75rem 0.85rem;
+  background: linear-gradient(to top, rgba(0,0,0,0.92), rgba(0,0,0,0.6) 60%, transparent);
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity var(--animation-duration), transform var(--animation-duration);
+}
+.galerij-tegel:hover .galerij-overlay,
+.galerij-tegel:focus-visible .galerij-overlay {
+  opacity: 1;
+  transform: translateY(0);
+}
+/* Op touch is er geen hover — overlay dan altijd tonen */
+@media (hover: none) {
+  .galerij-overlay { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .galerij-overlay { transition: none; transform: none; }
+}

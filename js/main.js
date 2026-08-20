@@ -203,6 +203,7 @@ async function laadVerhalen() {
   } catch(e) { console.log('[KoelPietje] Verhalen laden mislukt:', e); }
   renderVerhalenGrid();
   renderVerhalenPreview();
+  renderGalerij();
 }
 
 async function laadKunstwerken() {
@@ -378,6 +379,63 @@ function renderVerhalenGrid() {
         ${v.link ? linkHTML(v.link, cfg.kleur) : `<div class="mt-4 text-xs mono" style="color:${cfg.kleur};">Lees meer \u2192</div>`}
       </div>`;
     grid.appendChild(kaart);
+  });
+}
+
+// \u2500\u2500\u2500 Galerij \u2014 uitgelichte afbeeldingen, klik opent het verhaal \u2500\u2500
+function renderGalerij() {
+  const grid = document.getElementById('galerij-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+
+  const items = verhalenGesorteerd().filter(v => v.uitgelicht && v.afbeelding);
+
+  if (items.length === 0) {
+    grid.innerHTML = `<p class="text-gray-500 col-span-full text-center py-12">Er zijn nog geen afbeeldingen uitgelicht voor de galerij.</p>`;
+    return;
+  }
+
+  items.forEach(v => {
+    const cfg = rubriekConfig[v.rubriek] || { label: v.rubriek, kleur: '#f5c400', bg: 'rgba(245,196,0,0.15)' };
+
+    // <button> i.p.v. <div>: toetsenbord en screenreader werken dan vanzelf
+    const tegel = document.createElement('button');
+    tegel.type = 'button';
+    tegel.className = 'kaart overflow-hidden reveal relative block w-full p-0 text-left galerij-tegel';
+    tegel.setAttribute('aria-label', 'Lees het verhaal: ' + v.titel);
+    tegel.onclick = () => openVerhaal(v.id);
+
+    // Titels bevatten aanhalingstekens en emoji \u2014 daarom via DOM-properties
+    // opbouwen i.p.v. innerHTML, zodat escaping vanzelf goed gaat.
+    const beeld = document.createElement('div');
+    beeld.className = 'relative overflow-hidden aspect-square';
+    beeld.style.background = 'linear-gradient(135deg,#1a1400,#0a0a0a)';
+
+    const img = document.createElement('img');
+    img.src = v.afbeelding;
+    img.alt = v.titel;
+    img.loading = 'lazy';
+    img.style.cssText = 'width:100%;height:100%;object-fit:cover;object-position:center 20%;opacity:0.75;';
+    beeld.appendChild(img);
+
+    const overlay = document.createElement('div');
+    overlay.className = 'galerij-overlay';
+
+    const rubriek = document.createElement('div');
+    rubriek.className = 'mono text-xs uppercase mb-1';
+    rubriek.style.color = cfg.kleur;
+    rubriek.textContent = cfg.label;
+
+    const titel = document.createElement('div');
+    titel.className = 'text-sm leading-snug';
+    titel.textContent = v.titel;
+
+    overlay.appendChild(rubriek);
+    overlay.appendChild(titel);
+    beeld.appendChild(overlay);
+
+    tegel.appendChild(beeld);
+    grid.appendChild(tegel);
   });
 }
 
