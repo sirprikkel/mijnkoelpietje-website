@@ -427,7 +427,7 @@ function renderGalerij() {
     tegel.type = 'button';
     tegel.className = 'kaart overflow-hidden reveal relative block w-full p-0 text-left galerij-tegel';
     tegel.setAttribute('aria-label', 'Lees het verhaal: ' + v.titel);
-    tegel.onclick = () => openVerhaal(v.id);
+    tegel.onclick = () => openVerhaalUitGalerij(v.id);
 
     // Titels bevatten aanhalingstekens en emoji \u2014 daarom via DOM-properties
     // opbouwen i.p.v. innerHTML, zodat escaping vanzelf goed gaat.
@@ -692,6 +692,16 @@ function toonSectie(naam) {
   huidigeSectie = naam;
   window.scrollTo({ top: 0, behavior: 'smooth' });
 
+  // Navigeert de bezoeker zelf weg (navbalk), dan vervalt een onthouden
+  // galerij-herkomst. Anders zou een later verhaal uit het overzicht nog
+  // 'Terug naar galerij' tonen. Ook de galerij zelf hoort hierbij: klikken op
+  // 'Galerij' met een verhaal open is geen terugkeer via terugNaarGalerij().
+  // Die functie lost de herkomst al voor ze toonSectie() aanroept.
+  if (naam !== 'verhalen') {
+    verhaalHerkomst = 'verhalen';
+    galerijScrollPositie = null;
+  }
+
   if (naam === 'verhalen') sluitVerhaal();
   if (naam === 'shop') sluitProduct();
 
@@ -704,7 +714,23 @@ let actieveRubriek = 'alle';
 
 let overzichtScrollPositie = null;
 
+// Vanuit welke sectie is het verhaal geopend? Bepaalt waar de terugknop naartoe gaat.
+// Alleen de galerij wijkt af; overzicht en home-preview vallen terug op 'verhalen'.
+let verhaalHerkomst = 'verhalen';      // 'verhalen' | 'galerij'
+let galerijScrollPositie = null;
+
+// Klik op een galerij-tegel. De herkomst wordt hier vastgelegd - niet afgeleid uit
+// huidigeSectie, want de home-preview wisselt de sectie al voor openVerhaal draait.
+function openVerhaalUitGalerij(id) {
+  verhaalHerkomst = 'galerij';
+  galerijScrollPositie = window.scrollY;
+  openVerhaal(id);
+}
+
 function openVerhaal(id) {
+  // Elke andere ingang (overzicht, home-preview) valt terug op het overzicht.
+  if (verhaalHerkomst !== 'galerij') verhaalHerkomst = 'verhalen';
+
   if (huidigeSectie === 'verhalen') {
     overzichtScrollPositie = window.scrollY;
   } else {
@@ -732,7 +758,7 @@ function openVerhaal(id) {
     <div id="like-sectie-${v.id}"></div>
     <div id="reacties-sectie-${v.id}"></div>
     <div style="margin-top:3rem;">
-      <button onclick="sluitVerhaal()" class="btn-outline">\u2190 Terug naar overzicht</button>
+      <button onclick="${terugActieNaam()}" class="btn-outline">\u2190 ${terugLabel()}</button>
     </div>
   `;
 
@@ -741,7 +767,59 @@ function openVerhaal(id) {
 
   document.getElementById('verhaal-detail').classList.add('open');
   document.getElementById('verhalen-overzicht').classList.add('verborgen');
+  updateTerugKnoppen();
   window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ─── Terugknoppen ───
+// Er zijn twee terugknoppen: een vaste bovenaan het detail (index.html) en een
+// die in de openVerhaal-template wordt meegerenderd. Beide volgen de herkomst.
+function terugLabel() {
+  return verhaalHerkomst === 'galerij' ? 'Terug naar galerij' : 'Terug naar overzicht';
+}
+
+function terugActieNaam() {
+  return verhaalHerkomst === 'galerij' ? 'terugNaarGalerij()' : 'sluitVerhaal()';
+}
+
+// Werkt de vaste knop bovenaan bij. De pijl is een <svg> naast een los
+// tekstknooppunt — daarom alleen dat tekstknooppunt vervangen, niet textContent
+// van de hele button (dat zou de pijl slopen).
+function updateTerugKnoppen() {
+  const knop = document.getElementById('verhaal-terug-boven');
+  if (!knop) return;
+  const label = terugLabel();
+
+  const tekstNode = Array.from(knop.childNodes)
+    .reverse()
+    .find(n => n.nodeType === Node.TEXT_NODE && n.textContent.trim().length > 0);
+  if (tekstNode) tekstNode.textContent = ' ' + label + ' ';
+
+  knop.setAttribute('aria-label', label);
+  knop.onclick = verhaalHerkomst === 'galerij' ? terugNaarGalerij : sluitVerhaal;
+}
+
+// Sluit het verhaal en gaat terug naar de galerij, op de oude scrollpositie.
+function terugNaarGalerij() {
+  const positie = galerijScrollPositie;
+
+  document.getElementById('verhaal-detail').classList.remove('open');
+  document.getElementById('verhalen-overzicht').classList.remove('verborgen');
+
+  // Herkomst eerst lossen: toonSectie() roept sluitVerhaal() aan en mag daarbij
+  // niet opnieuw in dit pad belanden.
+  verhaalHerkomst = 'verhalen';
+  galerijScrollPositie = null;
+  overzichtScrollPositie = null;
+
+  toonSectie('galerij');
+
+  // toonSectie doet zelf een smooth scroll naar 0; daarom hierna en 'instant'.
+  if (positie !== null) {
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: positie, behavior: 'instant' });
+    });
+  }
 }
 
 function sluitVerhaal() {
