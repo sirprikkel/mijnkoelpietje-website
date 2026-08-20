@@ -501,6 +501,8 @@ function koopKnop(k, groot) {
     a.rel = 'noopener';
     a.className = 'btn-geel ' + maat;
     a.textContent = 'Kopen';
+    // Niet laten bubbelen naar een klikbare kaart eromheen; de link zelf volgt wel.
+    a.onclick = (e) => { e.stopPropagation(); };
     return a;
   }
   const btn = document.createElement('button');
@@ -572,6 +574,20 @@ function renderShop() {
     const knopRij = body.querySelector('.justify-between');
     knopRij.appendChild(koopKnop(k));
 
+    // Titel en beschrijving openen ook het product. Een div met onclick (geen <a>
+    // of <button>) zodat links in de beschrijving geen geneste interactieve
+    // elementen worden - dat is dezelfde reden dat het beeld apart een button is.
+    const tekstVlakken = [body.querySelector('h3'), body.querySelector('.prose-kaart')];
+    tekstVlakken.forEach(el => {
+      if (!el) return;
+      el.style.cursor = 'pointer';
+      el.onclick = (e) => {
+        // Een link in de markdown-beschrijving houdt voorrang.
+        if (e.target.closest('a, button')) return;
+        openProduct(i);
+      };
+    });
+
     kaart.appendChild(beeldKnop);
     kaart.appendChild(body);
     grid.appendChild(kaart);
@@ -588,7 +604,11 @@ function renderShopPreview() {
     const kaart = document.createElement('div');
     kaart.className = 'kaart reveal';
     kaart.style.cursor = 'pointer';
-    kaart.onclick = () => openProduct(i);
+    kaart.onclick = (e) => {
+      // Zelfde regel als in renderShop: knoppen en links houden voorrang.
+      if (e.target.closest('a, button')) return;
+      openProduct(i);
+    };
     const heeftAfb = k.afbeelding && k.afbeelding.length > 0;
     kaart.innerHTML = `
       <div class="relative overflow-hidden" style="height:200px;background:linear-gradient(135deg,#1a1400,#0a0a0a);">
