@@ -45,8 +45,13 @@ function afbStijl(formaat, standaardHoogte) {
 // Werkt ook als 'fotos' ontbreekt — dan is de lijst simpelweg 1 foto.
 function productFotos(k) {
   const lijst = [];
-  if (k.afbeelding) lijst.push(k.afbeelding);
-  (k.fotos || []).forEach(f => { if (f && !lijst.includes(f)) lijst.push(f); });
+  if (typeof k.afbeelding === 'string' && k.afbeelding) lijst.push(k.afbeelding);
+  (k.fotos || []).forEach(f => {
+    // Sveltia levert paden als string. Mocht een CMS ooit objecten opleveren
+    // ({afbeelding: '...'}), dan pakken we het pad eruit i.p.v. het object.
+    const pad = typeof f === 'string' ? f : (f && (f.afbeelding || f.image || f.src));
+    if (typeof pad === 'string' && pad && !lijst.includes(pad)) lijst.push(pad);
+  });
   return lijst;
 }
 
