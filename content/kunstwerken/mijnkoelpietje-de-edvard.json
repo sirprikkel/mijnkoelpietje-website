@@ -5,11 +5,7 @@
   "prijs": "45",
   "afbeelding": "/uploads/mijnlamp_glas02_kaarsje.jpg",
   "fotos": [
-    "/uploads/mijnlamp_glas01.jpg",
-    "/uploads/mijnlamp_glas01_kaarsje.jpg",
-    "/uploads/mijnlamp_glas02.jpg",
-    "/uploads/mijnlamp_glas02_kaarsje.jpg",
-    "/uploads/mijnlamp_glas03.jpg"
+    "/uploads/mijnlamp_glas01_kaarsje.jpg"
   ],
   "editie": "1 van 1",
   "mollie_link": "",
