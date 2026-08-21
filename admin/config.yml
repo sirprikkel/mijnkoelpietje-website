@@ -29,11 +29,6 @@ collections:
       - {label: "Korte intro (voor kaart)", name: "intro", widget: "text"}
       - {label: "Volledige tekst", name: "tekst", widget: "markdown"}
       - {label: "Afbeelding (optioneel)", name: "afbeelding", widget: "image", required: false}
-      - {label: "Afbeelding formaat", name: "afbeelding_formaat", widget: "select", required: false, default: "liggend", options: [
-          {label: "Liggend (landscape)", value: "liggend"},
-          {label: "Staand (portrait)", value: "staand"},
-          {label: "Vierkant (square)", value: "vierkant"}
-        ]}
       - {label: "Tonen in galerij", name: "uitgelicht", widget: "boolean", required: false, default: false, hint: "Vink aan om deze afbeelding in de Galerij te tonen"}
       - {label: "Link (optioneel)", name: "link", widget: "string", required: false, hint: "URL naar externe pagina, bijv: https://www.voorbeeld.nl"}
 
@@ -51,11 +46,6 @@ collections:
       - {label: "Beschrijving", name: "beschrijving", widget: "markdown"}
       - {label: "Prijs (€)", name: "prijs", widget: "string"}
       - {label: "Afbeelding", name: "afbeelding", widget: "image", required: false}
-      - {label: "Afbeelding formaat", name: "afbeelding_formaat", widget: "select", required: false, default: "liggend", options: [
-          {label: "Liggend (landscape)", value: "liggend"},
-          {label: "Staand (portrait)", value: "staand"},
-          {label: "Vierkant (square)", value: "vierkant"}
-        ]}
       - {label: "Extra foto's", name: "fotos", widget: "image", multiple: true, required: false, max: 8, hint: "Meerdere foto's tegelijk selecteren of slepen. De hoofdafbeelding hierboven blijft de eerste foto."}
       - {label: "Editie", name: "editie", widget: "string", required: false, hint: "Bijv: 1 van 1"}
       - {label: "Mollie betaallink", name: "mollie_link", widget: "string", required: false, hint: "Plak hier je Mollie betaallink"}
@@ -90,11 +80,6 @@ collections:
       - {label: "Beschrijving", name: "beschrijving", widget: "markdown"}
       - {label: "Locatie", name: "locatie", widget: "string", hint: "Bijv: Museum Valkenburg · 10:00–17:00"}
       - {label: "Afbeelding (optioneel)", name: "afbeelding", widget: "image", required: false}
-      - {label: "Afbeelding formaat", name: "afbeelding_formaat", widget: "select", required: false, default: "liggend", options: [
-          {label: "Liggend (landscape)", value: "liggend"},
-          {label: "Staand (portrait)", value: "staand"},
-          {label: "Vierkant (square)", value: "vierkant"}
-        ]}
       - {label: "Link (optioneel)", name: "link", widget: "string", required: false, hint: "URL naar externe pagina, bijv: https://www.voorbeeld.nl/evenement"}
 
   - name: "shop-instellingen"

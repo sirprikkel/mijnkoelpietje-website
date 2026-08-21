@@ -41,11 +41,15 @@ function renderMarkdown(txt) {
 }
 
 // ─── Afbeelding formaat helper ────────────────────────────────────
-function afbStijl(formaat, standaardHoogte) {
-  if (formaat === 'staand') return { height: Math.round(standaardHoogte * 2.0) + 'px', objectPosition: 'center 20%' };
-  if (formaat === 'vierkant') return { height: standaardHoogte + 'px', objectPosition: 'center center' };
-  return { height: standaardHoogte + 'px', objectPosition: 'center center' }; // liggend (default)
+// Vaste beeldhoogte per weergave, met de foto er volledig in gepast
+// (object-fit: contain). Zo blijven de kaarten netjes uitgelijnd terwijl er
+// niets wordt bijgesneden. Voorheen stond hier een handmatig CMS-veld
+// 'afbeelding_formaat', maar dat klopte bij een derde van de verhalen niet.
+function beeldHoogte(standaardHoogte) {
+  return standaardHoogte + 'px';
 }
+
+
 
 // ─── Fotolijst van een product ────────────────────────────────────
 // Hoofdafbeelding altijd eerst, daarna de extra foto's uit het CMS.
@@ -392,9 +396,8 @@ function renderVerhalenGrid() {
     kaart.setAttribute('role', 'listitem');
     kaart.onclick = () => openVerhaal(v.id);
     const heeftAfb = v.afbeelding && v.afbeelding.length > 0;
-    const vStijl = afbStijl(v.afbeelding_formaat, 180);
     kaart.innerHTML = `
-      ${heeftAfb ? `<div class="relative overflow-hidden" style="height:${vStijl.height};background:linear-gradient(135deg,#1a1400,#0a0a0a);"><img src="${v.afbeelding}" alt="${v.titel}" style="width:100%;height:100%;object-fit:cover;object-position:${vStijl.objectPosition};opacity:0.75;" /></div>` : ''}
+      ${heeftAfb ? `<div class="relative overflow-hidden" style="height:${beeldHoogte(220)};background:linear-gradient(135deg,#1a1400,#0a0a0a);"><img src="${v.afbeelding}" alt="${v.titel}" style="width:100%;height:100%;object-fit:contain;opacity:0.75;" /></div>` : ''}
       <div style="height:3px;background:${cfg.kleur};width:100%;"></div>
       <div class="p-6">
         <span class="rubriek-tag" style="background:${cfg.bg};color:${cfg.kleur};">${cfg.label}</span>
@@ -406,7 +409,7 @@ function renderVerhalenGrid() {
   });
 }
 
-// \u2500\u2500\u2500 Galerij \u2014 uitgelichte afbeeldingen, klik opent het verhaal \u2500\u2500
+// ─── Galerij — uitgelichte afbeeldingen, klik opent het verhaal ──
 function renderGalerij() {
   const grid = document.getElementById('galerij-grid');
   if (!grid) return;
@@ -415,31 +418,49 @@ function renderGalerij() {
   const items = verhalenGesorteerd().filter(v => v.uitgelicht && v.afbeelding);
 
   if (items.length === 0) {
-    grid.innerHTML = `<p class="text-gray-500 col-span-full text-center py-12">Er zijn nog geen afbeeldingen uitgelicht voor de galerij.</p>`;
+    grid.innerHTML = `<p class="text-gray-500 w-full text-center py-12">Er zijn nog geen afbeeldingen uitgelicht voor de galerij.</p>`;
     return;
   }
 
   items.forEach(v => {
     const cfg = rubriekConfig[v.rubriek] || { label: v.rubriek, kleur: '#f5c400', bg: 'rgba(245,196,0,0.15)' };
 
+    // Wrapper is het kolomkind van de masonry en draagt .reveal, zodat de
+    // reveal-transform en de hover-lift van .kaart elkaar niet overschrijven.
+    const item = document.createElement('div');
+    item.className = 'galerij-item reveal';
+
     // <button> i.p.v. <div>: toetsenbord en screenreader werken dan vanzelf
     const tegel = document.createElement('button');
     tegel.type = 'button';
-    tegel.className = 'kaart overflow-hidden reveal relative block w-full p-0 text-left galerij-tegel';
+    tegel.className = 'kaart overflow-hidden relative block w-full p-0 text-left galerij-tegel';
     tegel.setAttribute('aria-label', 'Lees het verhaal: ' + v.titel);
     tegel.onclick = () => openVerhaalUitGalerij(v.id);
 
-    // Titels bevatten aanhalingstekens en emoji \u2014 daarom via DOM-properties
+    // Titels bevatten aanhalingstekens en emoji — daarom via DOM-properties
     // opbouwen i.p.v. innerHTML, zodat escaping vanzelf goed gaat.
     const beeld = document.createElement('div');
-    beeld.className = 'relative overflow-hidden aspect-square';
-    beeld.style.background = 'linear-gradient(135deg,#1a1400,#0a0a0a)';
+    beeld.className = 'galerij-beeld';
 
     const img = document.createElement('img');
-    img.src = v.afbeelding;
     img.alt = v.titel;
     img.loading = 'lazy';
-    img.style.cssText = 'width:100%;height:100%;object-fit:cover;object-position:center 20%;opacity:0.75;';
+
+    // De verhouding lezen we uit de foto zelf. Tot die binnen is houdt
+    // .galerij-beeld zijn 3/4-plaatshouder aan, zodat er niets verspringt.
+    const zetVerhouding = () => {
+      if (img.naturalWidth && img.naturalHeight) {
+        beeld.style.aspectRatio = img.naturalWidth + ' / ' + img.naturalHeight;
+      }
+    };
+    img.addEventListener('load', zetVerhouding);
+    // Bij een gebroken foto de plaatshouderverhouding laten staan, anders
+    // klapt de tegel dicht en springt de kolomverdeling.
+    img.addEventListener('error', () => { img.style.display = 'none'; });
+    img.src = v.afbeelding;
+    // Stond de foto al in de cache, dan is 'load' mogelijk al geweest.
+    if (img.complete) zetVerhouding();
+
     beeld.appendChild(img);
 
     const overlay = document.createElement('div');
@@ -459,7 +480,8 @@ function renderGalerij() {
     beeld.appendChild(overlay);
 
     tegel.appendChild(beeld);
-    grid.appendChild(tegel);
+    item.appendChild(tegel);
+    grid.appendChild(item);
   });
 }
 
@@ -472,13 +494,12 @@ function renderVerhalenPreview() {
   vArr.forEach(v => {
     const cfg = rubriekConfig[v.rubriek] || { label: v.rubriek, kleur: '#f5c400', bg: 'rgba(245,196,0,0.15)' };
     const heeftAfb = v.afbeelding && v.afbeelding.length > 0;
-    const vStijl = afbStijl(v.afbeelding_formaat, 180);
     const kaart = document.createElement('div');
     kaart.className = 'kaart reveal overflow-hidden';
     kaart.style.cursor = 'pointer';
     kaart.onclick = () => { toonSectie('verhalen'); openVerhaal(v.id); };
     kaart.innerHTML = `
-      ${heeftAfb ? `<div class="relative overflow-hidden" style="height:${vStijl.height};background:linear-gradient(135deg,#1a1400,#0a0a0a);"><img src="${v.afbeelding}" alt="${v.titel}" style="width:100%;height:100%;object-fit:cover;object-position:${vStijl.objectPosition};opacity:0.75;" /></div>` : ''}
+      ${heeftAfb ? `<div class="relative overflow-hidden" style="height:${beeldHoogte(220)};background:linear-gradient(135deg,#1a1400,#0a0a0a);"><img src="${v.afbeelding}" alt="${v.titel}" style="width:100%;height:100%;object-fit:contain;opacity:0.75;" /></div>` : ''}
       <div style="height:3px;background:${cfg.kleur};width:100%;"></div>
       <div class="p-6">
         <span class="rubriek-tag" style="background:${cfg.bg};color:${cfg.kleur};">${cfg.label}</span>
@@ -523,14 +544,13 @@ function renderShop() {
     kaart.className = 'kaart group';
     const fotos = productFotos(k);
     const heeftAfb = fotos.length > 0;
-    const kStijl = afbStijl(k.afbeelding_formaat, 320);
 
     // Beeld-vlak is een button i.p.v. de hele kaart, zodat de bestelknop
     // en een eventuele 'Meer info'-link geen geneste interactieve elementen worden.
     const beeldKnop = document.createElement('button');
     beeldKnop.type = 'button';
     beeldKnop.className = 'relative overflow-hidden block w-full p-0 border-none galerij-tegel';
-    beeldKnop.style.cssText = `height:${kStijl.height};background:linear-gradient(135deg,#1a1400,#0a0a0a);cursor:pointer;`;
+    beeldKnop.style.cssText = `height:${beeldHoogte(360)};background:linear-gradient(135deg,#1a1400,#0a0a0a);cursor:pointer;`;
     beeldKnop.setAttribute('aria-label', 'Bekijk ' + k.titel);
     beeldKnop.onclick = () => openProduct(i);
 
@@ -539,7 +559,7 @@ function renderShop() {
       img.src = fotos[0];
       img.alt = k.titel;
       img.loading = 'lazy';
-      img.style.cssText = `width:100%;height:100%;object-fit:cover;object-position:${kStijl.objectPosition};opacity:0.85;`;
+      img.style.cssText = 'width:100%;height:100%;object-fit:contain;opacity:0.85;';
       beeldKnop.appendChild(img);
     } else {
       const leeg = document.createElement('div');
@@ -766,9 +786,8 @@ function openVerhaal(id) {
 
   const content = document.getElementById('verhaal-content');
   const heeftAfb = v.afbeelding && v.afbeelding.length > 0;
-  const detailStijl = afbStijl(v.afbeelding_formaat, 300);
   content.innerHTML = `
-    ${heeftAfb ? `<div style="margin-bottom:2rem;border-radius:12px;overflow:hidden;max-height:${detailStijl.height};"><img src="${v.afbeelding}" alt="${v.titel}" style="width:100%;height:${detailStijl.height};object-fit:cover;object-position:${detailStijl.objectPosition};opacity:0.85;" /></div>` : ''}
+    ${heeftAfb ? `<div style="margin-bottom:2rem;border-radius:12px;overflow:hidden;"><img src="${v.afbeelding}" alt="${v.titel}" style="width:100%;height:auto;max-height:70vh;object-fit:contain;opacity:0.85;display:block;" /></div>` : ''}
     <div style="border-left:3px solid ${kleur};padding-left:1.5rem;margin-bottom:2.5rem;">
       <div class="mono text-xs mb-2 uppercase" style="color:${kleur};letter-spacing:0.1em;">${label}</div>
       <h1 style="font-family:'Poiret One',sans-serif;font-weight:400;font-size:clamp(1.8rem,4vw,2.8rem);line-height:1.2;margin-bottom:0.5rem;">${v.titel}</h1>
@@ -875,7 +894,6 @@ function openProduct(index) {
 
   huidigProduct = index;
   const fotos = productFotos(k);
-  const stijl = afbStijl(k.afbeelding_formaat, 300);
   const content = document.getElementById('product-content');
   content.innerHTML = '';
 
@@ -898,7 +916,7 @@ function openProduct(index) {
     hoofdImg.alt = k.titel;
     // In de detailweergave willen we de héle foto zien (contain, niet cover) en
     // begrensd op de viewporthoogte, zodat staande foto's de thumbnails niet wegdrukken.
-    hoofdImg.style.cssText = `width:100%;max-height:min(${stijl.height}, 62vh);object-fit:contain;display:block;`;
+    hoofdImg.style.cssText = 'width:100%;height:auto;max-height:62vh;object-fit:contain;display:block;';
     hoofdKnop.appendChild(hoofdImg);
     hoofdKnop.onclick = () => openLightboxSerie(fotos, actieveFotoIndex, k.titel);
     beeldKol.appendChild(hoofdKnop);
