@@ -40,8 +40,10 @@ collections:
     slug: "{{slug}}"
     identifier_field: titel
     format: json
+    sortable_fields: ['volgorde', 'titel', 'collectie']
     fields:
       - {label: "Titel", name: "titel", widget: "string"}
+      - {label: "Volgorde", name: "volgorde", widget: "number", required: false, value_type: "int", min: 1, default: 10, hint: "Bepaalt de plek in de shop. Laag getal staat bovenaan. Tip: gebruik 10, 20, 30... dan kun je later makkelijk iets ertussen zetten."}
       - {label: "Collectie", name: "collectie", widget: "string", hint: "Bijv: Kanarie Serie"}
       - {label: "Beschrijving", name: "beschrijving", widget: "markdown"}
       - {label: "Prijs (€)", name: "prijs", widget: "string"}

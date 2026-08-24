@@ -248,6 +248,22 @@ async function laadVerhalen() {
   renderGalerij();
 }
 
+// Sorteert de shop op het CMS-veld 'volgorde' (laag getal bovenaan). Producten
+// zonder volgorde komen achteraan, onderling op titel, zodat een nieuw product
+// nooit onaangekondigd bovenaan springt.
+function sorteerKunstwerken(lijst) {
+  const nummer = k => {
+    const n = parseInt(k && k.volgorde, 10);
+    return Number.isFinite(n) ? n : Number.MAX_SAFE_INTEGER;
+  };
+  // slice(): niet de meegegeven array muteren.
+  return lijst.slice().sort((a, b) => {
+    const verschil = nummer(a) - nummer(b);
+    if (verschil !== 0) return verschil;
+    return String(a.titel || '').localeCompare(String(b.titel || ''), 'nl');
+  });
+}
+
 async function laadKunstwerken() {
   kunstwerken = [];
   try {
@@ -256,6 +272,9 @@ async function laadKunstwerken() {
       const idx = await r.json();
       const results = await Promise.all(idx.map(slug => fetchJSON(`/content/kunstwerken/${slug}.json`)));
       kunstwerken = results.filter(k => k).map(k => { if (!k.id) k.id = k.titel || 'onbekend'; return k; });
+      // Volgorde uit het CMS. Hier sorteren en niet in renderShop(), want
+      // openProduct() werkt op de array-index - die moet dus al kloppen.
+      kunstwerken = sorteerKunstwerken(kunstwerken);
     }
   } catch(e) { console.log('[KoelPietje] Kunstwerken laden mislukt:', e); }
   renderShop();
