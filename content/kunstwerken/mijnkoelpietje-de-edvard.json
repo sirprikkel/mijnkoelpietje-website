@@ -1,10 +1,15 @@
 {
-  "titel": "MijnKoelPietje op het PixelDoek (em1)",
-  "collectie": "Ai, Pastichem",
-  "beschrijving": "Een Hommage aan Edvard Munch",
-  "prijs": "0",
-  "afbeelding": "/uploads/mijnkoelpietje_edvardmunch.jpg",
-  "afbeelding_formaat": "vierkant",
-  "editie": "1 van 1",
-  "mollie_link": ""
+  "titel": "Glas-in-Lood Mijnlamp – Ambachtelijk & Uniek 29 CM - Handgemaakt Glas-in-Lood",
+  "collectie": "Glas-in-Lood",
+  "beschrijving": "Haal een uniek stukje mijngeschiedenis in huis: een ambachtelijk, handgemaakt glas-in-lood kunstwerk van MijnLamp, vervaardigd door vakman Pascal Weijers.\n\nOmdat elk exemplaar met de hand wordt gemaakt, bezit u een gegarandeerd uniek object.\n\nHoogte is 29 cm (zonder beugel 22cm)",
+  "prijs": "45",
+  "afbeelding": "/uploads/mijnlamp_glas02_kaarsje.jpg",
+  "fotos": [
+    "/uploads/mijnlamp_glas01_kaarsje.jpg",
+    "/uploads/mijnlamp_glas02.jpg"
+  ],
+  "editie": "",
+  "mollie_link": "",
+  "link": "",
+  "afbeelding_formaat": "vierkant"
 }
