@@ -213,5 +213,76 @@ function bouwLossePaginas() {
   console.log(`losse pagina's → ${LOSSE_PAGINAS.map(p => '/' + p.pad).join(', ')}`);
 }
 
+// ─── 4. Deelbare productpagina's ─────────────────────────────────────────────
+// Zelfde aanpak als bij de verhalen. Let op: de bestandsnaam is hier de
+// stabiele sleutel, ook waar die niet meer op de titel lijkt - de klant heeft
+// een paar producten hergebruikt zonder ze te hernoemen. De previewkaart toont
+// de actuele titel en foto, dus de bezoeker ziet altijd het juiste product.
+function bouwProductPaginas() {
+  const dir = 'content/kunstwerken';
+  if (!fs.existsSync(dir) || !fs.existsSync('index.html')) return;
+
+  const sjabloon = fs.readFileSync('index.html', 'utf8');
+  const kop = sjabloon.indexOf('  <title>');
+  const staart = sjabloon.indexOf('\n', sjabloon.indexOf('<meta property="og:url"'));
+  if (kop === -1 || staart === -1) return;
+
+  const slugs = fs.readdirSync(dir).filter(f => f.endsWith('.json') && f !== 'index.json').map(f => f.replace(/\.json$/, ''));
+
+  if (fs.existsSync('product')) fs.rmSync('product', { recursive: true, force: true });
+  fs.mkdirSync('og/product', { recursive: true });
+
+  let metBeeld = 0;
+
+  slugs.forEach(slug => {
+    let k;
+    try {
+      k = JSON.parse(fs.readFileSync(path.join(dir, slug + '.json'), 'utf8'));
+    } catch (e) {
+      console.warn(`  ! ${slug}.json onleesbaar, overgeslagen`);
+      return;
+    }
+
+    const veilig = padVeilig(slug);
+    let ogPad = '/og/_default.jpg';
+    const bron = k.afbeelding ? '.' + k.afbeelding : null;
+    if (bron && fs.existsSync(bron)) {
+      const doel = path.join('og', 'product', veilig + '.jpg');
+      if (maakOgAfbeelding(bron, doel)) { ogPad = '/og/product/' + veilig + '.jpg'; metBeeld++; }
+    }
+
+    const url = `${SITE}/product/${encodeURIComponent(veilig)}`;
+    const beeld = SITE + ogPad.split('/').map(encodeURIComponent).join('/');
+    const titel = esc(k.titel || 'MijnKoelPietje');
+    // Prijs erbij: dat is precies wat iemand wil zien in een gedeelde link.
+    const prijs = k.prijs !== undefined && k.prijs !== '' && String(k.prijs) !== '0' ? ` — € ${k.prijs},-` : '';
+    const oms = esc(omschrijving({ intro: k.beschrijving }));
+
+    const head = `  <title>${titel} — MijnKoelPietje</title>
+  <meta name="description" content="${oms}" />
+  <meta property="og:title" content="${titel}${esc(prijs)}" />
+  <meta property="og:description" content="${oms}" />
+  <meta property="og:type" content="product" />
+  <meta property="og:site_name" content="MijnKoelPietje" />
+  <meta property="og:locale" content="nl_NL" />
+  <meta property="og:url" content="${url}" />
+  <meta property="og:image" content="${beeld}" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="${titel}${esc(prijs)}" />
+  <meta name="twitter:description" content="${oms}" />
+  <meta name="twitter:image" content="${beeld}" />
+  <link rel="canonical" href="${url}" />`;
+
+    const map = path.join('product', veilig);
+    fs.mkdirSync(map, { recursive: true });
+    fs.writeFileSync(path.join(map, 'index.html'), sjabloon.slice(0, kop) + head + sjabloon.slice(staart));
+  });
+
+  console.log(`product/ → ${slugs.length} pagina's (${metBeeld} met eigen og-beeld)`);
+}
+
 bouwVerhaalPaginas();
+bouwProductPaginas();
 bouwLossePaginas();

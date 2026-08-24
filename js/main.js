@@ -179,6 +179,7 @@ let verhalen = {};
 // Tweede index op slug. verhalen[] blijft gesleuteld op titel, want die sleutel
 // is ook de verhaal_id in Supabase (likes/reacties) - die mag niet verschuiven.
 let slugNaarVerhaal = {};
+let slugNaarProduct = {};   // idem voor de shop
 let kunstwerken = [];
 let nieuwsItems = [];
 let sponsoren = [];
@@ -271,10 +272,16 @@ async function laadKunstwerken() {
     if (r.ok) {
       const idx = await r.json();
       const results = await Promise.all(idx.map(slug => fetchJSON(`/content/kunstwerken/${slug}.json`)));
+      // Slug eerst koppelen (results loopt gelijk op met idx), dan pas filteren.
+      results.forEach((k, i) => { if (k) k.slug = idx[i]; });
       kunstwerken = results.filter(k => k).map(k => { if (!k.id) k.id = k.titel || 'onbekend'; return k; });
       // Volgorde uit het CMS. Hier sorteren en niet in renderShop(), want
       // openProduct() werkt op de array-index - die moet dus al kloppen.
       kunstwerken = sorteerKunstwerken(kunstwerken);
+      // Pas na het sorteren indexeren: de router heeft de index in de
+      // gesorteerde array nodig, want openProduct() werkt daarop.
+      slugNaarProduct = {};
+      kunstwerken.forEach((k, i) => { if (k.slug) slugNaarProduct[padVeilig(k.slug)] = i; });
     }
   } catch(e) { console.log('[KoelPietje] Kunstwerken laden mislukt:', e); }
   renderShop();
@@ -768,6 +775,10 @@ function padVeilig(slug) {
   return String(slug).replace(/[. ]+$/, '');
 }
 
+function productUrl(slug) {
+  return '/product/' + encodeURIComponent(padVeilig(slug));
+}
+
 function verhaalUrl(slug) {
   return '/verhaal/' + encodeURIComponent(padVeilig(slug));
 }
@@ -802,12 +813,30 @@ function routeerVanUrl(opties = {}) {
     return;
   }
 
+  const mp = /^\/product\/([^/]+)\/?$/.exec(location.pathname);
+  if (mp) {
+    let pslug;
+    try { pslug = decodeURIComponent(mp[1]).normalize('NFC'); } catch (e) { pslug = mp[1]; }
+    const index = slugNaarProduct[pslug];
+    if (index === undefined) {
+      toonSectie('shop', { stilleUrl: true });
+      zetUrl('/', true);
+      return;
+    }
+    toonSectie('shop', { stilleUrl: true });
+    openProduct(index, { stilleUrl: true });
+    return;
+  }
+
   const m = /^\/verhaal\/([^/]+)\/?$/.exec(location.pathname);
 
   if (!m) {
-    // Geen verhaal-URL. Staat er nog een verhaal open, dan hoort dat dicht -
-    // dat is het terugknop-gedrag.
-    if (opties.vanPopstate) sluitVerhaal({ stilleUrl: true });
+    // Geen verhaal- of product-URL. Staat er nog iets open, dan hoort dat
+    // dicht - dat is het terugknop-gedrag.
+    if (opties.vanPopstate) {
+      sluitVerhaal({ stilleUrl: true });
+      sluitProduct({ stilleUrl: true });
+    }
     return;
   }
 
@@ -841,12 +870,23 @@ function startRouter() {
 // ─── Deelknoppen ─────────────────────────────────────────────────────────────
 // Opgebouwd met DOM-methoden, niet met een HTML-sjabloon: titels en slugs
 // bevatten apostroffen en aanhalingstekens die een onclick-string zouden breken.
+// Verhaal: knoppen onder het artikel.
 function renderDeelKnoppen(v) {
-  const el = document.getElementById('deel-sectie');
-  if (!el || !v || !v.slug) return;
+  if (!v || !v.slug) return;
+  deelBlok('deel-sectie', v.titel, location.origin + verhaalUrl(v.slug), 'Deel dit verhaal');
+}
 
-  const url = location.origin + verhaalUrl(v.slug);
-  const titel = v.titel || 'MijnKoelPietje';
+// Shop: zelfde blok onder het product.
+function renderDeelKnoppenProduct(k) {
+  if (!k || !k.slug) return;
+  deelBlok('deel-sectie-product', k.titel, location.origin + productUrl(k.slug), 'Deel dit product');
+}
+
+function deelBlok(containerId, ruweTitel, url, kopTekst) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+
+  const titel = ruweTitel || 'MijnKoelPietje';
 
   const wrap = document.createElement('div');
   wrap.className = 'kaart';
@@ -855,7 +895,7 @@ function renderDeelKnoppen(v) {
   const kop = document.createElement('div');
   kop.className = 'mono text-xs uppercase mb-3';
   kop.style.cssText = 'color:rgba(245,196,0,0.7);letter-spacing:0.1em;';
-  kop.textContent = 'Deel dit verhaal';
+  kop.textContent = kopTekst || 'Delen';
 
   const rij = document.createElement('div');
   rij.style.cssText = 'display:flex;flex-wrap:wrap;gap:0.6rem;align-items:center;';
@@ -894,7 +934,7 @@ function renderDeelKnoppen(v) {
 
   // Op mobiel dekt het systeemdeelmenu WhatsApp, mail en de rest in één knop.
   if (navigator.share) {
-    rij.appendChild(knop('Deel', 'Deel dit verhaal', async () => {
+    rij.appendChild(knop('Deel', kopTekst || 'Delen', async () => {
       try { await navigator.share({ title: titel, text: titel, url: url }); }
       catch (e) { /* geannuleerd door de bezoeker */ }
     }));
@@ -958,7 +998,7 @@ function toonSectie(naam, opties = {}) {
   }
 
   if (naam === 'verhalen') sluitVerhaal(opties);
-  if (naam === 'shop') sluitProduct();
+  if (naam === 'shop') sluitProduct(opties);
 
   // Trigger scroll reveals voor nieuwe sectie
   setTimeout(initScrollReveals, 50);
@@ -1106,7 +1146,7 @@ let huidigProduct = null;
 // Welke foto staat er groot? Bijgehouden zodat de lightbox op dezelfde foto opent.
 let actieveFotoIndex = 0;
 
-function openProduct(index) {
+function openProduct(index, opties = {}) {
   const k = kunstwerken[index];
   if (!k) return;   // guard vóór het opslaan van de scrollpositie
   actieveFotoIndex = 0;   // nieuw product start altijd bij de eerste foto
@@ -1115,7 +1155,9 @@ function openProduct(index) {
     shopScrollPositie = window.scrollY;
   } else {
     shopScrollPositie = null;
-    toonSectie('shop');
+    // Stil: anders pusht sluitProduct() hier '/' vlak voordat wij de
+    // product-URL pushen, en moet de bezoeker twee keer terug.
+    toonSectie('shop', { stilleUrl: true });
   }
 
   huidigProduct = index;
@@ -1220,7 +1262,11 @@ function openProduct(index) {
   document.getElementById('shop-overzicht').classList.add('verborgen');
   const kop = document.getElementById('shop-header');
   if (kop) kop.classList.add('verborgen');
+  renderDeelKnoppenProduct(k);
   window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // Deelbare URL, net als bij de verhalen.
+  if (!opties.stilleUrl && k.slug) zetUrl(productUrl(k.slug), false);
 }
 
 function kiesFoto(index, fotos, alt) {
@@ -1232,15 +1278,17 @@ function kiesFoto(index, fotos, alt) {
   });
 }
 
-function sluitProduct() {
+function sluitProduct(opties = {}) {
   const detail = document.getElementById('product-detail');
   if (!detail) return;
+  const stond = detail.classList.contains('open');
   detail.classList.remove('open');
   document.getElementById('shop-overzicht').classList.remove('verborgen');
   const kop = document.getElementById('shop-header');
   if (kop) kop.classList.remove('verborgen');
   huidigProduct = null;
   actieveFotoIndex = 0;
+  if (stond && !opties.stilleUrl) zetUrl('/', false);
   if (shopScrollPositie !== null) {
     const positie = shopScrollPositie;
     shopScrollPositie = null;

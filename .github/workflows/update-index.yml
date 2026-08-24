@@ -18,7 +18,7 @@ jobs:
       - run: |
           git config user.name "GitHub Action"
           git config user.email "action@github.com"
-          git add content/*/index.json og verhaal voorwaarden disclaimer
+          git add content/*/index.json og verhaal product voorwaarden disclaimer
           git diff --staged --quiet && exit 0
           git commit -m "Auto: update content index + deelpaginas"
           # Publiceert de klant twee verhalen kort na elkaar, dan kan deze push
