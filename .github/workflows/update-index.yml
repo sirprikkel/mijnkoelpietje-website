@@ -18,6 +18,6 @@ jobs:
       - run: |
           git config user.name "GitHub Action"
           git config user.email "action@github.com"
-          git add content/*/index.json og verhaal
+          git add content/*/index.json og verhaal voorwaarden disclaimer
           git diff --staged --quiet || git commit -m "Auto: update content index + deelpaginas"
           git push

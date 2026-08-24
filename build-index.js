@@ -160,4 +160,58 @@ function bouwVerhaalPaginas() {
   console.log(`verhaal/ → ${slugs.length} pagina's (${metBeeld} met eigen og-beeld, ${terugval} met terugval)`);
 }
 
+// ─── 3. Losse pagina's met een eigen URL ─────────────────────────────────────
+// Ook de juridische pagina's moeten te versturen zijn en vindbaar voor
+// zoekmachines. Zelfde truc als bij de verhalen, maar met vaste teksten.
+const LOSSE_PAGINAS = [
+  {
+    pad: 'voorwaarden',
+    titel: 'Algemene Voorwaarden',
+    oms: 'De algemene voorwaarden van MijnKoelPietje: bestellen, prijzen, retourneren en herroepingsrecht, garantie, klachten, privacy en cookies.'
+  },
+  {
+    pad: 'disclaimer',
+    titel: 'Disclaimer & Privacy',
+    oms: 'Disclaimer en privacyverklaring van MijnKoelPietje: historische context, gebruik van AI, intellectueel eigendom en de omgang met persoonsgegevens.'
+  }
+];
+
+function bouwLossePaginas() {
+  if (!fs.existsSync('index.html')) return;
+  const sjabloon = fs.readFileSync('index.html', 'utf8');
+  const kop = sjabloon.indexOf('  <title>');
+  const staart = sjabloon.indexOf('\n', sjabloon.indexOf('<meta property="og:url"'));
+  if (kop === -1 || staart === -1) return;
+
+  const beeld = SITE + '/og/_default.jpg';
+
+  LOSSE_PAGINAS.forEach(p => {
+    const url = `${SITE}/${p.pad}`;
+    const titel = esc(p.titel);
+    const oms = esc(p.oms);
+    const head = `  <title>${titel} — MijnKoelPietje</title>
+  <meta name="description" content="${oms}" />
+  <meta property="og:title" content="${titel}" />
+  <meta property="og:description" content="${oms}" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="MijnKoelPietje" />
+  <meta property="og:locale" content="nl_NL" />
+  <meta property="og:url" content="${url}" />
+  <meta property="og:image" content="${beeld}" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="${titel}" />
+  <meta name="twitter:description" content="${oms}" />
+  <meta name="twitter:image" content="${beeld}" />
+  <link rel="canonical" href="${url}" />`;
+
+    fs.mkdirSync(p.pad, { recursive: true });
+    fs.writeFileSync(path.join(p.pad, 'index.html'), sjabloon.slice(0, kop) + head + sjabloon.slice(staart));
+  });
+
+  console.log(`losse pagina's → ${LOSSE_PAGINAS.map(p => '/' + p.pad).join(', ')}`);
+}
+
 bouwVerhaalPaginas();
+bouwLossePaginas();

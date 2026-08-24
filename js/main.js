@@ -767,7 +767,22 @@ function zetUrl(url, vervang) {
 }
 
 // Vertaalt de huidige URL naar de juiste weergave.
+// Losse pagina's met een eigen URL. Deze hebben geen detailweergave, alleen
+// een sectie - de router hoeft er dus alleen naartoe te schakelen.
+const paginaRoutes = {
+  '/voorwaarden': 'voorwaarden',
+  '/disclaimer': 'disclaimer'
+};
+
 function routeerVanUrl(opties = {}) {
+  const pad = location.pathname.replace(/\/$/, '') || '/';
+
+  const sectie = paginaRoutes[pad];
+  if (sectie) {
+    toonSectie(sectie, { stilleUrl: true });
+    return;
+  }
+
   const m = /^\/verhaal\/([^/]+)\/?$/.exec(location.pathname);
 
   if (!m) {

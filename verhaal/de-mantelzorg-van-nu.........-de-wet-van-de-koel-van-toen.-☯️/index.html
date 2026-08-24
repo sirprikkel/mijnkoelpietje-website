@@ -791,8 +791,8 @@
     </div>
     <nav aria-label="Footer navigatie">
       <div class="flex gap-6 flex-wrap justify-center">
-        <button onclick="toonSectie('disclaimer')" class="nav-link">Disclaimer &amp; Privacy</button>
-        <button onclick="toonSectie('voorwaarden')" class="nav-link">Algemene Voorwaarden</button>
+        <a href="/disclaimer" class="nav-link" onclick="toonSectie('disclaimer');zetUrl('/disclaimer',false);return false;">Disclaimer &amp; Privacy</a>
+        <a href="/voorwaarden" class="nav-link" onclick="toonSectie('voorwaarden');zetUrl('/voorwaarden',false);return false;">Algemene Voorwaarden</a>
       </div>
     </nav>
     <div class="mono text-gray-700 text-xs text-center">
