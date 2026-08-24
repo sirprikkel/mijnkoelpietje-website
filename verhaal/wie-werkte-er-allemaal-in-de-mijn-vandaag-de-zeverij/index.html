@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wie werkte er allemaal in de mijn, vandaag: De zeverij 📤 — MijnKoelPietje</title>
+  <meta name="description" content="De Zeverij was feitelijk een gigantische fabriek vol trillende machines, lopende banden en waterbakken. Het doel, de bruikbare steenkool scheiden van de waardeloze leisteen en alles netjes op maat so…" />
+  <meta property="og:title" content="Wie werkte er allemaal in de mijn, vandaag: De zeverij 📤" />
+  <meta property="og:description" content="De Zeverij was feitelijk een gigantische fabriek vol trillende machines, lopende banden en waterbakken. Het doel, de bruikbare steenkool scheiden van de waardeloze leisteen en alles netjes op maat so…" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="MijnKoelPietje" />
+  <meta property="og:locale" content="nl_NL" />
+  <meta property="og:url" content="https://www.mijnkoelpietje.nl/verhaal/wie-werkte-er-allemaal-in-de-mijn-vandaag-de-zeverij" />
+  <meta property="og:image" content="https://www.mijnkoelpietje.nl/og/wie-werkte-er-allemaal-in-de-mijn-vandaag-de-zeverij.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Wie werkte er allemaal in de mijn, vandaag: De zeverij 📤" />
+  <meta name="twitter:description" content="De Zeverij was feitelijk een gigantische fabriek vol trillende machines, lopende banden en waterbakken. Het doel, de bruikbare steenkool scheiden van de waardeloze leisteen en alles netjes op maat so…" />
+  <meta name="twitter:image" content="https://www.mijnkoelpietje.nl/og/wie-werkte-er-allemaal-in-de-mijn-vandaag-de-zeverij.jpg" />
+  <link rel="canonical" href="https://www.mijnkoelpietje.nl/verhaal/wie-werkte-er-allemaal-in-de-mijn-vandaag-de-zeverij" />
+
+  <!-- Google Analytics 4 — vervang G-H9NMRD1G9Z door je eigen Measurement ID -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H9NMRD1G9Z"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-H9NMRD1G9Z');
+  </script>
+
+  <!-- Fonts: Poiret One (display) + Didact Gothic (body) + Space Mono (mono) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Didact+Gothic&family=Poiret+One&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Poiret One', 'sans-serif'],
+            sans: ['Didact Gothic', 'sans-serif'],
+            mono: ['Space Mono', 'monospace'],
+          },
+          colors: {
+            geel: '#f5c400',
+            'geel-dim': '#c49e00',
+            zwart: '#000000',
+            donker: '#0a0a0a',
+            oppervlak: '#121212',
+            grijs: '#1a1a1a',
+            tekst: '#e8e8e8',
+          },
+        }
+      }
+    }
+  </script>
+
+  <link rel="stylesheet" href="/styles/main.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+
+<!-- Cookie banner -->
+<div id="cookie-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:300;background:rgba(10,10,10,0.97);border-top:1px solid rgba(245,196,0,0.2);padding:1.25rem 1.5rem;">
+  <div style="max-width:900px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;gap:1rem;justify-content:space-between;">
+    <p style="color:#aaa;font-family:'Didact Gothic',sans-serif;font-size:0.82rem;line-height:1.6;margin:0;flex:1;min-width:260px;">
+      Deze website gebruikt <strong style="color:#e8e8e8;">functionele cookies</strong> en lokale opslag om jouw stem (like) te onthouden via Supabase. Er worden geen persoonsgegevens verkocht of gedeeld met adverteerders.
+      <button onclick="toonSectie('disclaimer')" style="color:var(--geel);background:none;border:none;cursor:pointer;font-size:0.82rem;padding:0;text-decoration:underline;">Meer info</button>
+    </p>
+    <button id="cookie-akkoord" onclick="cookieAkkoord()" style="background:var(--geel);color:#000;font-family:'Space Mono',monospace;font-size:0.78rem;font-weight:700;border:none;border-radius:8px;padding:0.65rem 1.5rem;cursor:pointer;white-space:nowrap;min-height:44px;">
+      Akkoord
+    </button>
+  </div>
+</div>
+
+<!-- Lightbox -->
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="Afbeeldingsvergroting" onclick="sluitLightbox()">
+  <button id="lightbox-close" onclick="sluitLightbox()" aria-label="Sluiten">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="24" height="24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+  </button>
+  <button id="lightbox-prev" onclick="event.stopPropagation(); lightboxVorige()" aria-label="Vorige foto">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="28" height="28"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
+  </button>
+  <button id="lightbox-next" onclick="event.stopPropagation(); lightboxVolgende()" aria-label="Volgende foto">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="28" height="28"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
+  </button>
+  <div id="lightbox-teller" class="mono" aria-live="polite"></div>
+  <img id="lightbox-img" src="" alt="" />
+</div>
+
+<!-- NAV -->
+<nav id="main-nav" aria-label="Hoofdnavigatie">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
+
+    <button onclick="toonSectie('home')" class="flex items-center gap-3 cursor-pointer bg-transparent border-none" aria-label="Naar homepage">
+      <img src="/logo-rond.png" alt="Mijn KoelPietje logo" width="44" height="44" style="border-radius:50%;filter:drop-shadow(0 0 8px rgba(245,196,0,0.4));" />
+      <span style="font-family:'Poiret One',sans-serif;" class="text-xl tracking-wide text-white">
+        Mijn<span style="color:var(--geel);">KoelPietje</span>
+      </span>
+    </button>
+
+    <!-- Desktop menu (onder 1060px vervangen door hamburger, zie updateNav in main.js) -->
+    <div id="desk-menu" class="flex items-center gap-4 xl:gap-6 2xl:gap-8">
+      <a href="https://www.facebook.com/profile.php?id=61584617014708" target="_blank" rel="noopener" id="fb-nav" class="fb-nav-link" aria-label="Volg MijnKoelPietje op Facebook">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20" style="overflow:visible;" aria-hidden="true">
+          <path class="fb-path" d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3" style="transform-origin:center;" />
+          <text class="fb-duim" x="12" y="2" text-anchor="middle" font-size="10" stroke="none" fill="currentColor" opacity="0">👍</text>
+        </svg>
+      </a>
+      <button class="nav-link" onclick="toonSectie('verhalen')">Verhalen</button>
+      <button class="nav-link" onclick="toonSectie('galerij')">Galerij</button>
+      <button class="nav-link" onclick="toonSectie('nieuws')">Nieuws</button>
+      <button class="nav-link" onclick="toonSectie('shop')">Shop</button>
+      <button class="nav-link" onclick="toonSectie('over')">Over</button>
+      <button class="nav-link" onclick="toonSectie('sponsoren')">Sponsoren</button>
+      <button class="nav-link" onclick="toonSectie('contact')">Contact</button>
+
+      <!-- Dieptemeter — direct na Contact, zelfde stijl -->
+      <div class="dieptemeter" id="dieptemeter">
+        <span class="depth-label">Diepte</span>
+        <div class="depth-row">
+          <span class="depth-getal" id="depth-getal">0</span>
+          <span class="depth-eenheid">m</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobiel hamburger -->
+    <button id="mob-menu-btn" onclick="toggleMobMenu()" style="display:none;color:var(--geel);" class="items-center justify-center min-w-[44px] min-h-[44px] cursor-pointer bg-transparent border-none" aria-label="Menu openen/sluiten" aria-expanded="false">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="24" height="24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
+    </button>
+  </div>
+
+  <!-- Mobiel dropdown -->
+  <div id="mob-menu" style="display:none;border-top:1px solid rgba(245,196,0,0.12);" class="px-6 pb-4">
+    <div class="flex flex-col gap-4 pt-4">
+      <a href="https://www.facebook.com/profile.php?id=61584617014708" target="_blank" rel="noopener" class="nav-link text-left min-h-[44px] flex items-center gap-2" onclick="toggleMobMenu()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true">
+          <path d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3" />
+        </svg>
+        Facebook
+      </a>
+      <button class="nav-link text-left min-h-[44px]" onclick="toonSectie('verhalen');toggleMobMenu()">Verhalen</button>
+      <button class="nav-link text-left min-h-[44px]" onclick="toonSectie('galerij');toggleMobMenu()">Galerij</button>
+      <button class="nav-link text-left min-h-[44px]" onclick="toonSectie('nieuws');toggleMobMenu()">Nieuws</button>
+      <button class="nav-link text-left min-h-[44px]" onclick="toonSectie('shop');toggleMobMenu()">Shop</button>
+      <button class="nav-link text-left min-h-[44px]" onclick="toonSectie('over');toggleMobMenu()">Over</button>
+      <button class="nav-link text-left min-h-[44px]" onclick="toonSectie('sponsoren');toggleMobMenu()">Sponsoren</button>
+      <button class="nav-link text-left min-h-[44px]" onclick="toonSectie('contact');toggleMobMenu()">Contact</button>
+    </div>
+  </div>
+</nav>
+
+
+<!-- ══════════════════════════════════════════════════════ HOME ══ -->
+<div id="sectie-home" class="sectie actief">
+
+  <!-- HERO — Chapter 1: Intro Hook -->
+  <section class="tunnel-bg min-h-[55vh] flex flex-col items-center justify-center relative pt-44 pb-14 px-4 sm:px-6 overflow-hidden">
+
+    <!-- Achtergrond decoratie -->
+    <div class="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+      <div style="position:absolute;top:25%;left:15%;width:500px;height:500px;background:radial-gradient(circle,rgba(245,196,0,0.05),transparent 70%);border-radius:50%;"></div>
+      <div style="position:absolute;top:55%;right:10%;width:350px;height:350px;background:radial-gradient(circle,rgba(245,196,0,0.03),transparent 70%);border-radius:50%;"></div>
+    </div>
+
+    <div class="relative z-10 text-center max-w-4xl">
+      <div class="mono text-xs tracking-widest mb-6 uppercase" style="color:rgba(245,196,0,0.7);">
+        Glück Auf &nbsp;·&nbsp; Verhalen &nbsp;·&nbsp; Mijnerfgoed
+      </div>
+
+      <h1 style="font-family:'Poiret One',sans-serif;font-size:clamp(2.8rem,8vw,7rem);line-height:1.05;font-weight:400;margin-bottom:1.5rem;">
+        In het donker<br/>
+        <span style="color:var(--geel);" class="kanarie-glow">zingt de kanarie</span>
+      </h1>
+
+      <p class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-10">
+        Een reis door de steenkolenmijn — Het leven in de kolonie - Verhalen en herinneringen -
+        Het KoelPietje als gids
+      </p>
+
+      <div class="flex flex-wrap gap-4 justify-center">
+        <button onclick="toonSectie('verhalen')" class="btn-geel">Lees de verhalen</button>
+      </div>
+    </div>
+
+    <div class="absolute bottom-0 left-0 right-0 shaft-glow" aria-hidden="true"></div>
+    <div class="mijn-decor" aria-hidden="true"></div>
+  </section>
+
+  <div class="hr-geel"></div>
+
+  <!-- VERHALEN PREVIEW — Chapter 2 -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 py-20">
+    <div class="reveal flex items-end justify-between mb-12 flex-wrap gap-4">
+      <div>
+        <div class="mono text-xs tracking-widest uppercase mb-2" style="color:rgba(245,196,0,0.7);">Verhalen</div>
+        <h2 style="font-family:'Poiret One',sans-serif;font-size:clamp(1.8rem,4vw,2.5rem);font-weight:400;">Uit de Diepte</h2>
+      </div>
+      <button onclick="toonSectie('verhalen')" class="btn-outline hidden md:block">Alle verhalen</button>
+    </div>
+
+    <div id="verhalen-preview" class="grid md:grid-cols-3 gap-6">
+      <!-- Wordt dynamisch gevuld door renderVerhalenPreview() -->
+    </div>
+
+    <div class="text-center mt-8 md:hidden">
+      <button onclick="toonSectie('verhalen')" class="btn-outline">Alle verhalen</button>
+    </div>
+  </section>
+
+  <!-- VIDEO TUSSENSTUK -->
+  <div style="position:relative;height:380px;overflow:hidden;margin:0;">
+    <div style="position:absolute;top:0;left:0;right:0;height:120px;background:linear-gradient(180deg,#000 0%,transparent 100%);z-index:2;pointer-events:none;"></div>
+    <video autoplay muted loop playsinline
+      style="width:100%;height:100%;object-fit:cover;object-position:center 30%;opacity:0.65;">
+      <source src="/hero-koelpietje.mp4" type="video/mp4" />
+    </video>
+    <div style="position:absolute;bottom:0;left:0;right:0;height:120px;background:linear-gradient(0deg,#000 0%,transparent 100%);z-index:2;pointer-events:none;"></div>
+  </div>
+
+  <!-- SHOP PREVIEW — Chapter 3 -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 py-20">
+    <div class="reveal flex items-end justify-between mb-12 flex-wrap gap-4">
+      <div>
+        <div class="mono text-xs tracking-widest uppercase mb-2" style="color:rgba(245,196,0,0.7);">Daal af in onze shop</div>
+        <h2 style="font-family:'Poiret One',sans-serif;font-size:clamp(1.8rem,4vw,2.5rem);font-weight:400;">Shop</h2>
+      </div>
+      <button onclick="toonSectie('shop')" class="btn-outline hidden md:block">Bekijk de shop</button>
+    </div>
+
+    <div id="shop-preview" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Wordt dynamisch gevuld door renderShopPreview() -->
+    </div>
+
+    <div class="text-center mt-8 md:hidden">
+      <button onclick="toonSectie('shop')" class="btn-outline">Bekijk de shop</button>
+    </div>
+  </section>
+
+  <!-- CLIMAX CTA — Chapter 5: Nieuwsbrief -->
+  <section class="py-24 px-4 sm:px-6 text-center border-t border-b" style="background:linear-gradient(135deg,#0a0800,#000);border-color:rgba(245,196,0,0.1);">
+    <div class="max-w-xl mx-auto reveal">
+      <div class="kanarie-flutter inline-block mb-6" aria-hidden="true">
+        <img src="/logo-rond.png" alt="" width="72" height="72" style="border-radius:50%;filter:drop-shadow(0 0 16px rgba(245,196,0,0.5));" />
+      </div>
+      <h2 style="font-family:'Poiret One',sans-serif;font-size:clamp(1.8rem,4vw,2.5rem);font-weight:400;" class="mb-4">Blijf op de hoogte</h2>
+      <p class="text-gray-400 mb-8">Nieuwe verhalen, kunst en activiteiten — rechtstreeks in je inbox.</p>
+      <form onsubmit="aanmeldenNieuwsbrief(event)" class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+        <input id="nieuwsbrief-email" type="email" placeholder="jouw@email.nl" class="zoek-input flex-1" aria-label="E-mailadres" required />
+        <button type="submit" id="nieuwsbrief-btn" class="btn-geel">Aanmelden</button>
+      </form>
+    </div>
+  </section>
+
+</div><!-- /home -->
+
+
+<!-- ══════════════════════════════════════════════════ VERHALEN ══ -->
+<div id="sectie-verhalen" class="sectie">
+  <div class="pt-24 pb-32 max-w-6xl mx-auto px-4 sm:px-6">
+
+    <div class="text-center mb-16 pt-8">
+      <div class="mono text-xs tracking-widest uppercase mb-3" style="color:rgba(245,196,0,0.7);">Tussen donker en licht</div>
+      <h1 style="font-family:'Poiret One',sans-serif;font-size:clamp(2.5rem,6vw,4rem);font-weight:400;" class="mb-4">Verhalen</h1>
+      <p class="text-gray-500 max-w-xl mx-auto">Herinneringen, geschiedenis, nostalgie en meer - elk verhaal een rimpeling in de tijd.</p>
+    </div>
+
+    <!-- Verhaal detail (verborgen tot klik) -->
+    <div id="verhaal-detail" class="verhaal-detail mb-12" role="article">
+      <button id="verhaal-terug-boven" onclick="sluitVerhaal()" class="flex items-center gap-2 mb-8 transition-colors text-sm mono cursor-pointer bg-transparent border-none min-h-[44px]" style="color:rgba(245,196,0,0.8);" aria-label="Terug naar overzicht">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/></svg>
+        Terug naar overzicht
+      </button>
+      <div id="verhaal-content" class="max-w-2xl"><!-- dynamisch --></div>
+    </div>
+
+    <!-- Overzicht -->
+    <div id="verhalen-overzicht" class="verhaal-overzicht">
+
+      <!-- Zoeken -->
+      <div class="mb-6">
+        <input type="search" id="zoek-verhalen" placeholder="Zoek op trefwoord..." class="zoek-input max-w-md" oninput="filterVerhalen()" aria-label="Zoeken in verhalen" />
+      </div>
+
+      <!-- Rubriek filters -->
+      <div class="flex flex-wrap items-center gap-2 mb-10" id="rubriek-filters" role="group" aria-label="Filter op rubriek">
+        <button class="rubriek-tag actief" style="background:rgba(245,196,0,0.12);color:var(--geel);" onclick="filterRubriek('alle',this)">Alle</button>
+        <button class="rubriek-tag" style="background:rgba(245,196,0,0.06);color:#777;" onclick="filterRubriek('ondergronds',this)">Ondergronds</button>
+        <button class="rubriek-tag" style="background:rgba(59,130,246,0.06);color:#777;" onclick="filterRubriek('bovengronds',this)">Bovengronds</button>
+        <button class="rubriek-tag" style="background:rgba(16,185,129,0.06);color:#777;" onclick="filterRubriek('de-sporen',this)">De Sporen</button>
+        <button class="rubriek-tag" style="background:rgba(249,115,22,0.06);color:#777;" onclick="filterRubriek('knipoog',this)">Knipoog</button>
+        <button class="rubriek-tag" style="background:rgba(168,85,247,0.06);color:#777;" onclick="filterRubriek('de-stem',this)">De Stem</button>
+        <select id="filter-jaar" onchange="filterVerhalen()" class="rubriek-tag ml-2" style="background:rgba(245,196,0,0.06);color:#777;border:1px solid rgba(245,196,0,0.15);cursor:pointer;padding:6px 12px;border-radius:999px;font-size:0.75rem;appearance:auto;" aria-label="Filter op jaar">
+          <option value="alle">Alle jaren</option>
+          <option value="2025">2025</option>
+          <option value="2026">2026</option>
+        </select>
+      </div>
+
+      <!-- Grid -->
+      <div id="verhalen-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" role="list">
+
+        <div class="kaart overflow-hidden" data-rubriek="ondergronds" data-tags="eerste dag vader mijn diepte lift koud" onclick="openVerhaal('v1')" role="listitem">
+          <div class="rubriek-balk" style="background:var(--geel);"></div>
+          <div class="p-6">
+            <span class="rubriek-tag" style="background:rgba(245,196,0,0.12);color:var(--geel);">Ondergronds</span>
+            <h3 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mt-3 mb-2">Mijn eerste dag onder de grond</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">Het was koud. De lift kreunde. Mijn vader legde zijn hand op mijn schouder: "Luister naar de kanarie."</p>
+            <div class="mt-4 mono text-xs" style="color:rgba(245,196,0,0.7);">Lees meer →</div>
+          </div>
+        </div>
+
+        <div class="kaart overflow-hidden" data-rubriek="de-stem" data-tags="kanarie mijnwerkers veiligheid gas detector haldane" onclick="openVerhaal('v2')" role="listitem">
+          <div class="rubriek-balk" style="background:#a855f7;"></div>
+          <div class="p-6">
+            <span class="rubriek-tag" style="background:rgba(168,85,247,0.12);color:#c084fc;">De Stem</span>
+            <h3 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mt-3 mb-2">De kanarie als levensredder</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">Eeuwenlang namen mijnwerkers een kanarie mee. Als het vogeltje stil werd, was het tijd om te vluchten.</p>
+            <div class="mt-4 mono text-xs text-blue-400">Lees meer →</div>
+          </div>
+        </div>
+
+        <div class="kaart overflow-hidden" data-rubriek="knipoog" data-tags="ai kunst beelden maken tools techniek midjourney stable diffusion" onclick="openVerhaal('v3')" role="listitem">
+          <div class="rubriek-balk" style="background:#f97316;"></div>
+          <div class="p-6">
+            <span class="rubriek-tag" style="background:rgba(249,115,22,0.12);color:#fb923c;">Knipoog</span>
+            <h3 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mt-3 mb-2">Hoe ik mijn beelden maak</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">Met AI-tools geef ik oude beelden een nieuw leven. Duisternis, geel licht, en de geest van de mijn in pixels.</p>
+            <div class="mt-4 mono text-xs text-emerald-400">Lees meer →</div>
+          </div>
+        </div>
+
+        <div class="kaart overflow-hidden" data-rubriek="bovengronds" data-tags="dagelijks leven eten brooddoos lamp helm ritueel" onclick="openVerhaal('v4')" role="listitem">
+          <div class="rubriek-balk" style="background:#3b82f6;"></div>
+          <div class="p-6">
+            <span class="rubriek-tag" style="background:rgba(59,130,246,0.12);color:#60a5fa;">Bovengronds</span>
+            <h3 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mt-3 mb-2">De brooddoos en de lamp</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">Elke ochtend dezelfde rituelen: de helm, de lamp, de brooddoos. Kleine dingen die het leven onder de grond draaglijk maakten.</p>
+            <div class="mt-4 mono text-xs text-purple-400">Lees meer →</div>
+          </div>
+        </div>
+
+        <div class="kaart overflow-hidden" data-rubriek="de-sporen" data-tags="kanarie vogel zingen geluid natuur zorgzaam koelpietje" onclick="openVerhaal('v5')" role="listitem">
+          <div class="rubriek-balk" style="background:#10b981;"></div>
+          <div class="p-6">
+            <span class="rubriek-tag" style="background:rgba(16,185,129,0.12);color:#34d399;">De Sporen</span>
+            <h3 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mt-3 mb-2">Het zingen stopt nooit</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">Een kanarie die zingt is een levende kanarie. In de mijn was dat geluid de mooiste melodie die je kon horen.</p>
+            <div class="mt-4 mono text-xs text-red-400">Lees meer →</div>
+          </div>
+        </div>
+
+        <div class="kaart overflow-hidden" data-rubriek="ondergronds" data-tags="vrienden kameraadschap saamhorigheid ploeg Jan Piet Toon" onclick="openVerhaal('v6')" role="listitem">
+          <div class="rubriek-balk" style="background:var(--geel);"></div>
+          <div class="p-6">
+            <span class="rubriek-tag" style="background:rgba(245,196,0,0.12);color:var(--geel);">Ondergronds</span>
+            <h3 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mt-3 mb-2">Vrienden in het donker</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">Je kent niemand beter dan degene die naast je werkt in het pikkedonker. Saamhorigheid als je enige licht.</p>
+            <div class="mt-4 mono text-xs" style="color:rgba(245,196,0,0.7);">Lees meer →</div>
+          </div>
+        </div>
+
+      </div><!-- /grid -->
+
+      <!-- Geen resultaten -->
+      <div id="geen-resultaten" class="hidden text-center py-20 text-gray-600" aria-live="polite">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#333" width="48" height="48" class="mx-auto mb-4"><path d="M12 3C8 3 5 6 5 10c0 2.4 1.1 4.6 2.9 6L6 21h12l-1.9-5c1.8-1.4 2.9-3.6 2.9-6 0-4-3-7-7-7zm0 2c2.8 0 5 2.2 5 5s-2.2 5-5 5-5-2.2-5-5 2.2-5 5-5z"/></svg>
+        <p>Geen verhalen gevonden voor "<span id="zoek-term-display"></span>"</p>
+      </div>
+
+    </div><!-- /overzicht -->
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════ NIEUWS ══ -->
+<div id="sectie-nieuws" class="sectie">
+  <div class="pt-24 pb-32 max-w-4xl mx-auto px-4 sm:px-6">
+    <div class="text-center mb-16 pt-8">
+      <div class="mono text-xs tracking-widest uppercase mb-3" style="color:rgba(245,196,0,0.7);">Actueel</div>
+      <h1 style="font-family:'Poiret One',sans-serif;font-size:clamp(2.5rem,6vw,4rem);font-weight:400;" class="mb-4">Nieuws</h1>
+      <p class="text-gray-500 max-w-xl mx-auto">Updates over nieuwtjes die kunnen uitgroeien tot verhalen</p>
+    </div>
+
+    <div id="nieuws-container" class="flex flex-col gap-6">
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════ GALERIJ ══ -->
+<div id="sectie-galerij" class="sectie">
+  <div class="pt-24 pb-32 max-w-6xl mx-auto px-4 sm:px-6">
+    <div class="text-center mb-16 pt-8">
+      <div class="mono text-xs tracking-widest uppercase mb-3" style="color:rgba(245,196,0,0.7);">Beeld uit de mijnstreek</div>
+      <h1 style="font-family:'Poiret One',sans-serif;font-size:clamp(2.5rem,6vw,4rem);font-weight:400;" class="mb-4">Galerij</h1>
+      <p class="text-gray-500 max-w-xl mx-auto">Een selectie van onze mooiste afbeeldingen. Klik op een beeld om het verhaal erachter te lezen.</p>
+    </div>
+
+    <div id="galerij-grid" class="galerij-masonry">
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ SHOP ══ -->
+<div id="sectie-shop" class="sectie">
+  <div class="pt-24 pb-32 max-w-6xl mx-auto px-4 sm:px-6">
+    <div id="shop-header" class="text-center mb-16 pt-8">
+      <div class="mono text-xs tracking-widest uppercase mb-3" style="color:rgba(245,196,0,0.7);">Daal af in onze shop</div>
+      <h1 style="font-family:'Poiret One',sans-serif;font-size:clamp(2.5rem,6vw,4rem);font-weight:400;" class="mb-4">Shop</h1>
+      <p class="text-gray-500 max-w-xl mx-auto">Mijn-erfgoed voor thuis unieke prints en hebbedingen met de ziel van ons mijnverleden</p>
+    </div>
+
+    <!-- Product detail (verborgen tot klik) -->
+    <div id="product-detail" class="product-detail mb-12" role="article">
+      <button onclick="sluitProduct()" class="flex items-center gap-2 mb-8 transition-colors text-sm mono cursor-pointer bg-transparent border-none min-h-[44px]" style="color:rgba(245,196,0,0.8);" aria-label="Terug naar de shop">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="16" height="16"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/></svg>
+        Terug naar de shop
+      </button>
+      <div id="product-content"><!-- dynamisch --></div>
+    </div>
+
+    <!-- Overzicht -->
+    <div id="shop-overzicht" class="shop-overzicht">
+      <div id="shop-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ACTIVITEITEN — sectie en menu-items verwijderd op verzoek van de klant.
+     De content (content/activiteiten/), de CMS-collectie en renderActiviteiten()
+     zijn bewust bewaard, zodat dit eenvoudig terug te zetten is. -->
+
+
+<!-- ════════════════════════════════════════════════════ CONTACT ══ -->
+<div id="sectie-contact" class="sectie">
+  <div class="pt-24 pb-32 max-w-xl mx-auto px-4 sm:px-6">
+    <div class="text-center mb-16 pt-8">
+      <div class="mono text-xs tracking-widest uppercase mb-3" style="color:rgba(245,196,0,0.7);">Kom in contact</div>
+      <h1 style="font-family:'Poiret One',sans-serif;font-size:clamp(2.5rem,6vw,4rem);font-weight:400;" class="mb-4">Contact</h1>
+      <p class="text-gray-500 max-w-xl mx-auto">Vraag, verhaal of een kritische noot? Gooi het in de groep, koempel. We horen graag van je!</p>
+    </div>
+
+    <div class="kaart p-8 mb-8">
+      <form onsubmit="verstuurContact(event)" novalidate>
+        <div class="flex flex-col gap-5">
+          <div>
+            <label for="contact-naam" class="block mono text-xs text-gray-500 uppercase tracking-wide mb-2">Naam</label>
+            <input id="contact-naam" type="text" placeholder="Je naam" class="zoek-input" required autocomplete="name" />
+          </div>
+          <div>
+            <label for="contact-email" class="block mono text-xs text-gray-500 uppercase tracking-wide mb-2">E-mail</label>
+            <input id="contact-email" type="email" placeholder="jouw@email.nl" class="zoek-input" required autocomplete="email" />
+          </div>
+          <div>
+            <label for="contact-onderwerp" class="block mono text-xs text-gray-500 uppercase tracking-wide mb-2">Onderwerp</label>
+            <input id="contact-onderwerp" type="text" placeholder="Waar gaat het over?" class="zoek-input" autocomplete="off" />
+          </div>
+          <div>
+            <label for="contact-bericht" class="block mono text-xs text-gray-500 uppercase tracking-wide mb-2">Bericht</label>
+            <textarea id="contact-bericht" placeholder="Jouw bericht..." class="zoek-input" rows="5" required style="resize:vertical;"></textarea>
+          </div>
+          <button type="submit" class="btn-geel w-full text-center">
+            Verstuur bericht
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Socials -->
+    <div class="flex gap-4 justify-center flex-wrap">
+      <a href="mailto:info@mijnkoelpietje.nl" class="kaart px-5 py-3 mono text-xs transition-colors" style="color:rgba(245,196,0,0.8);">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="14" height="14" class="inline mr-1" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
+        info@mijnkoelpietje.nl
+      </a>
+      <a href="https://www.facebook.com/profile.php?id=61584617014708" target="_blank" rel="noopener" class="kaart px-5 py-3 mono text-xs transition-colors text-blue-400">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="14" height="14" class="inline mr-1" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        Facebook
+      </a>
+      <a href="https://wa.me/31650907429" target="_blank" rel="noopener" class="kaart px-5 py-3 mono text-xs transition-colors text-green-400">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="14" height="14" class="inline mr-1" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        WhatsApp
+      </a>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════ OVER ══ -->
+<div id="sectie-over" class="sectie">
+  <div class="pt-24 pb-32 max-w-4xl mx-auto px-4 sm:px-6">
+    <div class="text-center mb-16 pt-8">
+      <div class="mono text-xs tracking-widest uppercase mb-3" style="color:rgba(245,196,0,0.7);">Wie zijn wij?</div>
+      <h1 style="font-family:'Poiret One',sans-serif;font-size:clamp(2.5rem,6vw,4rem);font-weight:400;" class="mb-4">Over MijnKoelPietje</h1>
+    </div>
+
+    <div class="flex flex-col gap-10">
+
+      <div class="kaart p-8 reveal">
+        <div class="mono text-xs tracking-widest uppercase mb-3" style="color:rgba(245,196,0,0.7);">Welkom</div>
+        <p class="text-gray-400 leading-relaxed">Welkom in onze digitale mijnstreek! Op deze website brengen we het verleden, het heden en de toekomst van de mijnbouw samen op een manier die je nog niet eerder hebt gezien. Ik ben <strong class="text-gray-300">Edward Frederiks</strong>, initiatiefnemer en bedenker van de verhalen en afbeeldingen op deze site. Veel lees- en kijkplezier!</p>
+      </div>
+
+      <div class="kaart p-8 reveal">
+        <h2 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-2xl mb-4" style="color:var(--geel);">De Geschiedenis in een Nieuw Jasje</h2>
+        <p class="text-gray-400 leading-relaxed mb-4">Onze verhalen zijn geworteld in de echte historie. We putten uit stoffige geschiedenisboeken, archieven en het allerbelangrijkst — de persoonlijke getuigenissen van de (oud-)mijnwerkers die de geschiedenis zelf hebben geschreven.</p>
+        <p class="text-gray-400 leading-relaxed">Om deze rijke historie toegankelijk en levend te houden voor nieuwe generaties, maken we gebruik van de modernste techniek: Kunstmatige Intelligentie (AI). We gebruiken AI om historische feiten te verweven tot meeslepende verhalen en om sfeervolle beelden te creëren die je mee terugnemen in de tijd.</p>
+      </div>
+
+      <div class="kaart p-8 reveal">
+        <h2 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-2xl mb-4">Wie is KoelPietje?</h2>
+        <p class="text-gray-400 leading-relaxed">KoelPietje is een unieke AI-creatie die symbool staat voor de kanarie die vroeger in de mijnen de veiligheid bewaakte. Met zijn opvallende, moderne uiterlijk slaat hij de brug tussen de traditie van vroeger en de techniek van nu. Hij is geen historisch figuur, maar een artistieke vertolker die ons helpt de verhalen van de mijnstreek te blijven vertellen.</p>
+      </div>
+
+      <!-- De 5 rubrieken -->
+      <div class="reveal">
+        <div class="mono text-xs tracking-widest uppercase mb-6" style="color:rgba(245,196,0,0.7);">De 5 Rubrieken</div>
+        <div class="grid md:grid-cols-2 gap-4">
+          <div class="kaart p-6">
+            <div style="height:3px;background:#f5c400;width:100%;border-radius:2px;" class="mb-4"></div>
+            <div class="mono text-xs mb-1" style="color:#f5c400;">VOELEN</div>
+            <h3 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mb-3">Ondergronds</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">Dit is de kern. Het staat voor het fysieke werk, de techniek, het gevaar en de kameraadschap in de duisternis. De functies, de gereedschappen.</p>
+          </div>
+          <div class="kaart p-6">
+            <div style="height:3px;background:#3b82f6;width:100%;border-radius:2px;" class="mb-4"></div>
+            <div class="mono text-xs mb-1" style="color:#3b82f6;">VOELEN</div>
+            <h3 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mb-3">Bovengronds</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">Een mooi contrast. Dit gaat over het leven in de mijnkolonies, de buurthuizen, de scholen, ontspanning, verenigingen, vrouwen en kinderen, sociaal maatschappelijk.</p>
+          </div>
+          <div class="kaart p-6">
+            <div style="height:3px;background:#10b981;width:100%;border-radius:2px;" class="mb-4"></div>
+            <div class="mono text-xs mb-1" style="color:#10b981;">ZIEN</div>
+            <h3 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mb-3">De Sporen</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">Het landschap, tastbare objecten (de Relikwieën), de sociale sporen (de cultuur), sporen in het lichaam of de geest (de tol), de herbestemming (nieuw leven).</p>
+          </div>
+          <div class="kaart p-6">
+            <div style="height:3px;background:#f97316;width:100%;border-radius:2px;" class="mb-4"></div>
+            <div class="mono text-xs mb-1" style="color:#f97316;">LACHEN</div>
+            <h3 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mb-3">Knipoog</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">Essentieel voor de balans. De mijnstreek staat bekend om haar specifieke humor. Maar ook voor verhalen zonder directe link met het koelverleden.</p>
+          </div>
+          <div class="kaart p-6 md:col-span-2">
+            <div style="height:3px;background:#a855f7;width:100%;border-radius:2px;" class="mb-4"></div>
+            <div class="mono text-xs mb-1" style="color:#a855f7;">HOREN</div>
+            <h3 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mb-3">De Stem</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">Persoonlijke getuigenissen, boeken, schilderijen, liederen, of misschien wel de stem van de mijn zelf.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="kaart p-8 reveal" style="border-color:rgba(245,196,0,0.3);">
+        <h2 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-2xl mb-4">Samen de geschiedenis bewaren</h2>
+        <p class="text-gray-400 leading-relaxed mb-4">Hoewel we AI gebruiken om onze verhalen vorm te geven, blijft de menselijke factor het belangrijkst. We streven naar historische nauwkeurigheid, maar we zien onze teksten en beelden vooral als eerbetoon en artistieke impressie.</p>
+        <p class="text-gray-400 leading-relaxed mb-6">Heb je zelf een verhaal te vertellen? Zie je een detail dat niet klopt, of wil je een herinnering met ons delen? Je bent van harte uitgenodigd om te reageren of contact met ons op te nemen. Samen houden we de herinnering aan de koempels levend.</p>
+        <button onclick="toonSectie('contact')" class="btn-geel">Neem contact op</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════ SPONSOREN ══ -->
+<div id="sectie-sponsoren" class="sectie">
+  <div class="pt-24 pb-32 max-w-4xl mx-auto px-4 sm:px-6">
+    <div class="text-center mb-16 pt-8">
+      <div class="mono text-xs tracking-widest uppercase mb-3" style="color:rgba(245,196,0,0.7);">Met dank aan</div>
+      <h1 style="font-family:'Poiret One',sans-serif;font-size:clamp(2.5rem,6vw,4rem);font-weight:400;" class="mb-4">Vrienden &amp; Sponsoren</h1>
+      <p class="text-gray-500 max-w-xl mx-auto">MijnKoelPietje is een liefdevolle project — geen commercieel initiatief. Maar er zijn mensen die ons een hart onder de riem steken. Dat verdient een eervolle vermelding.</p>
+    </div>
+
+    <div class="kaart p-8 mb-10 reveal" style="border-color:rgba(245,196,0,0.3);">
+      <div class="mono text-xs tracking-widest uppercase mb-4" style="color:rgba(245,196,0,0.7);">Waarom sponsoren?</div>
+      <p class="text-gray-400 leading-relaxed">We verdienen geen geld met deze website. Maar de verhalen, de beelden en de techniek kosten wel tijd en energie. Wil je dit project steunen als blijk van waardering? Dan plaatsen we jouw naam of die van jouw organisatie hier, met veel plezier.</p>
+    </div>
+
+    <div id="sponsoren-grid" class="grid md:grid-cols-2 gap-6 mb-10">
+      <!-- Wordt dynamisch gevuld door laadSponsoren() -->
+    </div>
+
+    <div class="text-center reveal">
+      <button onclick="toonSectie('contact')" class="btn-outline">Contact opnemen</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════ DISCLAIMER ══ -->
+<div id="sectie-disclaimer" class="sectie">
+  <div class="pt-24 pb-32 max-w-3xl mx-auto px-4 sm:px-6">
+    <div class="text-center mb-16 pt-8">
+      <div class="mono text-xs tracking-widest uppercase mb-3" style="color:rgba(245,196,0,0.7);">Juridisch &amp; Privacy</div>
+      <h1 style="font-family:'Poiret One',sans-serif;font-size:clamp(2rem,5vw,3.5rem);font-weight:400;" class="mb-4">Disclaimer &amp; Privacy</h1>
+      <p class="text-gray-500 text-sm">Laatste update: 20 augustus 2026</p>
+    </div>
+
+    <div class="flex flex-col gap-6 prose">
+
+      <div class="kaart p-8 reveal">
+        <h2 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mb-4" style="color:var(--geel);">1. Informatie en Historische Context</h2>
+        <p class="text-gray-400 leading-relaxed mb-3">De verhalen op deze website zijn geworteld in de rijke geschiedenis van de mijnbouw. Wij maken gebruik van diverse bronnen, waaronder geschiedenisboeken, archieven en persoonlijke getuigenissen van (oud-)mijnwerkers.</p>
+        <p class="text-gray-400 leading-relaxed mb-3"><strong class="text-gray-300">Narratieve vertellingen:</strong> Hoewel wij streven naar een getrouwe weergave, zijn de verhalen bedoeld als narratieve (verhalende) impressies. Wij garanderen niet dat alle feiten te allen tijde volledig, actueel of foutloos zijn.</p>
+        <p class="text-gray-400 leading-relaxed"><strong class="text-gray-300">Geen rechten:</strong> Aan de inhoud van deze website kunnen geen rechten worden ontleend. Het gebruik van de informatie is geheel voor eigen risico.</p>
+      </div>
+
+      <div class="kaart p-8 reveal">
+        <h2 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mb-4">2. Gebruik van Kunstmatige Intelligentie (AI)</h2>
+        <p class="text-gray-400 leading-relaxed mb-3">Om de geschiedenis op een vernieuwende wijze tot leven te wekken, maken wij gebruik van geavanceerde AI-technologie.</p>
+        <p class="text-gray-400 leading-relaxed mb-3"><strong class="text-gray-300">Teksten:</strong> De verhalen zijn tot stand gekomen met hulp van AI, waarbij bronmateriaal is verwerkt tot leesbare vertellingen. AI kan soms feiten interpreteren op een wijze die afwijkt van de strikt historische werkelijkheid ("hallucinaties"). Hoewel wij de output controleren, blijft het een artistieke verwerking.</p>
+        <p class="text-gray-400 leading-relaxed"><strong class="text-gray-300">Afbeeldingen:</strong> Alle getoonde beelden zijn gegenereerd met AI. Dit zijn artistieke impressies en nadrukkelijk geen authentieke historische foto's of documenten, tenzij expliciet anders vermeld.</p>
+      </div>
+
+      <div class="kaart p-8 reveal">
+        <h2 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mb-4">3. Personage 'KoelPietje' &amp; Artistieke Vrijheid</h2>
+        <p class="text-gray-400 leading-relaxed mb-3">Het personage KoelPietje is een unieke digitale creatie, ontwikkeld voor deze website. Hij staat symbool voor de kanarie die vroeger de veiligheid in de mijnen bewaakte en fungeert als gids tussen historie en toekomst.</p>
+        <p class="text-gray-400 leading-relaxed"><strong class="text-gray-300">Toevallige gelijkenissen:</strong> Eventuele visuele gelijkenissen met bestaande karakters, mascottes of personen berusten op louter toeval. KoelPietje is een origineel concept en staat los van andere (historische) commerciële figuren.</p>
+      </div>
+
+      <div class="kaart p-8 reveal">
+        <h2 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mb-4">4. Intellectueel Eigendom</h2>
+        <p class="text-gray-400 leading-relaxed mb-3">Wij respecteren het intellectueel eigendom van anderen. De input voor onze verhalen komt uit openbare bronnen of persoonlijke verslagen.</p>
+        <p class="text-gray-400 leading-relaxed"><strong class="text-gray-300">Auteursrecht:</strong> Zonder uitdrukkelijke schriftelijke toestemming is het niet toegestaan om teksten, het karakter KoelPietje of de AI-gegenereerde afbeeldingen van deze website te kopiëren of te verspreiden voor commerciële doeleinden. Mocht u menen dat er onterecht gebruik wordt gemaakt van bepaalde informatie of beeldmateriaal, neem dan direct contact met ons op.</p>
+      </div>
+
+      <div class="kaart p-8 reveal">
+        <h2 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mb-4">5. Privacy en Persoonsgegevens (AVG)</h2>
+        <p class="text-gray-400 leading-relaxed mb-3">Wij hechten grote waarde aan uw privacy. Wanneer u ons een bericht stuurt via het contactformulier of zich aanmeldt voor de nieuwsbrief, verwerken wij de gegevens die u zelf invult.</p>
+        <p class="text-gray-400 leading-relaxed mb-3"><strong class="text-gray-300">Doel:</strong> Deze gegevens worden uitsluitend gebruikt om uw bericht te beantwoorden of u de nieuwsbrief te sturen. Wij verkopen uw gegevens nooit aan derden.</p>
+        <p class="text-gray-400 leading-relaxed mb-3"><strong class="text-gray-300">Uw rechten:</strong> U heeft het recht op inzage, correctie of verwijdering van uw gegevens. Verzoeken hiertoe kunnen worden ingediend via <a href="mailto:info@mijnkoelpietje.nl" style="color:var(--geel);">info@mijnkoelpietje.nl</a>.</p>
+        <p class="text-gray-400 leading-relaxed"><strong class="text-gray-300">Cookies:</strong> Onze website kan gebruikmaken van functionele cookies om de gebruikerservaring te verbeteren.</p>
+      </div>
+
+      <div class="kaart p-8 reveal">
+        <h2 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mb-4">6. Externe Links en Techniek</h2>
+        <p class="text-gray-400 leading-relaxed mb-3"><strong class="text-gray-300">Links:</strong> Wij zijn niet verantwoordelijk voor de inhoud of het privacybeleid van websites waarnaar wij linken.</p>
+        <p class="text-gray-400 leading-relaxed"><strong class="text-gray-300">Beschikbaarheid:</strong> Wij garanderen niet dat de website foutloos of ononderbroken zal functioneren en zijn niet aansprakelijk voor schade door technische storingen.</p>
+      </div>
+
+      <div class="kaart p-8 reveal" style="border-color:rgba(245,196,0,0.3);">
+        <h2 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mb-4">7. Contact en Correcties</h2>
+        <p class="text-gray-400 leading-relaxed mb-4">Heeft u een aanvulling, een feitelijke correctie of een bezwaar tegen geplaatste content? Wij horen het graag. Wij waarderen de input van de (oud-)mijnwerkersgemeenschap om de verhalen zo waardevol mogelijk te maken.</p>
+        <a href="mailto:info@mijnkoelpietje.nl" class="btn-geel" style="display:inline-block;">info@mijnkoelpietje.nl</a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════ ALGEMENE VOORWAARDEN ══ -->
+<div id="sectie-voorwaarden" class="sectie">
+  <div class="pt-24 pb-32 max-w-3xl mx-auto px-4 sm:px-6">
+    <div class="text-center mb-16 pt-8">
+      <div class="mono text-xs tracking-widest uppercase mb-3" style="color:rgba(245,196,0,0.7);">Webshop &amp; Bestellen</div>
+      <h1 style="font-family:'Poiret One',sans-serif;font-size:clamp(2rem,5vw,3.5rem);font-weight:400;" class="mb-4">Algemene Voorwaarden</h1>
+      <p class="text-gray-500 text-sm">Laatste update: 24 augustus 2026</p>
+    </div>
+
+    <div class="flex flex-col gap-6 prose">
+
+      <div class="kaart p-8 reveal">
+        <h2 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mb-4">1. Wie zijn wij?</h2>
+        <p class="text-gray-400 leading-relaxed mb-3">MijnKoelPietje is een kleine webshop met producten die aansluiten bij de geschiedenis, cultuur en mijnbouwtraditie van Zuid-Limburg.</p>
+        <p class="text-gray-400 leading-relaxed mb-3">Deze algemene voorwaarden zijn van toepassing op alle bestellingen die via de webshop van MijnKoelPietje worden geplaatst.</p>
+        <p class="text-gray-400 leading-relaxed mb-3"><strong class="text-gray-300">MijnKoelPietje</strong><br/>
+        Eijmaelstraat 17<br/>
+        6412 AL Heerlen<br/>
+        Nederland<br/>
+        E-mail: <a href="mailto:info@mijnkoelpietje.nl" style="color:var(--geel);">info@mijnkoelpietje.nl</a></p>
+        <p class="text-gray-400 leading-relaxed"><strong class="text-gray-300">Btw:</strong> MijnKoelPietje maakt gebruik van de Kleineondernemersregeling (KOR).</p>
+      </div>
+
+      <div class="kaart p-8 reveal">
+        <h2 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mb-4">2. Bestellen</h2>
+        <p class="text-gray-400 leading-relaxed mb-3">Wanneer je een bestelling plaatst, ontvang je hiervan een bevestiging per e-mail.</p>
+        <p class="text-gray-400 leading-relaxed mb-3">Wij doen ons best om bestellingen zo snel mogelijk te verwerken en te verzenden. De verwachte levertijd wordt tijdens het bestelproces vermeld.</p>
+        <p class="text-gray-400 leading-relaxed">Als een bestelling onverhoopt vertraging oploopt, informeren wij je hierover zo snel mogelijk.</p>
+      </div>
+
+      <div class="kaart p-8 reveal">
+        <h2 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mb-4">3. Prijzen</h2>
+        <p class="text-gray-400 leading-relaxed mb-3">Alle prijzen die in de webshop worden vermeld zijn de prijzen die je betaalt.</p>
+        <p class="text-gray-400 leading-relaxed mb-3">Eventuele verzendkosten worden duidelijk vermeld voordat je de bestelling definitief plaatst.</p>
+        <p class="text-gray-400 leading-relaxed">MijnKoelPietje maakt gebruik van de <strong class="text-gray-300">Kleineondernemersregeling (KOR)</strong>.</p>
+      </div>
+
+      <div class="kaart p-8 reveal">
+        <h2 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mb-4">4. Retourneren en herroepingsrecht</h2>
+        <p class="text-gray-400 leading-relaxed mb-3">Als consument heb je het recht om je aankoop binnen <strong class="text-gray-300">14 dagen na ontvangst</strong> zonder opgave van reden te annuleren.</p>
+        <p class="text-gray-400 leading-relaxed mb-2"><strong class="text-gray-300">Zo werkt retourneren:</strong></p>
+        <ol class="text-gray-400 leading-relaxed mb-3" style="list-style:decimal;padding-left:1.5rem;">
+          <li>Meld je retour binnen 14 dagen na ontvangst via <a href="mailto:info@mijnkoelpietje.nl" style="color:var(--geel);">info@mijnkoelpietje.nl</a>.</li>
+          <li>Na je melding heb je nog 14 dagen om het product terug te sturen.</li>
+          <li>Stuur het product zorgvuldig en, voor zover redelijkerwijs mogelijk, compleet terug.</li>
+          <li>De kosten voor het terugsturen zijn voor eigen rekening.</li>
+        </ol>
+        <p class="text-gray-400 leading-relaxed mb-3">Na ontvangst van de retour betalen wij het aankoopbedrag terug. Ook de eventueel betaalde standaard verzendkosten van de oorspronkelijke bestelling worden terugbetaald.</p>
+        <p class="text-gray-400 leading-relaxed mb-3">De terugbetaling vindt plaats binnen 14 dagen nadat je de aankoop hebt herroepen. Wij mogen wachten met terugbetalen totdat wij het product hebben ontvangen of totdat je hebt aangetoond dat het product is teruggestuurd.</p>
+        <p class="text-gray-400 leading-relaxed mb-3"><strong class="text-gray-300">Gebruik van het product:</strong> Je mag een product bekijken en beoordelen zoals je dat ook in een winkel zou mogen doen. Wanneer een product verdergaand is gebruikt dan nodig is om het te beoordelen, kan sprake zijn van waardevermindering.</p>
+        <p class="text-gray-400 leading-relaxed"><strong class="text-gray-300">Uitzonderingen:</strong> Het herroepingsrecht geldt niet voor producten die speciaal voor jou zijn gemaakt of gepersonaliseerd, voor zover de wet hiervoor een uitzondering op het herroepingsrecht toestaat. Als een product speciaal voor jou wordt gemaakt of aangepast, wordt dit vooraf duidelijk aangegeven.</p>
+      </div>
+
+      <div class="kaart p-8 reveal">
+        <h2 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mb-4">5. Garantie en problemen met een bestelling</h2>
+        <p class="text-gray-400 leading-relaxed mb-3">Wij leveren producten die moeten voldoen aan de redelijke verwachtingen die je daarvan mag hebben.</p>
+        <p class="text-gray-400 leading-relaxed mb-3">Is een product bij ontvangst beschadigd, werkt het niet goed of is er iets anders niet in orde? Neem dan zo snel mogelijk contact met ons op via <a href="mailto:info@mijnkoelpietje.nl" style="color:var(--geel);">info@mijnkoelpietje.nl</a>. Vermeld daarbij indien mogelijk je ordernummer en voeg eventueel een foto van het probleem toe.</p>
+        <p class="text-gray-400 leading-relaxed mb-3">We bekijken de situatie en zoeken samen naar een passende oplossing, bijvoorbeeld reparatie, vervanging of terugbetaling.</p>
+        <p class="text-gray-400 leading-relaxed">Je wettelijke rechten als consument blijven hierbij altijd van toepassing.</p>
+      </div>
+
+      <div class="kaart p-8 reveal">
+        <h2 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mb-4">6. Klachten</h2>
+        <p class="text-gray-400 leading-relaxed mb-3">Het kan natuurlijk gebeuren dat iets niet helemaal naar wens verloopt. We vinden het belangrijk om klachten goed en persoonlijk op te lossen.</p>
+        <p class="text-gray-400 leading-relaxed mb-2"><strong class="text-gray-300">Onze klachtenprocedure:</strong></p>
+        <ol class="text-gray-400 leading-relaxed" style="list-style:decimal;padding-left:1.5rem;">
+          <li><strong class="text-gray-300">Neem contact met ons op.</strong> Stuur je klacht naar <a href="mailto:info@mijnkoelpietje.nl" style="color:var(--geel);">info@mijnkoelpietje.nl</a>. Beschrijf duidelijk wat er aan de hand is en vermeld indien mogelijk je ordernummer.</li>
+          <li><strong class="text-gray-300">Wij reageren.</strong> Wij proberen je klacht zo snel mogelijk te behandelen en streven ernaar om binnen 14 dagen inhoudelijk te reageren.</li>
+          <li><strong class="text-gray-300">Samen naar een oplossing.</strong> We doen ons best om klachten altijd in goed overleg op te lossen.</li>
+        </ol>
+      </div>
+
+      <div class="kaart p-8 reveal">
+        <h2 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mb-4">7. Privacyverklaring</h2>
+        <p class="text-gray-400 leading-relaxed mb-3">MijnKoelPietje gaat zorgvuldig om met jouw persoonsgegevens.</p>
+        <p class="text-gray-400 leading-relaxed mb-2"><strong class="text-gray-300">Welke gegevens gebruiken wij?</strong> Wanneer je een bestelling plaatst of contact met ons opneemt, kunnen wij onder andere de volgende gegevens verwerken:</p>
+        <ul class="text-gray-400 leading-relaxed mb-3" style="list-style:disc;padding-left:1.5rem;">
+          <li>Voor- en achternaam</li>
+          <li>Adresgegevens</li>
+          <li>E-mailadres</li>
+          <li>Telefoonnummer, wanneer je dit verstrekt</li>
+          <li>Bestelgegevens</li>
+          <li>Betaalgegevens</li>
+          <li>Gegevens die nodig zijn voor de administratie</li>
+        </ul>
+        <p class="text-gray-400 leading-relaxed mb-2"><strong class="text-gray-300">Waarvoor gebruiken wij deze gegevens?</strong> Wij gebruiken je gegevens uitsluitend wanneer dat nodig is, bijvoorbeeld voor:</p>
+        <ul class="text-gray-400 leading-relaxed mb-3" style="list-style:disc;padding-left:1.5rem;">
+          <li>het verwerken en bezorgen van je bestelling;</li>
+          <li>het verwerken van je betaling;</li>
+          <li>het beantwoorden van vragen;</li>
+          <li>het behandelen van retouren en klachten;</li>
+          <li>onze administratie;</li>
+          <li>het voldoen aan wettelijke verplichtingen.</li>
+        </ul>
+        <p class="text-gray-400 leading-relaxed mb-3">Wij verkopen jouw persoonsgegevens <strong class="text-gray-300">niet aan derden</strong>.</p>
+        <p class="text-gray-400 leading-relaxed mb-3"><strong class="text-gray-300">Met wie kunnen gegevens worden gedeeld?</strong> Wanneer dit noodzakelijk is voor het uitvoeren van je bestelling, kunnen gegevens worden gedeeld met bijvoorbeeld de webwinkelsoftware of hostingpartij, de betaalprovider, de pakketbezorger en de boekhouder of boekhoudsoftware. Deze partijen krijgen alleen de gegevens die noodzakelijk zijn voor hun werkzaamheden.</p>
+        <p class="text-gray-400 leading-relaxed mb-3"><strong class="text-gray-300">Hoe lang bewaren wij gegevens?</strong> Wij bewaren persoonsgegevens niet langer dan noodzakelijk is. Gegevens die onderdeel zijn van onze financiële administratie bewaren wij zolang dit wettelijk verplicht is, waaronder de fiscale bewaartermijn van 7 jaar.</p>
+        <p class="text-gray-400 leading-relaxed mb-2"><strong class="text-gray-300">Jouw rechten.</strong> Je hebt het recht om:</p>
+        <ul class="text-gray-400 leading-relaxed mb-3" style="list-style:disc;padding-left:1.5rem;">
+          <li>je persoonsgegevens in te zien;</li>
+          <li>onjuiste gegevens te laten corrigeren;</li>
+          <li>in bepaalde situaties gegevens te laten verwijderen;</li>
+          <li>bezwaar te maken tegen bepaalde vormen van verwerking.</li>
+        </ul>
+        <p class="text-gray-400 leading-relaxed">Een verzoek kun je sturen naar <a href="mailto:info@mijnkoelpietje.nl" style="color:var(--geel);">info@mijnkoelpietje.nl</a>. Om er zeker van te zijn dat een verzoek door de juiste persoon wordt gedaan, kunnen wij vragen om je identiteit te bevestigen.</p>
+      </div>
+
+      <div class="kaart p-8 reveal">
+        <h2 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mb-4">8. Cookies</h2>
+        <p class="text-gray-400 leading-relaxed mb-3">De webshop van MijnKoelPietje kan cookies gebruiken die noodzakelijk zijn om de website en webshop goed te laten functioneren, bijvoorbeeld voor het winkelmandje en het bestelproces.</p>
+        <p class="text-gray-400 leading-relaxed">Wanneer wij gebruikmaken van analytische of andere cookies waarvoor toestemming nodig is, vragen wij hiervoor vooraf toestemming.</p>
+      </div>
+
+      <div class="kaart p-8 reveal" style="border-color:rgba(245,196,0,0.3);">
+        <h2 style="font-family:'Poiret One',sans-serif;font-weight:400;" class="text-xl mb-4">9. Contact</h2>
+        <p class="text-gray-400 leading-relaxed mb-3">Heb je een vraag over een bestelling, product, retour, klacht of iets anders? Neem gerust contact met ons op. Wij proberen vragen zo snel mogelijk te beantwoorden.</p>
+        <p class="text-gray-400 leading-relaxed mb-4">MijnKoelPietje · Eijmaelstraat 17 · 6412 AL Heerlen · Nederland</p>
+        <a href="mailto:info@mijnkoelpietje.nl" class="btn-geel" style="display:inline-block;">info@mijnkoelpietje.nl</a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ FOOTER ══ -->
+<footer class="border-t py-12 px-4 sm:px-6" style="background:#000;border-color:rgba(245,196,0,0.1);">
+  <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+    <div class="flex items-center gap-3">
+      <img src="/logo-rond.png" alt="Mijn KoelPietje" width="36" height="36" style="border-radius:50%;" />
+      <div>
+        <div style="font-family:'Poiret One',sans-serif;" class="text-lg">Mijn<span style="color:var(--geel);">KoelPietje</span></div>
+        <div class="mono text-gray-600 text-xs">Glück Auf · Verhalen · Mijnerfgoed</div>
+      </div>
+    </div>
+    <nav aria-label="Footer navigatie">
+      <div class="flex gap-6 flex-wrap justify-center">
+        <button onclick="toonSectie('disclaimer')" class="nav-link">Disclaimer &amp; Privacy</button>
+        <button onclick="toonSectie('voorwaarden')" class="nav-link">Algemene Voorwaarden</button>
+      </div>
+    </nav>
+    <div class="mono text-gray-700 text-xs text-center">
+      © 2026 MijnKoelPietje.nl<br/>
+      Gebouwd door <a href="https://www.code-lieshout.nl" class="transition-colors" style="color:rgba(245,196,0,0.5);" target="_blank" rel="noopener">Code Lieshout</a>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ══════════════════════════════════════════ SCRIPTS ══ -->
+<script src="/js/main.js"></script>
+<script src="/js/dieptemeter.js"></script>
+<script src="/js/cookie-banner.js"></script>
+
+
+</body>
+</html>

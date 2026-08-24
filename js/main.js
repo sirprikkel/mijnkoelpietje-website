@@ -176,6 +176,9 @@ async function verstuurReactie(verhaalId) {
 
 // ─── Content Loader (dynamisch uit JSON) ──────────────────────────
 let verhalen = {};
+// Tweede index op slug. verhalen[] blijft gesleuteld op titel, want die sleutel
+// is ook de verhaal_id in Supabase (likes/reacties) - die mag niet verschuiven.
+let slugNaarVerhaal = {};
 let kunstwerken = [];
 let nieuwsItems = [];
 let sponsoren = [];
@@ -221,12 +224,23 @@ async function fetchJSON(url) {
 
 async function laadVerhalen() {
   verhalen = {};
+  slugNaarVerhaal = {};
   try {
     const r = await fetch('/content/verhalen/index.json');
     if (r.ok) {
       const idx = await r.json();
       const results = await Promise.all(idx.map(slug => fetchJSON(`/content/verhalen/${slug}.json`)));
-      results.forEach(v => { if (v) { if (!v.id) v.id = v.titel || 'onbekend'; verhalen[v.id] = v; } });
+      results.forEach((v, i) => {
+        if (!v) return;
+        if (!v.id) v.id = v.titel || 'onbekend';
+        v.slug = idx[i];                       // Promise.all bewaart de volgorde
+        verhalen[v.id] = v;
+        if (v.slug) {
+          slugNaarVerhaal[v.slug] = v;
+          // Ook op de padveilige variant, want dat is wat er in de URL staat.
+          slugNaarVerhaal[padVeilig(v.slug)] = v;
+        }
+      });
     }
   } catch(e) { console.log('[KoelPietje] Verhalen laden mislukt:', e); }
   renderVerhalenGrid();
@@ -713,12 +727,179 @@ function contactKopen(titel) {
 }
 
 // Laad alles bij pagina start
-document.addEventListener('DOMContentLoaded', laadContent);
+document.addEventListener('DOMContentLoaded', async () => {
+  await laadContent();
+  startRouter();
+});
+
+// ─── Router ──────────────────────────────────────────────────────────────────
+// De site is één pagina, maar een verhaal moet je kunnen delen. Elk verhaal
+// heeft daarom een eigen URL (/verhaal/<slug>) en een vooraf gegenereerde
+// pagina met de juiste og-tags (zie build-index.js). Deze router zorgt dat die
+// URL ook binnen de app klopt, en dat de terugknop het verhaal sluit in plaats
+// van de site te verlaten.
+
+// Schild tegen een lus tussen onze eigen pushState en de popstate-handler.
+let routerBezig = false;
+
+// Windows kan geen mapnaam maken die op een punt of spatie eindigt. Tien
+// slugs doen dat wel, dus build-index.js strippt die voor het pad. De URL
+// volgt diezelfde regel, anders wijst de link naar een map die niet bestaat.
+function padVeilig(slug) {
+  return String(slug).replace(/[. ]+$/, '');
+}
+
+function verhaalUrl(slug) {
+  return '/verhaal/' + encodeURIComponent(padVeilig(slug));
+}
+
+function zetUrl(url, vervang) {
+  if (!window.history || !history.pushState) return;
+  routerBezig = true;
+  try {
+    if (vervang) history.replaceState({ kp: true }, '', url);
+    else         history.pushState({ kp: true }, '', url);
+  } catch (e) {
+    // Bijv. bij openen vanaf file:// - dan werkt de site gewoon zonder router.
+  } finally {
+    routerBezig = false;
+  }
+}
+
+// Vertaalt de huidige URL naar de juiste weergave.
+function routeerVanUrl(opties = {}) {
+  const m = /^\/verhaal\/([^/]+)\/?$/.exec(location.pathname);
+
+  if (!m) {
+    // Geen verhaal-URL. Staat er nog een verhaal open, dan hoort dat dicht -
+    // dat is het terugknop-gedrag.
+    if (opties.vanPopstate) sluitVerhaal({ stilleUrl: true });
+    return;
+  }
+
+  let slug;
+  try {
+    slug = decodeURIComponent(m[1]).normalize('NFC');
+  } catch (e) {
+    slug = m[1];
+  }
+
+  const v = slugNaarVerhaal[slug];
+  if (!v) {
+    // Verhaal bestaat niet (meer): naar het overzicht in plaats van een lege pagina.
+    toonSectie('verhalen', { stilleUrl: true });
+    zetUrl('/', true);
+    return;
+  }
+
+  toonSectie('verhalen', { stilleUrl: true });
+  openVerhaal(v.id, { stilleUrl: true });
+}
+
+function startRouter() {
+  window.addEventListener('popstate', () => {
+    if (routerBezig) return;
+    routeerVanUrl({ vanPopstate: true });
+  });
+  routeerVanUrl();
+}
+
+// ─── Deelknoppen ─────────────────────────────────────────────────────────────
+// Opgebouwd met DOM-methoden, niet met een HTML-sjabloon: titels en slugs
+// bevatten apostroffen en aanhalingstekens die een onclick-string zouden breken.
+function renderDeelKnoppen(v) {
+  const el = document.getElementById('deel-sectie');
+  if (!el || !v || !v.slug) return;
+
+  const url = location.origin + verhaalUrl(v.slug);
+  const titel = v.titel || 'MijnKoelPietje';
+
+  const wrap = document.createElement('div');
+  wrap.className = 'kaart';
+  wrap.style.cssText = 'margin-top:2.5rem;padding:1.25rem 1.5rem;';
+
+  const kop = document.createElement('div');
+  kop.className = 'mono text-xs uppercase mb-3';
+  kop.style.cssText = 'color:rgba(245,196,0,0.7);letter-spacing:0.1em;';
+  kop.textContent = 'Deel dit verhaal';
+
+  const rij = document.createElement('div');
+  rij.style.cssText = 'display:flex;flex-wrap:wrap;gap:0.6rem;align-items:center;';
+
+  const melding = document.createElement('span');
+  melding.className = 'mono text-xs';
+  melding.style.cssText = 'color:var(--geel);opacity:0;transition:opacity 0.2s;';
+  melding.setAttribute('role', 'status');
+  melding.setAttribute('aria-live', 'polite');
+
+  function toon(tekst) {
+    melding.textContent = tekst;
+    melding.style.opacity = '1';
+    setTimeout(() => { melding.style.opacity = '0'; }, 2000);
+  }
+
+  function knop(label, aria, fn) {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'btn-outline';
+    b.textContent = label;
+    b.setAttribute('aria-label', aria);
+    b.onclick = fn;
+    return b;
+  }
+
+  function link(label, href, extern) {
+    const a = document.createElement('a');
+    a.className = 'btn-outline';
+    a.textContent = label;
+    a.href = href;
+    a.style.textDecoration = 'none';
+    if (extern) { a.target = '_blank'; a.rel = 'noopener noreferrer'; }
+    return a;
+  }
+
+  // Op mobiel dekt het systeemdeelmenu WhatsApp, mail en de rest in één knop.
+  if (navigator.share) {
+    rij.appendChild(knop('Deel', 'Deel dit verhaal', async () => {
+      try { await navigator.share({ title: titel, text: titel, url: url }); }
+      catch (e) { /* geannuleerd door de bezoeker */ }
+    }));
+  } else {
+    rij.appendChild(link('WhatsApp', 'https://wa.me/?text=' + encodeURIComponent(titel + '\n' + url), true));
+    rij.appendChild(link('E-mail', 'mailto:?subject=' + encodeURIComponent(titel) +
+                                   '&body=' + encodeURIComponent(titel + '\n\n' + url), false));
+  }
+
+  rij.appendChild(knop('Link kopiëren', 'Kopieer de link naar dit verhaal', async () => {
+    let gelukt = false;
+    try {
+      await navigator.clipboard.writeText(url);
+      gelukt = true;
+    } catch (e) {
+      // Geen clipboard-API (oudere browser of geen https): oude methode.
+      const ta = document.createElement('textarea');
+      ta.value = url;
+      ta.setAttribute('readonly', '');
+      ta.style.cssText = 'position:absolute;left:-9999px;';
+      document.body.appendChild(ta);
+      ta.select();
+      try { gelukt = document.execCommand('copy'); } catch (e2) { gelukt = false; }
+      document.body.removeChild(ta);
+    }
+    toon(gelukt ? 'gekopieerd!' : 'kopiëren mislukt');
+  }));
+
+  rij.appendChild(melding);
+  wrap.appendChild(kop);
+  wrap.appendChild(rij);
+  el.innerHTML = '';
+  el.appendChild(wrap);
+}
 
 // ─── Navigatie ───────────────────────────────────────────────────────────────
 let huidigeSectie = 'home';
 
-function toonSectie(naam) {
+function toonSectie(naam, opties = {}) {
   document.querySelectorAll('.sectie').forEach(s => s.classList.remove('actief'));
   const el = document.getElementById('sectie-' + naam);
   if (el) el.classList.add('actief');
@@ -742,7 +923,7 @@ function toonSectie(naam) {
     galerijScrollPositie = null;
   }
 
-  if (naam === 'verhalen') sluitVerhaal();
+  if (naam === 'verhalen') sluitVerhaal(opties);
   if (naam === 'shop') sluitProduct();
 
   // Trigger scroll reveals voor nieuwe sectie
@@ -767,7 +948,7 @@ function openVerhaalUitGalerij(id) {
   openVerhaal(id);
 }
 
-function openVerhaal(id) {
+function openVerhaal(id, opties = {}) {
   // Elke andere ingang (overzicht, home-preview) valt terug op het overzicht.
   if (verhaalHerkomst !== 'galerij') verhaalHerkomst = 'verhalen';
 
@@ -775,7 +956,9 @@ function openVerhaal(id) {
     overzichtScrollPositie = window.scrollY;
   } else {
     overzichtScrollPositie = null;
-    toonSectie('verhalen');
+    // Stil: anders pusht sluitVerhaal() hier '/' vlak voordat wij de
+    // verhaal-URL pushen, en moet de bezoeker twee keer terug.
+    toonSectie('verhalen', { stilleUrl: true });
   }
   const v = verhalen[id];
   if (!v) return;
@@ -794,6 +977,7 @@ function openVerhaal(id) {
       <div class="mono text-xs text-gray-600">${v.datum || ''}</div>
     </div>
     <div class="prose leading-relaxed" style="max-width:65ch;">${renderMarkdown(v.tekst)}</div>
+    <div id="deel-sectie"></div>
     <div id="like-sectie-${v.id}"></div>
     <div id="reacties-sectie-${v.id}"></div>
     <div style="margin-top:3rem;">
@@ -801,6 +985,7 @@ function openVerhaal(id) {
     </div>
   `;
 
+  renderDeelKnoppen(v);
   renderLikeKnop(v.id);
   renderReacties(v.id);
 
@@ -808,6 +993,10 @@ function openVerhaal(id) {
   document.getElementById('verhalen-overzicht').classList.add('verborgen');
   updateTerugKnoppen();
   window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // Deelbare URL. Alle bestaande aanroepen geven geen opties mee en pushen dus;
+  // alleen de router zet stilleUrl, want daar staat de URL al goed.
+  if (!opties.stilleUrl && v.slug) zetUrl(verhaalUrl(v.slug), false);
 }
 
 // ─── Terugknoppen ───
@@ -835,11 +1024,11 @@ function updateTerugKnoppen() {
   if (tekstNode) tekstNode.textContent = ' ' + label + ' ';
 
   knop.setAttribute('aria-label', label);
-  knop.onclick = verhaalHerkomst === 'galerij' ? terugNaarGalerij : sluitVerhaal;
+  knop.onclick = verhaalHerkomst === 'galerij' ? () => terugNaarGalerij() : () => sluitVerhaal();
 }
 
 // Sluit het verhaal en gaat terug naar de galerij, op de oude scrollpositie.
-function terugNaarGalerij() {
+function terugNaarGalerij(opties = {}) {
   const positie = galerijScrollPositie;
 
   document.getElementById('verhaal-detail').classList.remove('open');
@@ -851,7 +1040,8 @@ function terugNaarGalerij() {
   galerijScrollPositie = null;
   overzichtScrollPositie = null;
 
-  toonSectie('galerij');
+  toonSectie('galerij', { stilleUrl: true });
+  if (!opties.stilleUrl) zetUrl('/', false);
 
   // toonSectie doet zelf een smooth scroll naar 0; daarom hierna en 'instant'.
   if (positie !== null) {
@@ -861,9 +1051,11 @@ function terugNaarGalerij() {
   }
 }
 
-function sluitVerhaal() {
+function sluitVerhaal(opties = {}) {
+  const stond = document.getElementById('verhaal-detail').classList.contains('open');
   document.getElementById('verhaal-detail').classList.remove('open');
   document.getElementById('verhalen-overzicht').classList.remove('verborgen');
+  if (stond && !opties.stilleUrl) zetUrl('/', false);
   if (overzichtScrollPositie !== null) {
     const positie = overzichtScrollPositie;
     overzichtScrollPositie = null;
