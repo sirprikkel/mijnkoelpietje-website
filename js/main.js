@@ -973,6 +973,16 @@ function deelBlok(containerId, ruweTitel, url, kopTekst) {
 // ─── Navigatie ───────────────────────────────────────────────────────────────
 let huidigeSectie = 'home';
 
+// Springt naar de uitleg van de 5 rubrieken op de Over-pagina. toonSectie()
+// scrollt zelf naar boven, dus de uitleg wordt daarna in beeld gebracht.
+function toonRubriekUitleg() {
+  toonSectie('over');
+  const el = document.getElementById('de-rubrieken');
+  if (!el) return;
+  // Even wachten tot de sectie zichtbaar is, anders klopt de scrollpositie niet.
+  setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 120);
+}
+
 function toonSectie(naam, opties = {}) {
   document.querySelectorAll('.sectie').forEach(s => s.classList.remove('actief'));
   const el = document.getElementById('sectie-' + naam);

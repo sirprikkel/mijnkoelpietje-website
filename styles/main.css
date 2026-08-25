@@ -182,6 +182,22 @@ h1, h2, h3, h4, .font-display {
 .rubriek-tag:hover { opacity: 0.75; }
 .rubriek-tag.actief { opacity: 1; box-shadow: 0 0 0 1.5px currentColor; }
 
+/* Link naar de uitleg van de rubrieken, onder de filterbalk. */
+.rubriek-uitleg-link {
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  color: #777;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(245,196,0,0.35);
+  transition: color 0.2s ease;
+}
+.rubriek-uitleg-link:hover { color: var(--geel); text-decoration-color: var(--geel); }
+.rubriek-uitleg-link:focus-visible { outline: 2px solid var(--geel); outline-offset: 3px; border-radius: 3px; }
+
 /* Scroll reveal animaties */
 .reveal {
   opacity: 0;

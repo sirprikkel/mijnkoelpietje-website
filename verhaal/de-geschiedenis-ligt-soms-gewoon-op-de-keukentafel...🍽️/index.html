@@ -304,6 +304,14 @@
         </select>
       </div>
 
+      <!-- Bezoekers begrepen de rubrieknamen niet altijd; deze link wijst naar
+           de uitleg van de 5 rubrieken op de Over-pagina. -->
+      <p class="text-sm -mt-8 mb-10">
+        <button type="button" onclick="toonRubriekUitleg()" class="rubriek-uitleg-link">
+          Wat betekenen deze rubrieken?
+        </button>
+      </p>
+
       <!-- Grid -->
       <div id="verhalen-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" role="list">
 
@@ -524,7 +532,7 @@
       </div>
 
       <!-- De 5 rubrieken -->
-      <div class="reveal">
+      <div class="reveal" id="de-rubrieken">
         <div class="mono text-xs tracking-widest uppercase mb-6" style="color:rgba(245,196,0,0.7);">De 5 Rubrieken</div>
         <div class="grid md:grid-cols-2 gap-4">
           <div class="kaart p-6">
