@@ -73,7 +73,7 @@ serve(async (req) => {
       `
     );
 
-    // 2. Notificatie naar KoelPietje
+    // 2. Notificatie naar MijnKoelPietje
     const notificatieRes = await sendEmail(
       NOTIFY_EMAIL,
       "Nieuwe nieuwsbrief aanmelding",

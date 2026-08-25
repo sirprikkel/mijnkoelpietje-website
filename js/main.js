@@ -73,26 +73,26 @@ let sbClient = null;
 try {
   if (typeof supabase !== 'undefined' && SUPABASE_URL !== 'JOUW_SUPABASE_URL_HIER') {
     sbClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-    console.log('[KoelPietje] Supabase verbonden');
+    console.log('[MijnKoelPietje] Supabase verbonden');
   } else {
-    console.warn('[KoelPietje] Supabase NIET beschikbaar — typeof supabase:', typeof supabase);
+    console.warn('[MijnKoelPietje] Supabase NIET beschikbaar — typeof supabase:', typeof supabase);
   }
 } catch(e) {
-  console.error('[KoelPietje] Supabase init fout:', e);
+  console.error('[MijnKoelPietje] Supabase init fout:', e);
 }
 
 // ─── Likes ────────────────────────────────────────────────────────
 async function laadLikes(verhaalId) {
-  if (!sbClient) { console.warn('[KoelPietje] Geen sbClient voor likes'); return 0; }
+  if (!sbClient) { console.warn('[MijnKoelPietje] Geen sbClient voor likes'); return 0; }
   try {
     const { count, error: countErr } = await sbClient.from('likes').select('*', { count: 'exact', head: true }).eq('verhaal_id', verhaalId);
-    console.log('[KoelPietje] Likes voor', verhaalId, ':', count, countErr ? 'ERROR: ' + countErr.message : 'OK');
+    console.log('[MijnKoelPietje] Likes voor', verhaalId, ':', count, countErr ? 'ERROR: ' + countErr.message : 'OK');
     if (!countErr && count !== null) return count;
     const { data, error } = await sbClient.from('likes').select('*').eq('verhaal_id', verhaalId);
-    if (error) { console.error('[KoelPietje] Likes fallback mislukt:', error.message); return 0; }
-    console.log('[KoelPietje] Likes fallback voor', verhaalId, ':', data?.length);
+    if (error) { console.error('[MijnKoelPietje] Likes fallback mislukt:', error.message); return 0; }
+    console.log('[MijnKoelPietje] Likes fallback voor', verhaalId, ':', data?.length);
     return (data || []).length;
-  } catch(e) { console.error('[KoelPietje] Likes exception:', e); return 0; }
+  } catch(e) { console.error('[MijnKoelPietje] Likes exception:', e); return 0; }
 }
 
 async function stemLike(verhaalId) {
@@ -243,7 +243,7 @@ async function laadVerhalen() {
         }
       });
     }
-  } catch(e) { console.log('[KoelPietje] Verhalen laden mislukt:', e); }
+  } catch(e) { console.log('[MijnKoelPietje] Verhalen laden mislukt:', e); }
   renderVerhalenGrid();
   renderVerhalenPreview();
   renderGalerij();
@@ -283,7 +283,7 @@ async function laadKunstwerken() {
       slugNaarProduct = {};
       kunstwerken.forEach((k, i) => { if (k.slug) slugNaarProduct[padVeilig(k.slug)] = i; });
     }
-  } catch(e) { console.log('[KoelPietje] Kunstwerken laden mislukt:', e); }
+  } catch(e) { console.log('[MijnKoelPietje] Kunstwerken laden mislukt:', e); }
   renderShop();
   renderShopPreview();
 }
@@ -298,7 +298,7 @@ async function laadNieuws() {
       nieuwsItems = results.filter(n => n).map(n => { if (!n.id) n.id = n.titel || 'onbekend'; return n; });
       nieuwsItems.sort((a, b) => parseNLDatum(b.datum) - parseNLDatum(a.datum));
     }
-  } catch(e) { console.log('[KoelPietje] Nieuws laden mislukt:', e); }
+  } catch(e) { console.log('[MijnKoelPietje] Nieuws laden mislukt:', e); }
   renderNieuws();
 }
 
@@ -326,7 +326,7 @@ async function laadActiviteiten() {
       const results = await Promise.all(idx.map(slug => fetchJSON(`/content/activiteiten/${slug}.json`)));
       activiteiten = results.filter(a => a && a.titel);
     }
-  } catch(e) { console.log('[KoelPietje] Activiteiten laden mislukt:', e); }
+  } catch(e) { console.log('[MijnKoelPietje] Activiteiten laden mislukt:', e); }
   renderActiviteiten();
 }
 
@@ -373,7 +373,7 @@ let bundelData = null;
 async function laadBundel() {
   try {
     bundelData = await fetchJSON('/content/shop-instellingen/bundel.json');
-  } catch(e) { console.log('[KoelPietje] Bundel laden mislukt:', e); }
+  } catch(e) { console.log('[MijnKoelPietje] Bundel laden mislukt:', e); }
 }
 
 function renderBundel(grid) {
