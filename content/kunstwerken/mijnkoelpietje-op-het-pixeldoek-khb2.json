@@ -1,12 +1,17 @@
 {
-  "titel": "MijnKoelPietje op het PixelDoek (khb2)",
+  "titel": "MijnKoelPietje een stukje mijnverleden voor thuis.",
   "volgorde": 50,
-  "collectie": "Ai, Pastichem",
-  "beschrijving": "Een Hommage aan Herman Brood",
-  "prijs": "0",
-  "afbeelding": "/uploads/Gemini_Generated_Image_smrv0ssmrv0ssmrv.png",
-  "afbeelding_formaat": "vierkant",
-  "editie": "1 van 1",
+  "collectie": "3D, MijnKoelPietje",
+  "beschrijving": "Steeds vaker kregen we de vraag of MijnKoelPietje ook thuis een plekje kan krijgen. Daarom is hij nu beschikbaar als bijzonder gedenk en decoratiestuk voor liefhebbers van de Limburgse mijnstreek.\n\nEen mooie herinnering aan de Koempel en een sfeervolle blikvanger voor de schouw, het dressoir, de vitrinekast of je eigen **‘koel-hoekje’**.\n\n**~~Een klein koelpietje, met een groot verhaal.~~**\n\nKosten van verzending voor de koper 2,50",
+  "prijs": "5 euro",
+  "afbeelding": "/uploads/mijnkoelpietjes01.jpg",
+  "fotos": [
+    "/uploads/mijnkoelpietjes02.jpg",
+    "/uploads/mijnkoelpietjes03.jpg",
+    "/uploads/mijnkoelpietjes01.jpg"
+  ],
+  "editie": "",
   "mollie_link": "",
-  "link": ""
+  "link": "",
+  "afbeelding_formaat": "vierkant"
 }
