@@ -242,6 +242,7 @@ function bouwProductPaginas() {
       console.warn(`  ! ${slug}.json onleesbaar, overgeslagen`);
       return;
     }
+    if (k.tonen === false) return;
 
     const veilig = padVeilig(slug);
     let ogPad = '/og/_default.jpg';

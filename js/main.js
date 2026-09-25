@@ -274,7 +274,8 @@ async function laadKunstwerken() {
       const results = await Promise.all(idx.map(slug => fetchJSON(`/content/kunstwerken/${slug}.json`)));
       // Slug eerst koppelen (results loopt gelijk op met idx), dan pas filteren.
       results.forEach((k, i) => { if (k) k.slug = idx[i]; });
-      kunstwerken = results.filter(k => k).map(k => { if (!k.id) k.id = k.titel || 'onbekend'; return k; });
+      // tonen: false = tijdelijk uit de shop gehaald via het CMS.
+      kunstwerken = results.filter(k => k && k.tonen !== false).map(k => { if (!k.id) k.id = k.titel || 'onbekend'; return k; });
       // Volgorde uit het CMS. Hier sorteren en niet in renderShop(), want
       // openProduct() werkt op de array-index - die moet dus al kloppen.
       kunstwerken = sorteerKunstwerken(kunstwerken);
@@ -748,7 +749,7 @@ function contactKopen(titel) {
     const onderwerp = document.querySelector('select');
     if (onderwerp) onderwerp.value = 'Vraag over de kunst';
     const bericht = document.querySelector('textarea');
-    if (bericht) bericht.value = `Hallo, ik heb interesse in het kunstwerk "${titel}". Kunt u mij meer informatie sturen?`;
+    if (bericht) bericht.value = `Hallo, ik heb interesse in of een vraag over het product "${titel}" in de webshop.`;
   }, 300);
 }
 

@@ -52,6 +52,7 @@ collections:
       - {label: "Editie", name: "editie", widget: "string", required: false, hint: "Bijv: 1 van 1"}
       - {label: "Mollie betaallink", name: "mollie_link", widget: "string", required: false, hint: "Plak hier je Mollie betaallink"}
       - {label: "Link (optioneel)", name: "link", widget: "string", required: false, hint: "URL naar externe pagina, bijv: https://www.voorbeeld.nl"}
+      - {label: "Tonen op website", name: "tonen", widget: "boolean", default: true, required: false, hint: "Uitzetten om dit product tijdelijk uit de shop te halen."}
 
   - name: "sponsoren"
     label: "Vrienden & Sponsoren"
