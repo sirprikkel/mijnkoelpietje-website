@@ -211,8 +211,10 @@ export const getBundel = cache((): Bundel | null => {
   }
 });
 
-/** og-afbeelding (1200x630) die scripts/build-og.mjs bij het bouwen maakt. */
-export function ogAfbeelding(bron: string | null): string | null {
-  if (!bron || !bron.startsWith('/')) return null;
+export const OG_STANDAARD = '/og-default.jpg';
+
+/** og-afbeelding (1200x630) uit scripts/build-og.mjs; zonder bron de standaardafbeelding. */
+export function ogAfbeelding(bron: string | null): string {
+  if (!bron || !bron.startsWith('/')) return OG_STANDAARD;
   return `/og/${ogNaam(bron)}`;
 }

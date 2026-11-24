@@ -9,8 +9,13 @@ import { SITE_URL } from '@/lib/slug';
 
 const GA_ID = 'G-H9NMRD1G9Z';
 
+// Absolute og-afbeeldingen: op een Vercel-preview naar de preview zelf, zodat
+// je deelkaarten kunt testen voordat de site live gaat. Productie: het echte domein.
+const METADATA_BASE =
+  process.env.VERCEL_ENV === 'preview' && process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : SITE_URL;
+
 export const metadata: Metadata = {
-  metadataBase: new URL(SITE_URL),
+  metadataBase: new URL(METADATA_BASE),
   title: 'Echo van de Mijnen, Oude Archieven, Nieuwe Herinneringen',
   description:
     'Wie kan er beter vertellen over het leven in de kolonie dan MijnKoelPietje. Duik in de stoffige archieven en ontdek de echte historie in een modern jasje met leuke afbeeldingen. Ga je mee ondergronds? Ga je mee nieuwe herinneringen maken?',
