@@ -1,24 +1,30 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
 import { useEffect } from 'react';
 
 /**
  * Port van initScrollReveals(): elementen met .reveal krijgen .zichtbaar zodra
- * ze in beeld komen. Draait opnieuw na elke navigatie en houdt via een
- * MutationObserver ook later toegevoegde .reveal-elementen bij.
+ * ze in beeld komen.
+ *
+ * Eén observer voor de hele sessie. Een MutationObserver pikt de .reveal-
+ * elementen van elke nieuwe pagina op, ook na navigeren via het menu. Eerder
+ * draaide dit per route en markeerde het elementen op de DOM; bij client-side
+ * navigatie markeerde de oude observer de nieuwe elementen vlak voordat hij werd
+ * afgesloten, waardoor de nieuwe ze oversloeg en ze onzichtbaar bleven.
  */
 export function ScrollReveals() {
-  const pathname = usePathname();
-
   useEffect(() => {
-    const reveals = () => Array.from(document.querySelectorAll<HTMLElement>('.reveal:not(.zichtbaar)'));
+    const alle = () => Array.from(document.querySelectorAll<HTMLElement>('.reveal:not(.zichtbaar)'));
 
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      reveals().forEach(el => el.classList.add('zichtbaar'));
-      return;
+      const toon = () => alle().forEach(el => el.classList.add('zichtbaar'));
+      toon();
+      const mo = new MutationObserver(toon);
+      mo.observe(document.body, { childList: true, subtree: true });
+      return () => mo.disconnect();
     }
 
+    const bekeken = new WeakSet<Element>();
     const io = new IntersectionObserver(
       entries => {
         entries.forEach(entry => {
@@ -31,13 +37,15 @@ export function ScrollReveals() {
       { threshold: 0.1, rootMargin: '0px 0px -40px 0px' },
     );
 
-    const observeer = () =>
-      reveals().forEach((el, i) => {
-        if (el.dataset.kpObserved) return;
-        el.dataset.kpObserved = '1';
-        if (!el.style.transitionDelay) el.style.transitionDelay = `${Math.min(i, 8) * 80}ms`;
+    const observeer = () => {
+      let i = 0;
+      for (const el of alle()) {
+        if (bekeken.has(el)) continue;
+        bekeken.add(el);
+        if (!el.style.transitionDelay) el.style.transitionDelay = `${Math.min(i++, 8) * 80}ms`;
         io.observe(el);
-      });
+      }
+    };
 
     observeer();
     const mo = new MutationObserver(observeer);
@@ -47,7 +55,7 @@ export function ScrollReveals() {
       io.disconnect();
       mo.disconnect();
     };
-  }, [pathname]);
+  }, []);
 
   return null;
 }
