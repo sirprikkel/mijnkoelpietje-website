@@ -28,7 +28,6 @@ export const metadata: Metadata = {
     locale: 'nl_NL',
     siteName: 'MijnKoelPietje',
   },
-  icons: { icon: '/logo-rond.png' },
 };
 
 export const viewport: Viewport = { width: 'device-width', initialScale: 1 };
