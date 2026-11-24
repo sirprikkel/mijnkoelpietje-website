@@ -1,15 +1,3 @@
 {
-  "rewrites": [
-    { "source": "/admin", "destination": "/admin/index.html" },
-    { "source": "/admin/", "destination": "/admin/index.html" }
-  ],
-  "headers": [
-    {
-      "source": "/admin/config.yml",
-      "headers": [
-        { "key": "Content-Type", "value": "text/yaml" },
-        { "key": "Cache-Control", "value": "no-cache" }
-      ]
-    }
-  ]
+  "framework": "nextjs"
 }
