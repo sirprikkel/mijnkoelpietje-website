@@ -169,7 +169,12 @@ async function mapLimit(items, concurrency, operation) {
 
 async function fetchBytes(url) {
   const response = await fetch(url, {
-    headers: { 'user-agent': 'mijnkoelpietje-smoke-test/1.0' },
+    headers: {
+      'user-agent': 'mijnkoelpietje-smoke-test/1.0',
+      // Voor een beveiligde Vercel-preview: Project Settings > Deployment Protection >
+      // Protection Bypass for Automation. Token alleen via env, nooit in de repo.
+      ...(process.env.VERCEL_BYPASS ? { 'x-vercel-protection-bypass': process.env.VERCEL_BYPASS } : {}),
+    },
     redirect: 'follow',
     signal: AbortSignal.timeout(30_000),
   });
