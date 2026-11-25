@@ -92,7 +92,9 @@ export default async function ProductPagina({ params }: Props) {
                 <ProductFotos fotos={k.fotos} titel={k.titel} />
               </div>
 
-              <div>
+              {/* Op mobiel staat de koopknop direct onder de prijs (order), op desktop onder de beschrijving. */}
+              <div className="flex flex-col">
+                <div className="order-1">
                 {k.collectie && (
                   <div className="mono text-xs uppercase mb-2" style={{ color: 'rgba(245,196,0,0.7)', letterSpacing: '0.1em' }}>
                     {k.collectie}
@@ -117,12 +119,15 @@ export default async function ProductPagina({ params }: Props) {
                   )}
                   {k.editie && <span className="mono text-xs text-gray-500">Editie {k.editie}</span>}
                 </div>
+                </div>
+
                 <div
-                  className="prose leading-relaxed mb-8"
+                  className="prose leading-relaxed mb-8 order-3 md:order-2"
                   style={{ maxWidth: '60ch' }}
                   dangerouslySetInnerHTML={{ __html: renderMarkdown(k.beschrijving) }}
                 />
 
+                <div className="order-2 md:order-3 mb-8 md:mb-0">
                 <KoopKnop
                   titel={k.titel}
                   mollieLink={k.mollieLink}
@@ -143,13 +148,16 @@ export default async function ProductPagina({ params }: Props) {
                 </div>
 
                 <ActieBalk actie={actie} />
-                <Voordelen voordelen={voordelen} />
+                </div>
 
+                <div className="order-4">
+                <Voordelen voordelen={voordelen} />
                 {k.collectie && (
                   <p className="mono text-[0.7rem] uppercase tracking-widest text-gray-600 mt-6">
                     Collectie: <span className="text-gray-400">{k.collectie}</span>
                   </p>
                 )}
+                </div>
               </div>
             </div>
           </div>
