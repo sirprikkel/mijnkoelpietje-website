@@ -30,7 +30,7 @@ function SponsorKaart({ s }: { s: Sponsor }) {
         <div className="text-gray-400 text-sm leading-relaxed" dangerouslySetInnerHTML={{ __html: s.omschrijving }} />
       )}
       {s.website && (
-        <a href={s.website} target="_blank" rel="noopener" className="mono text-xs mt-2 inline-block" style={LINK_GEEL}>
+        <a href={s.website} target="_blank" rel="noopener" data-kp-klik={`sponsor: ${s.naam}`} className="mono text-xs mt-2 inline-block" style={LINK_GEEL}>
           Bezoek website →
         </a>
       )}

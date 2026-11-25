@@ -33,6 +33,7 @@ export function ShopPreview({ kunstwerken }: { kunstwerken: Kunstwerk[] }) {
           <Link
             key={k.slug}
             href={productUrl(k.slug)}
+            data-kp-klik={`home-product: ${k.titel}`}
             className="kaart reveal block"
             style={{ cursor: 'pointer', color: 'inherit', textDecoration: 'none' }}
           >

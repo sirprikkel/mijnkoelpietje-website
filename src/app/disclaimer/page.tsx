@@ -40,7 +40,8 @@ export default function DisclaimerPage() {
             <Alinea>Wij hechten grote waarde aan uw privacy. Wanneer u ons een bericht stuurt via het contactformulier of zich aanmeldt voor de nieuwsbrief, verwerken wij de gegevens die u zelf invult.</Alinea>
             <Alinea label="Doel:">Deze gegevens worden uitsluitend gebruikt om uw bericht te beantwoorden of u de nieuwsbrief te sturen. Wij verkopen uw gegevens nooit aan derden.</Alinea>
             <Alinea label="Uw rechten:">U heeft het recht op inzage, correctie of verwijdering van uw gegevens. Verzoeken hiertoe kunnen worden ingediend via <MailLink />.</Alinea>
-            <Alinea label="Cookies:" mb="">Onze website kan gebruikmaken van functionele cookies om de gebruikerservaring te verbeteren.</Alinea>
+            <Alinea label="Cookies:">Onze website kan gebruikmaken van functionele cookies om de gebruikerservaring te verbeteren.</Alinea>
+            <Alinea label="Bezoekersstatistieken:" mb="">Wij tellen anoniem hoe vaak pagina's worden bekeken en op welke links in de shop wordt geklikt, met GoatCounter. Daarbij worden geen cookies geplaatst en geen persoonsgegevens of IP-adressen bewaard; wij zien alleen totalen.</Alinea>
           </JuridischKaart>
 
           <JuridischKaart titel="6. Externe Links en Techniek">

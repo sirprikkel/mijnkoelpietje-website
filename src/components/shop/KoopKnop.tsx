@@ -28,13 +28,13 @@ export function KoopKnop({ titel, mollieLink, groot = false, tekst, className }:
   const maat = className ?? (groot ? 'text-base px-8 py-3' : 'text-sm');
   if (mollieLink) {
     return (
-      <a href={mollieLink} target="_blank" rel="noopener" className={'btn-geel ' + maat}>
+      <a href={mollieLink} target="_blank" rel="noopener" data-kp-klik={`shop-kopen: ${titel}`} className={'btn-geel ' + maat}>
         {tekst ?? 'Kopen'}
       </a>
     );
   }
   return (
-    <Link href={contactKopenHref(titel)} className={'btn-geel ' + maat}>
+    <Link href={contactKopenHref(titel)} data-kp-klik={`shop-bestellen: ${titel}`} className={'btn-geel ' + maat}>
       {tekst ?? 'Bestellen'}
     </Link>
   );

@@ -1,13 +1,11 @@
 import type { Metadata, Viewport } from 'next';
-import Script from 'next/script';
 import './globals.css';
 import { Nav } from '@/components/layout/Nav';
 import { Footer } from '@/components/layout/Footer';
 import { CookieBanner } from '@/components/layout/CookieBanner';
 import { ScrollReveals } from '@/components/layout/ScrollReveals';
+import { GoatCounter } from '@/components/layout/GoatCounter';
 import { SITE_URL } from '@/lib/slug';
-
-const GA_ID = 'G-H9NMRD1G9Z';
 
 // Absolute og-afbeeldingen: op een Vercel-preview naar de preview zelf, zodat
 // je deelkaarten kunt testen voordat de site live gaat. Productie: het echte domein.
@@ -50,10 +48,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main>{children}</main>
         <Footer />
         <ScrollReveals />
-        <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />
-        <Script id="ga" strategy="afterInteractive">
-          {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_ID}');`}
-        </Script>
+        <GoatCounter />
       </body>
     </html>
   );

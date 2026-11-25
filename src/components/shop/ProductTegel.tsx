@@ -21,7 +21,7 @@ const prijsLabel = formatPrijs;
 /** Producttegel in de stijl van het voorbeeld: vierkante foto, titel, prijs, knop bij hover. */
 export function ProductTegel({ p, prioriteit = false }: { p: ShopTegelData; prioriteit?: boolean }) {
   return (
-    <Link href={p.href} className="shop-tegel group" aria-label={`${p.titel}${p.prijs ? `, ${prijsLabel(p.prijs)}` : ''}`}>
+    <Link href={p.href} data-kp-klik={`shop-product: ${p.titel}`} className="shop-tegel group" aria-label={`${p.titel}${p.prijs ? `, ${prijsLabel(p.prijs)}` : ''}`}>
       <div className="shop-tegel-foto">
         {p.foto ? (
           <Image
