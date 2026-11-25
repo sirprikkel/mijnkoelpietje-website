@@ -102,6 +102,23 @@ collections:
           - {label: "Knop tekst", name: "knop_tekst", widget: "string", default: "Bundel kopen"}
           - {label: "Mollie betaallink", name: "mollie_link", widget: "string", required: false, hint: "Plak hier je Mollie betaallink"}
           - {label: "Tonen op website", name: "tonen", widget: "boolean", default: true}
+      - name: "shop"
+        label: "Shoppagina"
+        file: "content/shop-instellingen/shop.json"
+        format: json
+        fields:
+          - label: "Voordelen (blokjes op de productpagina)"
+            name: "voordelen"
+            widget: "list"
+            max: 4
+            hint: "Zet hier alleen beloftes die echt kloppen, bijv. uit de algemene voorwaarden."
+            fields:
+              - {label: "Icoon", name: "icoon", widget: "select", options: [{label: "Betalen", value: "betalen"}, {label: "Retour", value: "retour"}, {label: "Contact", value: "contact"}, {label: "Verzending", value: "verzending"}, {label: "Levertijd", value: "levertijd"}, {label: "Handgemaakt", value: "handgemaakt"}, {label: "Ophalen", value: "ophalen"}]}
+              - {label: "Titel", name: "titel", widget: "string"}
+              - {label: "Tekst", name: "tekst", widget: "string", required: false}
+          - {label: "Actiebalk tonen", name: "actie_tonen", widget: "boolean", default: false, hint: "Balk onder de koopknop, bijv. voor een kortingscode."}
+          - {label: "Actie tekst", name: "actie_tekst", widget: "string", required: false, hint: "Bijv: 10% korting op je eerste aankoop met code:"}
+          - {label: "Actie code (optioneel)", name: "actie_code", widget: "string", required: false}
 
   - name: "nieuws"
     label: "Nieuws"

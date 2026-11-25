@@ -80,6 +80,19 @@ export interface Bundel {
   tonen: boolean;
 }
 
+export type VoordeelIcoon = 'betalen' | 'retour' | 'contact' | 'verzending' | 'levertijd' | 'handgemaakt' | 'ophalen';
+
+export interface ShopVoordeel {
+  icoon: VoordeelIcoon;
+  titel: string;
+  tekst: string;
+}
+
+export interface ShopInstellingen {
+  voordelen: ShopVoordeel[];
+  actie: { tekst: string; code: string } | null;
+}
+
 export const RUBRIEK_CONFIG: Record<string, { label: string; kleur: string; bg: string }> = {
   ondergronds: { label: 'Ondergronds', kleur: '#f5c400', bg: 'rgba(245,196,0,0.15)' },
   bovengronds: { label: 'Bovengronds', kleur: '#3b82f6', bg: 'rgba(59,130,246,0.15)' },

@@ -1,16 +1,16 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { getKunstwerkBySegment, getKunstwerken, ogAfbeelding } from '@/lib/content';
+import { getKunstwerkBySegment, getKunstwerken, getShopInstellingen, ogAfbeelding } from '@/lib/content';
 import { cleanTekst, externeHref, renderMarkdown } from '@/lib/markdown';
 import { productUrl, SITE_URL } from '@/lib/slug';
 import { ProductFotos } from '@/components/shop/ProductFotos';
 import { DeelKnoppen } from '@/components/shop/DeelKnoppen';
-import { KoopKnop } from '@/components/shop/KoopKnop';
+import { KoopKnop, contactKopenHref } from '@/components/shop/KoopKnop';
+import { ActieBalk, Voordelen } from '@/components/shop/Voordelen';
+import { formatPrijs } from '@/lib/prijs';
 
 type Props = { params: Promise<{ slug: string }> };
-
-const OG_FALLBACK = '/logo-rond.png';
 
 export function generateStaticParams() {
   return getKunstwerken().map((k) => ({ slug: k.urlSlug }));
@@ -34,10 +34,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!k) return {};
 
   const titel = k.titel || 'MijnKoelPietje';
-  const prijs = k.prijs && k.prijs !== '0' ? ` — € ${k.prijs},-` : '';
+  const prijs = k.prijs && formatPrijs(k.prijs) !== 'Gratis' ? ` — ${formatPrijs(k.prijs)}` : '';
   const oms = omschrijving(k.beschrijving);
   const url = SITE_URL + productUrl(k.slug);
-  const beeld = ogAfbeelding(k.afbeelding) ?? OG_FALLBACK;
+  const beeld = ogAfbeelding(k.afbeelding);
 
   return {
     title: `${titel} — MijnKoelPietje`,
@@ -67,31 +67,37 @@ export default async function ProductPagina({ params }: Props) {
   if (!k) notFound();
 
   const meerInfo = externeHref(k.link);
+  const instellingen = getShopInstellingen();
+  // 'Veilig betalen' alleen tonen als dit product echt een Mollie-betaallink heeft.
+  const voordelen = instellingen.voordelen.filter(v => v.icoon !== 'betalen' || k.mollieLink);
+  const actie = instellingen.actie;
 
   return (
     <div id="sectie-shop">
       <div className="pt-24 pb-32 max-w-6xl mx-auto px-4 sm:px-6">
         <div id="product-detail" className="product-detail open mb-12 pt-8" role="article">
-          <Link
-            href="/shop"
-            className="flex items-center gap-2 mb-8 transition-colors text-sm mono cursor-pointer bg-transparent border-none min-h-[44px]"
-            style={{ color: 'rgba(245,196,0,0.8)' }}
-            aria-label="Terug naar de shop"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" width="16" height="16" aria-hidden="true">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-            </svg>
-            Terug naar de shop
-          </Link>
+          <nav aria-label="Kruimelpad" className="mono text-xs text-gray-500 mb-8">
+            <ol className="flex flex-wrap items-center gap-x-2 gap-y-1">
+              <li><Link href="/" className="kruimel-link">Home</Link></li>
+              <li aria-hidden="true">/</li>
+              <li><Link href="/shop" className="kruimel-link">Shop</Link></li>
+              <li aria-hidden="true">/</li>
+              <li aria-current="page" className="text-gray-400 truncate max-w-[60vw]">{k.titel}</li>
+            </ol>
+          </nav>
 
           <div id="product-content">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
-              <ProductFotos fotos={k.fotos} titel={k.titel} />
+            <div className="grid grid-cols-1 md:grid-cols-[1.15fr_1fr] gap-10 lg:gap-14 items-start">
+              <div className="md:sticky md:top-24">
+                <ProductFotos fotos={k.fotos} titel={k.titel} />
+              </div>
 
               <div>
-                <div className="mono text-xs uppercase mb-2" style={{ color: 'rgba(245,196,0,0.7)', letterSpacing: '0.1em' }}>
-                  {k.collectie}
-                </div>
+                {k.collectie && (
+                  <div className="mono text-xs uppercase mb-2" style={{ color: 'rgba(245,196,0,0.7)', letterSpacing: '0.1em' }}>
+                    {k.collectie}
+                  </div>
+                )}
                 <h1
                   style={{
                     fontFamily: "'Poiret One',sans-serif",
@@ -104,30 +110,46 @@ export default async function ProductPagina({ params }: Props) {
                   {k.titel}
                 </h1>
                 <div className="flex items-center gap-4 mb-6 flex-wrap">
-                  <span className="text-2xl font-bold" style={{ color: 'var(--geel)' }}>
-                    € {k.prijs},–
-                  </span>
+                  {k.prijs && (
+                    <span className="text-2xl font-bold" style={{ color: 'var(--geel)' }}>
+                      {formatPrijs(k.prijs)}
+                    </span>
+                  )}
                   {k.editie && <span className="mono text-xs text-gray-500">Editie {k.editie}</span>}
                 </div>
                 <div
-                  className="prose leading-relaxed mb-6"
+                  className="prose leading-relaxed mb-8"
                   style={{ maxWidth: '60ch' }}
                   dangerouslySetInnerHTML={{ __html: renderMarkdown(k.beschrijving) }}
                 />
-                {meerInfo && (
-                  <div className="mb-6">
-                    <a
-                      href={meerInfo}
-                      target="_blank"
-                      rel="noopener"
-                      className="mono text-xs mt-2 inline-block"
-                      style={{ color: 'var(--geel)' }}
-                    >
+
+                <KoopKnop
+                  titel={k.titel}
+                  mollieLink={k.mollieLink}
+                  tekst={k.mollieLink ? 'Direct kopen' : 'Bestellen via contact'}
+                  className="product-koopknop"
+                />
+                <div className="flex flex-wrap gap-x-6 gap-y-2 mt-3">
+                  {k.mollieLink && (
+                    <Link href={contactKopenHref(k.titel)} className="mono text-xs kruimel-link">
+                      Vraag over dit product? →
+                    </Link>
+                  )}
+                  {meerInfo && (
+                    <a href={meerInfo} target="_blank" rel="noopener" className="mono text-xs kruimel-link">
                       Meer info →
                     </a>
-                  </div>
+                  )}
+                </div>
+
+                <ActieBalk actie={actie} />
+                <Voordelen voordelen={voordelen} />
+
+                {k.collectie && (
+                  <p className="mono text-[0.7rem] uppercase tracking-widest text-gray-600 mt-6">
+                    Collectie: <span className="text-gray-400">{k.collectie}</span>
+                  </p>
                 )}
-                <KoopKnop titel={k.titel} mollieLink={k.mollieLink} groot />
               </div>
             </div>
           </div>

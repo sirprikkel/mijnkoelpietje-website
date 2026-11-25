@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import type { Kunstwerk } from '@/lib/types';
 import { productUrl } from '@/lib/slug';
+import { formatPrijs } from '@/lib/prijs';
 
 const KOP_STIJL: React.CSSProperties = {
   fontFamily: "'Poiret One',sans-serif",
@@ -69,7 +70,7 @@ export function ShopPreview({ kunstwerken }: { kunstwerken: Kunstwerk[] }) {
               </h3>
               <div className="flex items-center justify-between mt-2">
                 <span className="font-bold" style={{ color: 'var(--geel)' }}>
-                  € {k.prijs},–
+                  {formatPrijs(k.prijs)}
                 </span>
                 <span className="mono text-xs" style={{ color: 'var(--geel)' }}>
                   Bekijk →

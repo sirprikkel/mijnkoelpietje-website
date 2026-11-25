@@ -1,5 +1,6 @@
 import type { Bundel } from '@/lib/types';
 import { KoopKnop } from './KoopKnop';
+import { formatPrijs } from '@/lib/prijs';
 
 /** Bundelkaart onder de shop (renderBundel in de oude main.js). */
 export function BundelKaart({ b }: { b: Bundel }) {
@@ -17,9 +18,9 @@ export function BundelKaart({ b }: { b: Bundel }) {
           <p className="text-gray-500 mb-4 text-sm">{b.beschrijving}</p>
           <div className="flex items-center gap-4 flex-wrap">
             <span className="text-2xl font-bold" style={{ color: 'var(--geel)' }}>
-              € {b.prijs},–
+              {formatPrijs(b.prijs)}
             </span>
-            {b.oudePrijs && <span className="text-gray-600 line-through text-sm">€ {b.oudePrijs},–</span>}
+            {b.oudePrijs && <span className="text-gray-600 line-through text-sm">{formatPrijs(b.oudePrijs)}</span>}
             {b.korting && (
               <span
                 className="mono text-xs px-2 py-1 rounded-full"

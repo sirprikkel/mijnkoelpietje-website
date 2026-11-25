@@ -6,7 +6,8 @@ import { createHash } from 'node:crypto';
 import { parseNLDatum } from './datum';
 import { normaliseerSlug, padVeilig } from './slug';
 import type {
-  Activiteit, Bundel, Kunstwerk, NieuwsItem, Sponsor, Verhaal, VerhaalKaart,
+  Activiteit, Bundel, Kunstwerk, NieuwsItem, ShopInstellingen, ShopVoordeel, Sponsor, Verhaal, VerhaalKaart,
+  VoordeelIcoon,
 } from './types';
 
 // Leest de CMS-content (content/<collectie>/*.json) bij het bouwen.
@@ -208,6 +209,36 @@ export const getBundel = cache((): Bundel | null => {
   } catch (e) {
     console.warn(`[content] shop-instellingen/bundel.json: ongeldig (${(e as Error).message})`);
     return null;
+  }
+});
+
+const VOORDEEL_ICONEN: readonly VoordeelIcoon[] = ['betalen', 'retour', 'contact', 'verzending', 'levertijd', 'handgemaakt', 'ophalen'];
+
+/** Shoppagina-instellingen uit het CMS (content/shop-instellingen/shop.json). Ontbreekt het: geen blokjes, geen actie. */
+export const getShopInstellingen = cache((): ShopInstellingen => {
+  const leeg: ShopInstellingen = { voordelen: [], actie: null };
+  const bestand = path.join(CONTENT_DIR, 'shop-instellingen', 'shop.json');
+  if (!fs.existsSync(bestand)) return leeg;
+  try {
+    const d = JSON.parse(fs.readFileSync(bestand, 'utf8')) as Ruw;
+    const ruw = Array.isArray(d.voordelen) ? (d.voordelen as Ruw[]) : [];
+    const voordelen: ShopVoordeel[] = ruw
+      .filter(v => v && str(v.titel).trim())
+      .slice(0, 4)
+      .map(v => {
+        const icoon = str(v.icoon) as VoordeelIcoon;
+        return {
+          icoon: VOORDEEL_ICONEN.includes(icoon) ? icoon : 'contact',
+          titel: str(v.titel).trim(),
+          tekst: str(v.tekst).trim(),
+        };
+      });
+    const actieTekst = str(d.actie_tekst).trim();
+    const actie = d.actie_tonen === true && actieTekst ? { tekst: actieTekst, code: str(d.actie_code).trim() } : null;
+    return { voordelen, actie };
+  } catch (e) {
+    console.warn(`[content] shop-instellingen/shop.json: ongeldig (${(e as Error).message})`);
+    return leeg;
   }
 });
 

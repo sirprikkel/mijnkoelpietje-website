@@ -1,0 +1,22 @@
+{
+  "voordelen": [
+    {
+      "icoon": "betalen",
+      "titel": "Veilig betalen",
+      "tekst": "Afrekenen via een betaallink van Mollie, met iDEAL en andere bekende betaalmethodes."
+    },
+    {
+      "icoon": "retour",
+      "titel": "14 dagen bedenktijd",
+      "tekst": "Niet tevreden? Meld je retour binnen 14 dagen na ontvangst. Zie de algemene voorwaarden."
+    },
+    {
+      "icoon": "contact",
+      "titel": "Vragen over een product?",
+      "tekst": "Stuur ons een bericht via het contactformulier, we helpen je graag."
+    }
+  ],
+  "actie_tonen": false,
+  "actie_tekst": "",
+  "actie_code": ""
+}

@@ -4,37 +4,19 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { LightboxKnop } from '@/components/Lightbox';
 
-/** Hoofdfoto + thumbnailstrip (openProduct/kiesFoto in de oude main.js). */
+/**
+ * Productfoto's zoals in het voorbeeld: verticale fotostrip links (desktop),
+ * grote foto rechts met vergrootglas. Op mobiel staat de strip onder de foto.
+ */
 export function ProductFotos({ fotos, titel }: { fotos: string[]; titel: string }) {
   const [actief, setActief] = useState(0);
   if (fotos.length === 0) return null;
+  const meer = fotos.length > 1;
 
   return (
-    <div>
-      <LightboxKnop
-        fotos={fotos}
-        index={actief}
-        alt={titel}
-        className="relative overflow-hidden block w-full p-0 border-none galerij-tegel"
-        style={{ borderRadius: '12px', cursor: 'zoom-in', background: 'linear-gradient(135deg,#1a1400,#0a0a0a)' }}
-        aria-label={'Vergroot foto van ' + titel}
-      >
-        {/* Hele foto tonen (contain), begrensd op de viewporthoogte. */}
-        <Image
-          id="product-hoofdfoto"
-          key={fotos[actief]}
-          src={fotos[actief]}
-          alt={titel}
-          width={1200}
-          height={1200}
-          priority={actief === 0}
-          sizes="(min-width: 1152px) 556px, (min-width: 768px) 50vw, 100vw"
-          style={{ width: '100%', height: 'auto', maxHeight: '62vh', objectFit: 'contain', display: 'block' }}
-        />
-      </LightboxKnop>
-
-      {fotos.length > 1 && (
-        <div className="thumb-strip">
+    <div className={meer ? 'product-fotos met-strip' : 'product-fotos'}>
+      {meer && (
+        <div className="product-strip" role="group" aria-label="Kies een foto">
           {fotos.map((foto, i) => (
             <button
               key={foto}
@@ -49,6 +31,30 @@ export function ProductFotos({ fotos, titel }: { fotos: string[]; titel: string 
           ))}
         </div>
       )}
+
+      <LightboxKnop
+        fotos={fotos}
+        index={actief}
+        alt={titel}
+        className="product-hoofdfoto"
+        aria-label={'Vergroot foto van ' + titel}
+      >
+        <Image
+          id="product-hoofdfoto"
+          key={fotos[actief]}
+          src={fotos[actief]}
+          alt={titel}
+          fill
+          priority={actief === 0}
+          sizes="(min-width: 1152px) 560px, (min-width: 768px) 50vw, 100vw"
+          style={{ objectFit: 'contain' }}
+        />
+        <span className="product-zoom" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" width={18} height={18}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.2-5.2M10.5 18a7.5 7.5 0 1 0 0-15 7.5 7.5 0 0 0 0 15z" />
+          </svg>
+        </span>
+      </LightboxKnop>
     </div>
   );
 }
