@@ -8,7 +8,7 @@ export function contactKopenHref(titel: string): string {
   const bericht = `Hallo, ik heb interesse in of een vraag over het product "${titel}" in de webshop.`;
   return (
     '/contact?onderwerp=' +
-    encodeURIComponent('Vraag over de kunst: ' + titel) +
+    encodeURIComponent('Vraag over een product uit de shop: ' + titel) +
     '&bericht=' +
     encodeURIComponent(bericht)
   );

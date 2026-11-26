@@ -8,7 +8,7 @@ import { BundelKaart } from '@/components/shop/BundelKaart';
 
 export const metadata: Metadata = {
   title: 'Shop — MijnKoelPietje',
-  description: 'Mijn-erfgoed voor thuis unieke prints en hebbedingen met de ziel van ons mijnverleden',
+  description: 'Mijn-erfgoed voor thuis: hebbedingen met de ziel van ons mijnverleden',
   alternates: { canonical: '/shop' },
 };
 
@@ -41,7 +41,7 @@ export default function ShopPagina() {
             Shop
           </h1>
           <p className="text-gray-500 max-w-xl mx-auto">
-            Mijn-erfgoed voor thuis unieke prints en hebbedingen met de ziel van ons mijnverleden
+            Mijn-erfgoed voor thuis: hebbedingen met de ziel van ons mijnverleden
           </p>
         </div>
 
